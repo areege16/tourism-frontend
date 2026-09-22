@@ -3,14 +3,14 @@ import { finalize, Observable, tap } from 'rxjs';
 import { BaseResponse, LoginRequest, LoginResponse, RegisterRequest, RegisterResponse } from '../Models/auth';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BaseAPI } from '../../Shared/Env/env';
+import { apiUrl} from '../../Shared/Env/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private readonly baseUrl = `${BaseAPI}`;
+  private readonly baseUrl = `${apiUrl}`;
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'auth_user';
   private MID_KEY = 'mid';

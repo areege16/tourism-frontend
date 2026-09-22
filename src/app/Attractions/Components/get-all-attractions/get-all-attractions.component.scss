@@ -1,0 +1,19 @@
+@import '../../../styles/clay-shared';
+@import '../../../styles/clay-table';
+
+.attractions-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0 1.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  flex-shrink: 0;
+}

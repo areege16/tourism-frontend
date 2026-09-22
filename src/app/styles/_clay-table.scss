@@ -1,0 +1,217 @@
+// ==========================================
+// Claymorphism Reusable Table
+// ==========================================
+
+.table-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  padding: 1rem 1.25rem;
+  box-sizing: border-box;
+
+  .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+
+    .title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+
+      h3 {
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      .results-count {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+    }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+  }
+
+  .table-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    min-height: 0;
+    padding-left: 0.25rem;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(188, 175, 155, 0.4);
+      border-radius: 10px;
+    }
+  }
+
+  .clay-mat-table {
+    width: 100%;
+    background: transparent;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+
+    th.mat-mdc-header-cell {
+      background-color: var(--bg-card);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      border: none;
+      padding: 0.5rem 0.75rem;
+      text-align: right;
+    }
+
+    tr.mat-mdc-row {
+      background-color: var(--bg-app);
+      box-shadow: 2px 2px 5px rgba(188, 175, 155, 0.2),
+        -2px -2px 5px rgba(255, 255, 255, 0.8);
+      transition: transform 0.15s ease;
+
+      &:hover {
+        transform: scale(1.002);
+      }
+
+      td.mat-mdc-cell {
+        border: none;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.85rem;
+        color: var(--text-main);
+        vertical-align: middle;
+
+        &:first-child {
+          border-radius: 0 14px 14px 0;
+        }
+
+        &:last-child {
+          border-radius: 14px 0 0 14px;
+        }
+      }
+    }
+
+    .idx-badge {
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+
+    .item-name-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+
+      .item-thumb {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        object-fit: cover;
+        box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.6);
+      }
+
+      .item-thumb-fallback {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-card);
+        box-shadow: inset 1px 1px 2px rgba(188, 175, 155, 0.25);
+
+        mat-icon {
+          font-size: 1.1rem;
+          width: 1.1rem;
+          height: 1.1rem;
+          color: var(--text-muted);
+        }
+      }
+    }
+
+    .value-badge {
+      background-color: #FFFDF9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      font-weight: 600;
+      box-shadow: inset 1px 1px 3px rgba(188, 175, 155, 0.2);
+      white-space: nowrap;
+    }
+
+    .action-buttons-group {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      .action-icon-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #FFFDF9;
+        box-shadow: 2px 2px 4px rgba(188, 175, 155, 0.25),
+          -2px -2px 4px rgba(255, 255, 255, 0.9);
+        transition: transform 0.15s ease;
+
+        mat-icon {
+          font-size: 1.1rem;
+          width: 1.1rem;
+          height: 1.1rem;
+        }
+
+        &.view mat-icon {
+          color: var(--icon-active);
+        }
+
+        &.edit mat-icon {
+          color: var(--cta-salmon);
+        }
+
+        &.delete mat-icon {
+          color: #c25353;
+        }
+
+        &:hover {
+          transform: translateY(-2px);
+        }
+      }
+    }
+
+    .state-row td {
+      text-align: center;
+      padding: 2rem 1rem !important;
+
+      .loading-state,
+      .empty-state {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+
+        mat-icon {
+          font-size: 1.8rem;
+          width: 1.8rem;
+          height: 1.8rem;
+        }
+      }
+    }
+  }
+}

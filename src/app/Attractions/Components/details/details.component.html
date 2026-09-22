@@ -1,0 +1,124 @@
+<div class="clay-dialog">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>account_balance</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">{{ attraction?.name?.ar || 'تفاصيل المعلم' }}</h2>
+        <p class="dialog-subtitle" *ngIf="attraction">{{ attraction.category.ar }}</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body" dir="rtl">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+      <span>جاري تحميل التفاصيل...</span>
+    </div>
+
+    <ng-container *ngIf="!isLoading && attraction">
+      <div class="gallery-section">
+        <img [src]="activeImage" [alt]="attraction.name.ar" class="main-image" />
+        <div class="thumbnails-row" *ngIf="attraction.imageGallery.length">
+          <img
+            *ngFor="let img of attraction.imageGallery"
+            [src]="getFullImageUrl(img)"
+            (click)="setActiveImage(img)"
+            class="thumb-item"
+            [class.active]="activeImage === getFullImageUrl(img)"
+          />
+        </div>
+      </div>
+
+      <!-- معلومات أساسية -->
+      <div class="dialog-info-card">
+        <mat-icon>info</mat-icon>
+        <p>{{ attraction.description.ar }}</p>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <mat-icon>schedule</mat-icon>
+          <div>
+            <span class="detail-label">مواعيد الزيارة</span>
+            <span class="detail-value">{{ attraction.openingHours.ar }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>confirmation_number</mat-icon>
+          <div>
+            <span class="detail-label">سعر التذكرة</span>
+            <span class="detail-value">{{ attraction.ticketPrice.ar }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>star</mat-icon>
+          <div>
+            <span class="detail-label">التقييم</span>
+            <span class="detail-value">⭐ {{ attraction.rating }} ({{ attraction.reviewCount }} تقييم)</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>history_edu</mat-icon>
+          <div>
+            <span class="detail-label">الحقبة التاريخية</span>
+            <span class="detail-value">{{ attraction.historicalPeriod.ar }}</span>
+          </div>
+        </div>
+
+        <!-- الموقع الجغرافي -->
+        <div class="detail-item">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="detail-label">الموقع الجغرافي</span>
+            <a class="detail-value map-link"
+               [href]="getGoogleMapsUrl(attraction.latitude, attraction.longitude)"
+               target="_blank"
+               dir="ltr">
+              {{ attraction.latitude }}, {{ attraction.longitude }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- المميزات -->
+      <div class="features-section" *ngIf="attraction.features.length">
+        <h4>المميزات المتاحة</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngFor="let f of attraction.features">
+            <mat-icon>check_circle</mat-icon>
+            {{ f.ar }}
+          </span>
+        </div>
+      </div>
+
+      <!-- الأهمية التاريخية -->
+      <div class="significance-section" *ngIf="attraction.significance?.ar">
+        <h4>الأهمية التاريخية</h4>
+        <p class="significance-text">{{ attraction.significance.ar }}</p>
+      </div>
+
+      <!-- رابط الحجز -->
+      <a
+        *ngIf="attraction.bookingUrl"
+        [href]="attraction.bookingUrl"
+        target="_blank"
+        class="booking-link"
+      >
+        <mat-icon>open_in_new</mat-icon>
+        <span>رابط الحجز الرسمي</span>
+      </a>
+    </ng-container>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">إغلاق</button>
+  </div>
+</div>

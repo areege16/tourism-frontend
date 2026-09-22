@@ -17,9 +17,8 @@ export class LayoutComponent {
 
 
   navItems: NavItem[] = [
-    { label: 'الرئيسية', icon: 'dashboard', route: '/dashboard' },
+    { label: 'المعالم السياحية', icon: 'place', route: '/dashboard/attractions' },
     { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
-    { label: 'محاضر الإزالات', icon: 'gavel', route: '/dashboard/violations' },
     { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
     { label: 'الإعدادات والمستخدمين', icon: 'settings', route: '/dashboard/register' }
   ];
