@@ -1,0 +1,198 @@
+<div class="clay-dialog details-dialog" dir="rtl">
+    <!-- رأس النافذة -->
+    <div class="clay-dialog-header">
+        <div class="header-title-group">
+            <div class="dialog-header-icon">
+                <mat-icon>assignment</mat-icon>
+            </div>
+            <div>
+                <h2 class="dialog-title">تفاصيل محضر المخالفة</h2>
+                <p class="dialog-subtitle" *ngIf="requestData">
+                    طلب رقم #{{ requestData.requestID }} • تاريخ الإنشاء: {{ requestData.createdAt | date:'yyyy/MM/dd'
+                    }}
+                </p>
+            </div>
+        </div>
+        <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <!-- جسم النافذة -->
+    <div class="clay-dialog-body" *ngIf="!isLoading && requestData">
+
+        <!-- بيانات المواطن -->
+        <div class="section-container">
+            <div class="section-header">
+                <span class="dot-indicator mint"></span>
+                <h3>بيانات المخالف</h3>
+            </div>
+            <div class="info-grid three-cols">
+                <div class="info-box">
+                    <label>اسم المواطن</label>
+                    <div class="value-highlight">{{ requestData.citizenName }}</div>
+                </div>
+                <div class="info-box">
+                    <label>الرقم القومي</label>
+                    <div class="value-highlight font-mono">{{ requestData.nationalID }}</div>
+                </div>
+                <div class="info-box">
+                    <label>عنوان الإقامة</label>
+                    <div class="value-highlight">{{ requestData.details.propertyAddress || '—' }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- بيانات الإخطار والمحضر -->
+        <div class="section-container">
+            <div class="section-header">
+                <span class="dot-indicator butter"></span>
+                <h3>بيانات المحضر والقرارات</h3>
+            </div>
+            <div class="info-grid four-cols">
+                <div class="info-box">
+                    <label>رقم قرار الإيقاف</label>
+                    <div class="value-highlight">{{ requestData.stopDecisionNo || '—' }}</div>
+                </div>
+                <div class="info-box">
+                    <label>تاريخ قرار الإيقاف</label>
+                    <div class="value-highlight">{{ requestData.stopDecisionDate | date:'yyyy/MM/dd' }}</div>
+                </div>
+                <div class="info-box">
+                    <label>رقم المحضر</label>
+                    <div class="value-highlight">{{ requestData.reportNo || '—' }}</div>
+                </div>
+                <div class="info-box">
+                    <label>تاريخ المحضر</label>
+                    <div class="value-highlight">{{ requestData.reportDate | date:'yyyy/MM/dd' }}</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- بيانات موقع المخالفة -->
+        <div class="section-container">
+            <div class="section-header">
+                <span class="dot-indicator periwinkle"></span>
+                <h3>موقع وتفاصيل المخالفة</h3>
+            </div>
+            <div class="info-grid three-cols">
+                <div class="info-box">
+                    <label>المحافظة / المركز / القرية</label>
+                    <div class="value-highlight">
+                        {{ requestData.details.governorateName }} - {{ requestData.details.regionName }} - {{
+                        requestData.details.areaName }}
+                    </div>
+                </div>
+                <div class="info-box two-span">
+                    <label>عنوان العقار المخالف</label>
+                    <div class="value-highlight">{{ requestData.details.propertyAddress }}</div>
+                </div>
+            </div>
+            <div class="info-box full-width mt-2">
+                <label>تفاصيل الأعمال المخالفة</label>
+                <div class="violation-text-box">
+                    {{ requestData.details.violationDetails }}
+                </div>
+            </div>
+        </div>
+
+        <!-- المرفقات المؤرشفة (3 بطاقات) -->
+        <div class="section-container">
+            <div class="section-header">
+                <span class="dot-indicator peach"></span>
+                <h3>المستندات والمرفقات المؤرشفة</h3>
+            </div>
+
+            <div class="attachments-grid">
+                <!-- 1. قرار الإيقاف (Type 5) -->
+                <ng-container *ngTemplateOutlet="attachmentCard; context: { 
+          title: 'قرار إيقاف الأعمال', 
+          att: getAttachmentByType(5),
+          badgeClass: 'mint'
+        }"></ng-container>
+
+                <!-- 2. محضر المعاينة (Type 6) -->
+                <ng-container *ngTemplateOutlet="attachmentCard; context: { 
+          title: 'محضر مخالفة / معاينة', 
+          att: getAttachmentByType(6),
+          badgeClass: 'butter'
+        }"></ng-container>
+
+                <!-- 3. قرار الإزالة (Type 7) -->
+                <ng-container *ngTemplateOutlet="attachmentCard; context: { 
+          title: 'قرار الإزالة', 
+          att: getAttachmentByType(7),
+          badgeClass: 'peach'
+        }"></ng-container>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- حالة التحميل -->
+    <div class="clay-loading-box" *ngIf="isLoading">
+        <mat-spinner diameter="44"></mat-spinner>
+        <p>جاري استرجاع تفاصيل الملف المؤرشف...</p>
+    </div>
+
+    <!-- الفوتر -->
+    <div class="clay-dialog-actions">
+       
+        <button class="btn-dialog-cancel" (click)="onClose()" type="button">
+            إغلاق النافذة
+        </button>
+    </div>
+</div>
+
+<ng-template #attachmentCard let-title="title" let-att="att" let-badgeClass="badgeClass">
+    <div class="attachment-clay-card" [class.empty]="!att">
+        <div class="att-header">
+            <span class="att-badge" [ngClass]="badgeClass">{{ title }}</span>
+
+            <div class="att-actions" *ngIf="att">
+                <button type="button" class="btn-icon-action" (click)="printDetails(att)" title="طباعة هذا المستند">
+                    <mat-icon>print</mat-icon>
+                </button>
+
+                <!-- زر تحميل الملف -->
+                <a [href]="att.fileUrl" target="_blank" download class="btn-icon-action" title="تحميل الملف">
+                    <mat-icon>download</mat-icon>
+                </a>
+            </div>
+        </div>
+
+        <div class="att-body" (click)="att ? openZoom(att.fileUrl, title, $event) : null">
+            <div *ngIf="att" class="img-preview-box">
+                <img [src]="att.fileUrl" [alt]="title" loading="lazy" />
+                <div class="preview-overlay">
+                    <mat-icon>zoom_in</mat-icon>
+                    <span>تكبير المستند</span>
+                </div>
+            </div>
+            <div *ngIf="!att" class="no-file-box">
+                <mat-icon>attachment</mat-icon>
+                <span>لا يوجد مستند مرفق</span>
+            </div>
+        </div>
+
+        <div class="att-footer" *ngIf="att">
+            <span class="file-name" [title]="att.originalFileName">{{ att.originalFileName }}</span>
+            <span class="file-size">{{ (att.fileSize / 1024) | number:'1.0-0' }} KB</span>
+        </div>
+    </div>
+</ng-template>
+
+<!-- (Lightbox) -->
+<div class="clay-lightbox-backdrop" *ngIf="zoomedImageSrc" (click)="closeZoom()">
+    <div class="clay-lightbox-container" (click)="$event.stopPropagation()">
+        <div class="lightbox-header">
+            <h4>{{ zoomedImageTitle }}</h4>
+            <button class="btn-close-zoom" (click)="closeZoom()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <div class="lightbox-image-wrapper">
+            <img [src]="zoomedImageSrc" [alt]="zoomedImageTitle" />
+        </div>
+    </div>
+</div>

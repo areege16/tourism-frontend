@@ -1,0 +1,355 @@
+<div class="clay-dialog" dir="rtl">
+
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>auto_fix_high</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تسجيل محضر إيقاف جديد</h2>
+        <p class="dialog-subtitle">استيراد المستندات من السكانر والذكاء الاصطناعي أو الإدخال اليدوي المباشر</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body" mat-dialog-content>
+
+      <!-- قسم السكانر والمرفقات -->
+      <div class="ocr-section-card">
+        <div class="section-top-bar">
+          <div class="section-title">
+            <div class="title-icon">
+              <mat-icon>scanner</mat-icon>
+            </div>
+            <div>
+              <h3>المرفقات والمسح الضوئي</h3>
+              <p>اسحب المستندات من السكانر أو ارفعها يدوياً واستخرج البيانات عبر الذكاء الاصطناعي</p>
+            </div>
+          </div>
+
+          <button 
+            type="button" 
+            class="btn-scanner-load" 
+            (click)="loadLatestScanBatch()" 
+            [disabled]="isLoadingScan">
+            <mat-icon [class.spin-icon]="isLoadingScan">{{ isLoadingScan ? 'sync' : 'cloud_download' }}</mat-icon>
+            <span>{{ isLoadingScan ? 'جاري السحب...' : 'تحميل آخر سكان' }}</span>
+          </button>
+        </div>
+
+        <div class="scanner-mapping-bar" *ngIf="scannedBatchFiles.length > 0">
+          <div class="mapping-title">
+            <mat-icon>tune</mat-icon>
+            <span>تم سحب ({{ scannedBatchFiles.length }}) أوراق — حدد نوع كل مستند:</span>
+          </div>
+
+          <div class="mapping-cards-container">
+            <div class="mapping-card" *ngFor="let file of scannedBatchFiles; let i = index">
+              <div class="mapping-img-wrapper" (click)="openZoom(scannedBatchPreviews[i], 'ورقة سكانر رقم ' + (i + 1))">
+                <img [src]="scannedBatchPreviews[i]" alt="ورقة سكانر" />
+                <span class="sheet-number">ورقة {{ i + 1 }}</span>
+                <div class="zoom-hover"><mat-icon>zoom_in</mat-icon></div>
+              </div>
+
+              <div class="mapping-action">
+                <label>تعيين كـ:</label>
+                <mat-select 
+                  placeholder="اختر النوع" 
+                  class="clay-input-field clay-select-sm"
+                  (selectionChange)="assignScannedFileToType(i, $event.value)">
+                  <mat-option *ngFor="let doc of DOC_TYPES" [value]="doc.id">
+                    {{ doc.label }}
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- شبكة كروت المرفقات -->
+        <div class="attachments-grid">
+          
+          <!-- قرار الإيقاف -->
+          <div class="file-upload-box" [class.has-file]="fileStopDecision">
+            <input type="file" #file5 (change)="onFileSelected($event, 5)" accept="image/*" hidden />
+            <div class="upload-content" *ngIf="!previewStopDecision" (click)="file5.click()">
+              <div class="icon-circle mint"><mat-icon>assignment_late</mat-icon></div>
+              <span class="box-title">قرار الإيقاف</span>
+              <span class="box-hint">اضغط للرفع أو اسحب سكان</span>
+            </div>
+            <div class="preview-content" *ngIf="previewStopDecision" (click)="openZoom(previewStopDecision, 'قرار الإيقاف')">
+              <img [src]="previewStopDecision" alt="قرار الإيقاف" class="thumb-img" />
+              <div class="preview-overlay"><mat-icon>zoom_in</mat-icon><span>تكبير</span></div>
+              <span class="img-badge mint">قرار الإيقاف</span>
+            </div>
+            <button type="button" class="btn-remove-file" *ngIf="fileStopDecision" (click)="removeFile(5, $event)"><mat-icon>close</mat-icon></button>
+          </div>
+
+          <!-- محضر المعاينة -->
+          <div class="file-upload-box" [class.has-file]="fileInspectionReport">
+            <input type="file" #file6 (change)="onFileSelected($event, 6)" accept="image/*" hidden />
+            <div class="upload-content" *ngIf="!previewInspectionReport" (click)="file6.click()">
+              <div class="icon-circle butter"><mat-icon>report_problem</mat-icon></div>
+              <span class="box-title">محضر المعاينة</span>
+              <span class="box-hint">اضغط للرفع أو اسحب سكان</span>
+            </div>
+            <div class="preview-content" *ngIf="previewInspectionReport" (click)="openZoom(previewInspectionReport, 'محضر المعاينة')">
+              <img [src]="previewInspectionReport" alt="محضر المعاينة" class="thumb-img" />
+              <div class="preview-overlay"><mat-icon>zoom_in</mat-icon><span>تكبير</span></div>
+              <span class="img-badge butter">محضر المعاينة</span>
+            </div>
+            <button type="button" class="btn-remove-file" *ngIf="fileInspectionReport" (click)="removeFile(6, $event)"><mat-icon>close</mat-icon></button>
+          </div>
+
+          <!-- قرار الإزالة -->
+          <div class="file-upload-box" [class.has-file]="fileRemovalDecision">
+            <input type="file" #file7 (change)="onFileSelected($event, 7)" accept="image/*" hidden />
+            <div class="upload-content" *ngIf="!previewRemovalDecision" (click)="file7.click()">
+              <div class="icon-circle peach"><mat-icon>delete_forever</mat-icon></div>
+              <span class="box-title">قرار الإزالة</span>
+              <span class="box-hint">اضغط للرفع أو اسحب سكان</span>
+            </div>
+            <div class="preview-content" *ngIf="previewRemovalDecision" (click)="openZoom(previewRemovalDecision, 'قرار الإزالة')">
+              <img [src]="previewRemovalDecision" alt="قرار الإزالة" class="thumb-img" />
+              <div class="preview-overlay"><mat-icon>zoom_in</mat-icon><span>تكبير</span></div>
+              <span class="img-badge peach">قرار الإزالة</span>
+            </div>
+            <button type="button" class="btn-remove-file" *ngIf="fileRemovalDecision" (click)="removeFile(7, $event)"><mat-icon>close</mat-icon></button>
+          </div>
+
+        </div>
+
+        <button 
+          type="button" 
+          class="btn-ocr-extract" 
+          (click)="triggerOcr()"
+          [disabled]="isProcessingOcr || !hasAtLeastOneFile">
+          <mat-icon [class.spin-icon]="isProcessingOcr">{{ isProcessingOcr ? 'sync' : 'psychology' }}</mat-icon>
+          <span>{{ isProcessingOcr ? 'جاري استخراج البيانات...' : 'استخراج البيانات آلياً من الصور (OCR)' }}</span>
+        </button>
+      </div>
+
+      <!-- Zoom Modal -->
+      <div class="image-lightbox-modal" *ngIf="zoomedImageSrc" (click)="closeZoom()">
+        <div class="lightbox-container" (click)="$event.stopPropagation()">
+          <div class="lightbox-header">
+            <span class="lightbox-title">{{ zoomedImageTitle }}</span>
+            <button type="button" class="btn-close-lightbox" (click)="closeZoom()"><mat-icon>close</mat-icon></button>
+          </div>
+          <div class="lightbox-body">
+            <img [src]="zoomedImageSrc" [alt]="zoomedImageTitle" />
+          </div>
+        </div>
+      </div>
+
+      <!-- الحقول -->
+      <div class="form-grid">
+
+        <div class="input-group">
+          <label>اسم المواطن <span class="required">*</span></label>
+          <input type="text" formControlName="fullName" placeholder="اسم المواطن رباعي..." class="clay-input-field"
+            [class.is-invalid]="createForm.get('fullName')?.invalid && createForm.get('fullName')?.touched" />
+          <div class="validation-error" *ngIf="createForm.get('fullName')?.invalid && createForm.get('fullName')?.touched">
+            <span><mat-icon>error_outline</mat-icon> اسم المواطن مطلوب (3 أحرف على الأقل).</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>الرقم القومي <span class="required">*</span></label>
+          <input type="text" formControlName="nationalID" placeholder="14 رقم بالتمام..." maxlength="14" inputmode="numeric"
+            (keypress)="onlyNumbers($event)" class="clay-input-field"
+            [class.is-invalid]="createForm.get('nationalID')?.invalid && createForm.get('nationalID')?.touched" />
+          <div class="validation-error" *ngIf="createForm.get('nationalID')?.invalid && createForm.get('nationalID')?.touched">
+            <span><mat-icon>error_outline</mat-icon> يجب إدخال 14 رقماً بالتمام بدون حروف.</span>
+          </div>
+        </div>
+
+        <div class="input-group full-row">
+          <label>عنوان المواطن <span class="required">*</span></label>
+          <input type="text" formControlName="citizenAddress" placeholder="عنوان المواطن المذكور بالقرار..." class="clay-input-field" 
+            [class.is-invalid]="createForm.get('citizenAddress')?.invalid && createForm.get('citizenAddress')?.touched" />
+        </div>
+
+        <div class="input-group">
+          <label>رقم قرار الإيقاف <span class="required">*</span></label>
+          <input type="text" formControlName="stopDecisionNo" placeholder="أرقام القرار فقط..." inputmode="numeric"
+            (keypress)="onlyNumbers($event)" class="clay-input-field"
+            [class.is-invalid]="createForm.get('stopDecisionNo')?.invalid && createForm.get('stopDecisionNo')?.touched" />
+        </div>
+
+        <div class="input-group">
+          <label>تاريخ قرار الإيقاف <span class="required">*</span></label>
+          <div class="clay-datepicker-wrapper">
+            <input matInput [matDatepicker]="pickerStopDecision" formControlName="stopDecisionDate" placeholder="يوم / شهر / سنة" class="clay-input-field" readonly (click)="pickerStopDecision.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="pickerStopDecision" class="clay-picker-toggle"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStopDecision></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>رقم المحضر <span class="required">*</span></label>
+          <input type="text" formControlName="reportNo" placeholder="أرقام المحضر فقط..." inputmode="numeric"
+            (keypress)="onlyNumbers($event)" class="clay-input-field"
+            [class.is-invalid]="createForm.get('reportNo')?.invalid && createForm.get('reportNo')?.touched" />
+        </div>
+
+        <div class="input-group">
+          <label>تاريخ المحضر <span class="required">*</span></label>
+          <div class="clay-datepicker-wrapper">
+            <input matInput [matDatepicker]="pickerReportDate" formControlName="reportDate" placeholder="يوم / شهر / سنة" class="clay-input-field" readonly (click)="pickerReportDate.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="pickerReportDate" class="clay-picker-toggle"></mat-datepicker-toggle>
+            <mat-datepicker #pickerReportDate></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="input-group full-row">
+          <label>تاريخ الإعلان (اختياري)</label>
+          <div class="clay-datepicker-wrapper">
+            <input matInput [matDatepicker]="pickerAnnouncementDate" formControlName="announcementDate" placeholder="يوم / شهر / سنة" class="clay-input-field" readonly (click)="pickerAnnouncementDate.open()" />
+            <mat-datepicker-toggle matIconSuffix [for]="pickerAnnouncementDate" class="clay-picker-toggle"></mat-datepicker-toggle>
+            <mat-datepicker #pickerAnnouncementDate></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>المحافظة <span class="required">*</span></label>
+          <mat-select formControlName="governorateID" placeholder="اختر المحافظة" class="clay-input-field clay-select-override" (selectionChange)="onGovernorateChange($event.value)">
+            <div class="select-search-header" (click)="$event.stopPropagation()">
+              <mat-icon>search</mat-icon>
+              <input [formControl]="govSearchCtrl" placeholder="بحث..." class="inner-search-input" />
+            </div>
+            <mat-option *ngFor="let g of filteredGovernorates" [value]="g.governorateID">{{ g.governorateName }}</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="input-group">
+          <label>المركز / الحي <span class="required">*</span></label>
+          <mat-select formControlName="regionID" placeholder="اختر المركز" class="clay-input-field clay-select-override" (selectionChange)="onRegionChange($event.value)">
+            <div class="select-search-header" (click)="$event.stopPropagation()">
+              <mat-icon>search</mat-icon>
+              <input [formControl]="regionSearchCtrl" placeholder="بحث..." class="inner-search-input" />
+            </div>
+            <mat-option *ngFor="let r of filteredRegions" [value]="r.regionID">{{ r.regionName }}</mat-option>
+          </mat-select>
+        </div>
+
+        <!-- القرية مع زر الإضافة السريعة -->
+        <div class="input-group full-row">
+          <div class="label-with-action">
+            <label>القرية / المنطقة <span class="required">*</span></label>
+            <button 
+              type="button" 
+              class="btn-inline-add" 
+              (click)="openAddAreaDialog()" 
+              [disabled]="!createForm.get('regionID')?.value" 
+              matTooltip="إضافة قرية جديدة لهذا المركز">
+              <mat-icon>add_circle_outline</mat-icon>
+              <span>إضافة قرية او حي غير موجود</span>
+            </button>
+          </div>
+
+          <mat-select formControlName="areaID" placeholder="اختر القرية" class="clay-input-field clay-select-override">
+            <div class="select-search-header" (click)="$event.stopPropagation()">
+              <mat-icon>search</mat-icon>
+              <input [formControl]="areaSearchCtrl" placeholder="بحث..." class="inner-search-input" />
+            </div>
+            <mat-option *ngFor="let a of filteredAreas" [value]="a.areaID">{{ a.areaName }}</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="input-group full-row">
+          <label>موقع العقار المخالف <span class="required">*</span></label>
+          <input type="text" formControlName="propertyAddress" placeholder="الشارع / الحوض / القرية..." class="clay-input-field" 
+            [class.is-invalid]="createForm.get('propertyAddress')?.invalid && createForm.get('propertyAddress')?.touched" />
+        </div>
+
+        <div class="input-group full-row">
+          <label>تفاصيل المخالفة <span class="required">*</span></label>
+          <textarea formControlName="violationDetails" rows="3" placeholder="وصف الأعمال المخالفة..." class="clay-input-field clay-textarea"
+            [class.is-invalid]="createForm.get('violationDetails')?.invalid && createForm.get('violationDetails')?.touched"></textarea>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions" mat-dialog-actions>
+      <button type="button" class="btn-dialog-cancel" (click)="onClose()">إلغاء</button>
+      <button 
+        type="submit" 
+        class="btn-dialog-confirm" 
+        [disabled]="createForm.invalid || !hasAtLeastOneFile || isSubmitting || isProcessingOcr || isLoadingScan">
+        <mat-icon *ngIf="!isSubmitting">cloud_upload</mat-icon>
+        <span *ngIf="!isSubmitting">حفظ المحضر بالكامل</span>
+        <span *ngIf="isSubmitting">جاري الحفظ...</span>
+      </button>
+    </div>
+  </form>
+
+  <!-- نافذة إضافة قرية جديدة مع التنبيه الذكي بالتشابه -->
+  <div class="clay-sub-modal-overlay" *ngIf="showAddAreaModal" (click)="closeAddAreaDialog()">
+    <div class="clay-sub-modal-card" (click)="$event.stopPropagation()">
+      <div class="sub-modal-header">
+        <div class="header-title">
+          <mat-icon class="icon-accent">add_location_alt</mat-icon>
+          <h3>إضافة قرية / منطقة جديدة</h3>
+        </div>
+        <button type="button" class="btn-close" (click)="closeAddAreaDialog()"><mat-icon>close</mat-icon></button>
+      </div>
+
+      <div class="sub-modal-body">
+        
+        <!-- صندوق تحذير التشابه -->
+        <div class="warning-similarity-box" *ngIf="similarAreaWarning">
+          <mat-icon>warning_amber</mat-icon>
+          <div class="warn-content">
+            <h4>تنبيه: تشابه في الأسماء!</h4>
+            <p>{{ similarAreaWarning }}</p>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label>اسم القرية / المنطقة <span class="required">*</span></label>
+          <input 
+            type="text" 
+            [(ngModel)]="newAreaName" 
+            (ngModelChange)="similarAreaWarning = null"
+            placeholder="مثال: حي غرب / قرية ..." 
+            class="clay-input-field" />
+        </div>
+
+       
+      </div>
+
+      <div class="sub-modal-actions">
+        <!-- إذا وُجد تشابه، يظهر زر التأكيد الإجباري -->
+        <button 
+          type="button" 
+          class="btn-confirm-override" 
+          *ngIf="similarAreaWarning" 
+          (click)="checkAndSaveArea(true)" 
+          [disabled]="isAddingArea">
+          نعم، متابعة الإضافة رغم التشابه
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-dialog-confirm" 
+          *ngIf="!similarAreaWarning" 
+          (click)="checkAndSaveArea(false)" 
+          [disabled]="isAddingArea || !newAreaName.trim()">
+          <mat-icon>{{ isAddingArea ? 'sync' : 'check' }}</mat-icon>
+          <span>{{ isAddingArea ? 'جاري الإضافة...' : 'إضافة وتحديد' }}</span>
+        </button>
+
+        <button type="button" class="btn-dialog-cancel" (click)="closeAddAreaDialog()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+</div>

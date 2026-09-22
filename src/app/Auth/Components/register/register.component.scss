@@ -1,0 +1,71 @@
+@import '../../../styles/dialog';
+@import '../../../styles/toast';
+@import '../../../styles/_clay-shared';
+
+.form-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    &.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--text-muted, #7B6E66);
+
+      .req { color: #dc2626; }
+    }
+
+    .field-error {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #dc2626;
+      margin-top: 0.15rem;
+    }
+
+    .password-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 100%;
+        padding-left: 2.5rem;
+      }
+
+      .btn-toggle-eye {
+        position: absolute;
+        left: 0.5rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-muted, #7B6E66);
+
+        mat-icon {
+          font-size: 1.2rem;
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+
+        &:hover {
+          color: var(--text-main, #3A2E2C);
+        }
+      }
+    }
+  }
+}

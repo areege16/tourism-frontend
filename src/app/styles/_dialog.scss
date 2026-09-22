@@ -1,0 +1,268 @@
+// ==========================================
+// Claymorphism Mat-Dialog Global Theme
+// ==========================================
+
+::ng-deep .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: transparent !important;
+  padding: 0 !important;
+
+  .mat-mdc-dialog-surface,
+  .mdc-dialog__surface {
+    background-color: var(--bg-card, #FFFDF9) !important;
+    border-radius: 36px !important; // انحناء عريض وفائق النعومة
+    border: 2px solid rgba(255, 255, 255, 0.9) !important;
+    box-shadow:
+      6px 8px 20px rgba(188, 175, 155, 0.18),
+      -4px -4px 14px rgba(255, 255, 255, 0.5),
+      0 12px 24px rgba(58, 46, 44, 0.06) !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+// التعتيم الخلفي (Backdrop)
+.cdk-overlay-dark-backdrop {
+  background: rgba(58, 46, 44, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+// هيكل الديالوج الرئيسي
+.clay-dialog {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-main);
+  background-color: var(--bg-card);
+  position: relative;
+  font-family: inherit;
+
+  // --- الهيدر ---
+  .clay-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 1.75rem 1.1rem;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+    border-bottom: 1.5px dashed rgba(188, 175, 155, 0.35);
+
+    .header-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+
+      .dialog-header-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--pastel-mint);
+        box-shadow: 4px 4px 10px rgba(163, 207, 195, 0.5),
+          inset 2px 2px 4px rgba(255, 255, 255, 0.9),
+          inset -2px -2px 4px rgba(68, 104, 96, 0.15);
+
+        mat-icon {
+          color: var(--icon-active);
+          font-size: 1.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+
+        &.peach {
+          background: var(--pastel-peach);
+          box-shadow: 4px 4px 10px rgba(246, 196, 180, 0.6),
+            inset 2px 2px 4px #ffffff,
+            inset -2px -2px 4px rgba(238, 126, 97, 0.2);
+
+          mat-icon {
+            color: var(--cta-salmon);
+          }
+        }
+      }
+
+      h2.dialog-title {
+        margin: 0;
+        font-size: 1.18rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -0.3px;
+      }
+
+      .dialog-subtitle {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 0.2rem 0 0;
+        font-weight: 500;
+      }
+    }
+
+    .btn-close {
+      width: 38px;
+      height: 38px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 3px 3px 8px rgba(188, 175, 155, 0.22),
+        -3px -3px 8px rgba(255, 255, 255, 0.95);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+      mat-icon {
+        font-size: 1.25rem;
+        width: 1.25rem;
+        height: 1.25rem;
+      }
+
+      &:hover {
+        color: var(--cta-salmon);
+        background: var(--pastel-peach);
+        transform: rotate(90deg) scale(1.06);
+      }
+    }
+  }
+
+  // --- المحتوى الداخلي ---
+  .mat-mdc-dialog-content,
+  .clay-dialog-body {
+    padding: 1.35rem 1.75rem !important;
+    max-height: 68vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(188, 175, 155, 0.45);
+      border-radius: 10px;
+    }
+
+    // كارت التنبيه الإرشادي المجسم
+    .dialog-info-card {
+      background: var(--bg-app);
+      border-radius: 20px;
+      padding: 0.85rem 1.15rem;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      box-shadow: inset 2px 2px 5px rgba(188, 175, 155, 0.2),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      mat-icon {
+        color: var(--icon-active);
+        font-size: 1.35rem;
+        width: 1.35rem;
+        height: 1.35rem;
+        flex-shrink: 0;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.83rem;
+        color: var(--text-main);
+        font-weight: 600;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  // --- الفوتر والأزرار ---
+  .mat-mdc-dialog-actions,
+  .clay-dialog-actions {
+    padding: 1rem 1.75rem 1.5rem !important;
+    margin: 0 !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; // محاذاة لليمين مع RTL
+    gap: 0.85rem;
+    background: linear-gradient(0deg, rgba(203, 216, 212, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
+    border-top: 1.5px dashed rgba(188, 175, 155, 0.3);
+
+    .btn-dialog-confirm {
+      background-color: var(--cta-salmon) !important;
+      color: #ffffff !important;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.65rem 1.6rem;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 4px 5px 12px rgba(238, 126, 97, 0.4),
+        inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.7);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+      mat-icon {
+        font-size: 1.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 5px 7px 15px rgba(238, 126, 97, 0.5),
+          inset 1.5px 1.5px 3px #ffffff;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+
+    .btn-dialog-cancel {
+      background-color: var(--bg-card) !important;
+      color: var(--text-muted) !important;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 20px;
+      border: 1.5px solid rgba(255, 255, 255, 0.9);
+      cursor: pointer;
+      box-shadow: 3px 3px 7px rgba(188, 175, 155, 0.2),
+        -3px -3px 7px rgba(255, 255, 255, 0.95);
+      transition: all 0.2s ease;
+
+      &:hover {
+        background-color: #f6f1e8 !important;
+        color: var(--text-main) !important;
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .clay-datepicker-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .clay-input-field {
+      width: 100%;
+      cursor: pointer;
+      padding-inline-end: 2.8rem !important; // مسافة لأيقونة التقويم
+    }
+
+    .clay-picker-toggle {
+      position: absolute;
+      left: 8px; // في وضع RTL ستكون الأيقونة جهة اليسار
+      color: var(--icon-active, #446860);
+
+      ::ng-deep .mat-mdc-icon-button {
+        width: 32px;
+        height: 32px;
+        padding: 4px;
+      }
+    }
+  }
+}

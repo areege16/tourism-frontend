@@ -1,0 +1,106 @@
+<div class="clay-dialog" dir="rtl">
+  
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon butter">
+        <mat-icon>edit_location_alt</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل بيانات المواطن</h2>
+        <p class="dialog-subtitle" *ngIf="citizen">سجل رقم #{{ citizen.citizenID }}</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="state-container" *ngIf="isLoading">
+    <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+    <span>جاري جلب أحدث بيانات المواطن...</span>
+  </div>
+
+  <!-- Body -->
+  <div class="clay-dialog-body" [formGroup]="editForm" *ngIf="!isLoading && citizen">
+
+    <!-- كارت البيانات الأساسية -->
+    <div class="static-info-card">
+      <div class="static-avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <div class="static-meta">
+        <strong>{{ citizen.fullName }}</strong>
+        <div class="static-badges">
+          <span class="id-tag">
+            <mat-icon>fingerprint</mat-icon>
+            {{ citizen.nationalID }}
+          </span>
+          <span class="requests-tag" *ngIf="citizen.requestsCount !== undefined">
+            <mat-icon>gavel</mat-icon>
+            {{ citizen.requestsCount }} محاضر
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- شبكة حقول التعديل -->
+    <div class="form-inputs-grid">
+      
+      <!-- المحافظة -->
+      <div class="input-group">
+        <label>المحافظة <span class="req">*</span></label>
+        <mat-select formControlName="governorateID" placeholder="اختر المحافظة" class="clay-select-field"
+          (selectionChange)="onGovernorateChange($event.value)">
+          <mat-option *ngFor="let gov of governorates" [value]="gov.governorateID">
+            {{ gov.governorateName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- المركز / الحي -->
+      <div class="input-group">
+        <label>المركز / الحي <span class="req">*</span></label>
+        <mat-select formControlName="regionID" placeholder="اختر المركز" class="clay-select-field"
+          (selectionChange)="onRegionChange($event.value)">
+          <mat-option *ngFor="let reg of regions" [value]="reg.regionID">
+            {{ reg.regionName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- القرية / المنطقة -->
+      <div class="input-group">
+        <label>القرية / المنطقة</label>
+        <mat-select formControlName="areaID" placeholder="اختر القرية" class="clay-select-field">
+          <mat-option [value]="null">-- بدون تحديد --</mat-option>
+          <mat-option *ngFor="let area of areas" [value]="area.areaID">
+            {{ area.areaName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- تفاصيل العنوان -->
+      <div class="input-group full-width">
+        <label>تفاصيل العنوان <span class="req">*</span></label>
+        <textarea formControlName="addressDetails" rows="3" class="clay-input-field textarea-field"
+          placeholder="أدخل الشارع / المعلم المميز / رقم العقار..."></textarea>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="clay-dialog-actions" *ngIf="!isLoading">
+    <button class="btn-dialog-confirm" [disabled]="editForm.invalid || isSubmitting" (click)="onSubmit()" type="button">
+      <mat-icon>{{ isSubmitting ? 'sync' : 'check' }}</mat-icon>
+      {{ isSubmitting ? 'جاري الحفظ...' : 'حفظ التعديلات' }}
+    </button>
+    <button class="btn-dialog-cancel" (click)="onClose()" type="button">
+      إلغاء
+    </button>
+  </div>
+
+</div>

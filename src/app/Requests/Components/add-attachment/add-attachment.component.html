@@ -1,0 +1,153 @@
+<div class="clay-dialog" dir="rtl">
+  <!-- رأس النافذة -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>cloud_upload</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">استكمال المستندات المطلوبة</h2>
+        <p class="dialog-subtitle">طلب رقم #{{ requestId }}</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- جسم النافذة -->
+  <div class="clay-dialog-body">
+    
+    <!-- قسم السكانر العلوي -->
+    <div class="ocr-section-card">
+      <div class="section-top-bar">
+        <div class="section-title">
+          <div class="title-icon">
+            <mat-icon>scanner</mat-icon>
+          </div>
+          <div>
+            <h3>المرفقات والمسح الضوئي</h3>
+            <p>اسحب المستندات الممسوحة ضوئياً وقم بتعيينها لكل نوع ناقص</p>
+          </div>
+        </div>
+
+        <button 
+          type="button" 
+          class="btn-scanner-load" 
+          (click)="loadLatestScanBatch()" 
+          [disabled]="isLoadingScan">
+          <mat-icon [class.spin-icon]="isLoadingScan">{{ isLoadingScan ? 'sync' : 'cloud_download' }}</mat-icon>
+          <span>{{ isLoadingScan ? 'جاري السحب...' : 'تحميل آخر سكان' }}</span>
+        </button>
+      </div>
+
+      <!-- شريط تعيين ترتيب أوراق السكانر المجلوبة -->
+      <div class="scanner-mapping-bar" *ngIf="scannedBatchFiles && scannedBatchFiles.length > 0">
+        <div class="mapping-title">
+          <mat-icon>tune</mat-icon>
+          <span>تم سحب ({{ scannedBatchFiles.length }}) أوراق — حدد نوع كل مستند:</span>
+        </div>
+
+        <div class="mapping-cards-container">
+          <div class="mapping-card" *ngFor="let file of scannedBatchFiles; let i = index">
+            <div class="mapping-img-wrapper" (click)="openZoom(scannedBatchPreviews[i], 'ورقة سكانر رقم ' + (i + 1))">
+              <img [src]="scannedBatchPreviews[i]" alt="ورقة سكانر" />
+              <span class="sheet-number">ورقة {{ i + 1 }}</span>
+              <div class="zoom-hover"><mat-icon>zoom_in</mat-icon></div>
+            </div>
+
+            <div class="mapping-action">
+              <label>تعيين كـ:</label>
+              <mat-select 
+                placeholder="اختر النوع" 
+                class="clay-input-field clay-select-sm"
+                (selectionChange)="assignScannedFileToType(i, $event.value)">
+                <mat-option *ngFor="let doc of availableMissingTypes" [value]="doc.id">
+                  {{ doc.label }}
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- قائمة المستندات الناقصة الحالية -->
+    <div class="missing-upload-list">
+      <ng-container *ngFor="let typeId of missingTypeIds">
+        <div class="upload-row-clay" [ngClass]="attachmentConfig[typeId]?.color || 'mint'">
+
+          <div class="row-info">
+            <div class="thumb-wrapper" *ngIf="previewUrls[typeId]" (click)="openZoom(previewUrls[typeId], attachmentConfig[typeId]?.title || '')">
+              <img [src]="previewUrls[typeId]" alt="مستند" />
+              <div class="thumb-zoom"><mat-icon>zoom_in</mat-icon></div>
+            </div>
+
+            <div class="row-icon" *ngIf="!previewUrls[typeId]">
+              <mat-icon>{{ attachmentConfig[typeId]?.icon || 'attachment' }}</mat-icon>
+            </div>
+
+            <div>
+              <h4>{{ attachmentConfig[typeId]?.title }}</h4>
+              <span class="file-status" *ngIf="selectedFiles[typeId]">
+                <mat-icon>check_circle</mat-icon>
+                {{ selectedFiles[typeId].name }} ({{ (selectedFiles[typeId].size / 1024) | number:'1.0-0' }} KB)
+              </span>
+              <span class="file-status not-selected" *ngIf="!selectedFiles[typeId]">
+                لم يتم تعيين أو اختيار ملف بعد
+              </span>
+            </div>
+          </div>
+
+          <div class="row-actions">
+            <input 
+              type="file" 
+              #fileInput 
+              style="display: none" 
+              accept="image/*,.pdf" 
+              (change)="onFileChange(typeId, $event)" 
+            />
+
+            <button *ngIf="!selectedFiles[typeId]" type="button" class="btn-choose" (click)="fileInput.click()">
+              <mat-icon>attach_file</mat-icon>
+              اختيار ملف
+            </button>
+
+            <button *ngIf="selectedFiles[typeId]" type="button" class="btn-remove" (click)="removeFile(typeId)">
+              <mat-icon>delete</mat-icon>
+              إلغاء
+            </button>
+          </div>
+
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+
+  <!-- الفوتر -->
+  <div class="clay-dialog-actions">
+    <button class="btn-dialog-confirm" [disabled]="!hasSelectedAnyFile() || isSubmitting" (click)="onSubmit()" type="button">
+      <mat-icon>check</mat-icon>
+      {{ isSubmitting ? 'جاري الحفظ...' : 'حفظ ومتابعة' }}
+    </button>
+    <button class="btn-dialog-cancel" (click)="onClose()" type="button">
+      إلغاء
+    </button>
+  </div>
+</div>
+
+<!-- نافذة تكبير الصورة (Lightbox Modal) -->
+<div class="image-lightbox-modal" *ngIf="zoomedImageSrc" (click)="closeZoom()">
+  <div class="lightbox-container" (click)="$event.stopPropagation()">
+    <div class="lightbox-header">
+      <span class="lightbox-title">{{ zoomedImageTitle }}</span>
+      <button type="button" class="btn-close-lightbox" (click)="closeZoom()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <div class="lightbox-body">
+      <img [src]="zoomedImageSrc" [alt]="zoomedImageTitle" />
+    </div>
+  </div>
+</div>

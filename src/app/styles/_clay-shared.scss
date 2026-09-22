@@ -1,0 +1,91 @@
+// Claymorphism Reusable Helpers
+.clay-stat-card {
+  border-radius: 24px;
+  padding: 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: var(--clay-card-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  .stat-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+                2px 2px 5px rgba(0, 0, 0, 0.05);
+
+    mat-icon {
+      font-size: 1.4rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      color: var(--text-main);
+    }
+  }
+
+  .stat-title {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 0.35rem;
+  }
+
+  .stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1.1;
+  }
+
+  .stat-badge {
+    margin-top: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.55);
+    color: var(--icon-active);
+  }
+
+  // Pastel Color Variants
+  &.mint { background-color: var(--pastel-mint); }
+  &.peach { background-color: var(--pastel-peach); }
+  &.butter { background-color: var(--pastel-butter); }
+  &.periwinkle { background-color: var(--pastel-periwinkle); }
+  &.mauve { background-color: var(--pastel-mauve); }
+}
+
+// Clay Input Control
+.clay-input-field {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 18px;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  outline: none;
+  font-family: inherit;
+  box-shadow: inset 2px 2px 5px rgba(188, 175, 155, 0.2),
+              inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--text-muted);
+  }
+
+  &:focus {
+    border-color: var(--pastel-mint);
+  }
+}

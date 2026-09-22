@@ -1,0 +1,280 @@
+<div class="requests-page-container" dir="rtl">
+
+  <!-- 1. Stats Grid -->
+  <div class="stats-grid">
+    <div class="clay-stat-card periwinkle">
+      <div class="stat-icon-wrapper">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <span class="stat-title">إجمالي المحاضر</span>
+      <span class="stat-value">{{ totalCount }}</span>
+      <span class="stat-badge">سجلات النظام</span>
+    </div>
+
+    <div class="clay-stat-card mint">
+      <div class="stat-icon-wrapper">
+        <mat-icon>task_alt</mat-icon>
+      </div>
+      <span class="stat-title">محاضر مكتملة</span>
+      <span class="stat-value">{{ completedCount }}</span>
+      <span class="stat-badge">منفذة</span>
+    </div>
+
+    <div class="clay-stat-card peach">
+      <div class="stat-icon-wrapper">
+        <mat-icon>pending_actions</mat-icon>
+      </div>
+      <span class="stat-title">قيد الإجراء</span>
+      <span class="stat-value">{{ pendingCount }}</span>
+      <span class="stat-badge">تحت المتابعة</span>
+    </div>
+
+    <div class="clay-stat-card butter">
+      <div class="stat-icon-wrapper">
+        <mat-icon>map</mat-icon>
+      </div>
+      <span class="stat-title">المحافظات النشطة</span>
+      <span class="stat-value">{{ governorates.length }}</span>
+      <span class="stat-badge">تغطية جغرافية</span>
+    </div>
+  </div>
+
+  <!-- 2. Filter Card -->
+  <div class="filter-card">
+    <div class="filter-header">
+      <div class="title-with-icon">
+        <mat-icon>filter_alt</mat-icon>
+        <h3>بحث وفلترة محاضر الإيقاف</h3>
+      </div>
+      <button class="btn-clear" (click)="clearFilters()">
+        <mat-icon>restart_alt</mat-icon>
+        <span>إعادة تعيين</span>
+      </button>
+      <button class="btn-clear" (click)="createRequest()">
+        <mat-icon>add</mat-icon>
+        <span>إنشاء طلب جديد</span>
+      </button>
+    </div>
+
+    <form [formGroup]="searchForm" class="filters-grid">
+
+      <!-- بحث نصي عام -->
+      <div class="input-group">
+        <label>بحث عام</label>
+        <input type="text" formControlName="searchText" placeholder="الاسم / القرار / المحضر..."
+          class="clay-input-field" />
+      </div>
+
+      <!-- الرقم القومي -->
+      <div class="input-group">
+        <label>الرقم القومي</label>
+        <input type="text" formControlName="nationalID" placeholder="14 رقم..." maxlength="14"
+          class="clay-input-field" />
+      </div>
+
+      <!-- المحافظة -->
+      <div class="input-group">
+        <label>المحافظة</label>
+        <mat-select formControlName="governorateID" placeholder="اختر المحافظة"
+          class="clay-input-field clay-select-override" (selectionChange)="onGovernorateChange($event.value)">
+          <div class="select-search-header" (click)="$event.stopPropagation()">
+            <mat-icon>search</mat-icon>
+            <input [formControl]="govSearchCtrl" placeholder="بحث في المحافظات..." class="inner-search-input" />
+          </div>
+          <mat-option [value]="null">الكل</mat-option>
+          <mat-option *ngFor="let g of filteredGovernorates" [value]="g.governorateID">
+            {{ g.governorateName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- المركز / الحي -->
+      <div class="input-group">
+        <label>المركز / الحي</label>
+        <mat-select formControlName="regionID" placeholder="اختر المركز" class="clay-input-field clay-select-override"
+          (selectionChange)="onRegionChange($event.value)">
+          <div class="select-search-header" (click)="$event.stopPropagation()">
+            <mat-icon>search</mat-icon>
+            <input [formControl]="regionSearchCtrl" placeholder="بحث في المراكز..." class="inner-search-input" />
+          </div>
+          <mat-option [value]="null">الكل</mat-option>
+          <mat-option *ngFor="let r of filteredRegions" [value]="r.regionID">
+            {{ r.regionName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- القرية / المنطقة -->
+      <div class="input-group">
+        <label>القرية / المنطقة</label>
+        <mat-select formControlName="areaID" placeholder="اختر القرية" class="clay-input-field clay-select-override">
+          <div class="select-search-header" (click)="$event.stopPropagation()">
+            <mat-icon>search</mat-icon>
+            <input [formControl]="areaSearchCtrl" placeholder="بحث في القرى..." class="inner-search-input" />
+          </div>
+          <mat-option [value]="null">الكل</mat-option>
+          <mat-option *ngFor="let a of filteredAreas" [value]="a.areaID">
+            {{ a.areaName }}
+          </mat-option>
+        </mat-select>
+      </div>
+
+      <!-- حالة الطلب -->
+      <div class="input-group">
+        <label>حالة الاكتمال</label>
+        <mat-select formControlName="isCompleted" placeholder="الكل" class="clay-input-field clay-select-override">
+          <mat-option [value]="null">الكل</mat-option>
+          <mat-option [value]="true">مكتمل</mat-option>
+          <mat-option [value]="false">قيد الإجراء</mat-option>
+        </mat-select>
+      </div>
+
+      <!-- من تاريخ -->
+      <div class="input-group">
+        <label>من تاريخ</label>
+        <input type="date" formControlName="fromDate" class="clay-input-field" />
+      </div>
+
+      <!-- إلى تاريخ -->
+      <div class="input-group">
+        <label>إلى تاريخ</label>
+        <input type="date" formControlName="toDate" class="clay-input-field" />
+      </div>
+
+    </form>
+  </div>
+
+  <!-- 3. Table Card -->
+  <div class="table-card">
+    <div class="table-scroll-container">
+      <table mat-table [dataSource]="requests" class="clay-table">
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="requestID">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let row" class="bold-cell">{{ row.requestID }}</td>
+        </ng-container>
+
+        <!-- Citizen Name -->
+        <ng-container matColumnDef="citizenName">
+          <th mat-header-cell *matHeaderCellDef>اسم المواطن</th>
+          <td mat-cell *matCellDef="let row">{{ row.citizenName }}</td>
+        </ng-container>
+
+        <!-- National ID -->
+        <ng-container matColumnDef="nationalID">
+          <th mat-header-cell *matHeaderCellDef>الرقم القومي</th>
+          <td mat-cell *matCellDef="let row" class="mono-cell">{{ row.nationalID }}</td>
+        </ng-container>
+
+        <!-- Stop Decision No -->
+        <ng-container matColumnDef="stopDecisionNo">
+          <th mat-header-cell *matHeaderCellDef>قرار الإيقاف</th>
+          <td mat-cell *matCellDef="let row">{{ row.stopDecisionNo }}</td>
+        </ng-container>
+
+        <!-- Stop Decision Date -->
+        <ng-container matColumnDef="stopDecisionDate">
+          <th mat-header-cell *matHeaderCellDef>تاريخ الإيقاف</th>
+          <td mat-cell *matCellDef="let row">{{ row.stopDecisionDate | date:'yyyy/MM/dd' }}</td>
+        </ng-container>
+
+        <!-- Report No -->
+        <ng-container matColumnDef="reportNo">
+          <th mat-header-cell *matHeaderCellDef>رقم المحضر</th>
+          <td mat-cell *matCellDef="let row">{{ row.reportNo }}</td>
+        </ng-container>
+
+        <!-- Report Date -->
+        <ng-container matColumnDef="reportDate">
+          <th mat-header-cell *matHeaderCellDef>تاريخ المحضر</th>
+          <td mat-cell *matCellDef="let row">{{ row.reportDate | date:'yyyy/MM/dd' }}</td>
+        </ng-container>
+
+        <!-- Announcement Date -->
+        <ng-container matColumnDef="announcementDate">
+          <th mat-header-cell *matHeaderCellDef>تاريخ الإعلان</th>
+          <td mat-cell *matCellDef="let row">{{ row.announcementDate | date:'yyyy/MM/dd' }}</td>
+        </ng-container>
+
+        <!-- Status -->
+        <ng-container matColumnDef="isCompleted">
+          <th mat-header-cell *matHeaderCellDef>حالة الطلب / النواقص</th>
+          <td mat-cell *matCellDef="let row">
+
+            <!-- حالة مكتمل -->
+            <div *ngIf="row.isCompleted" class="status-badge completed">
+              <mat-icon>check_circle</mat-icon>
+              <span>مكتمل المستندات</span>
+            </div>
+
+            <!-- حالة قيد الإجراء مع النواقص المحملة عبر الـ requestId -->
+            <div *ngIf="!row.isCompleted" class="status-pending-container">
+              <div class="status-badge pending">
+                <mat-icon>hourglass_empty</mat-icon>
+                <span>قيد الإجراء</span>
+              </div>
+
+              <!-- عرض المرفقات الناقصة -->
+              <div class="missing-tags" *ngIf="missingAttachmentsMap[row.requestID]?.length">
+                <span class="missing-label">ناقص:</span>
+                <span class="missing-badge" *ngFor="let item of missingAttachmentsMap[row.requestID]">
+                  {{ item }}
+                </span>
+              </div>
+            </div>
+
+          </td>
+        </ng-container>
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="action-buttons-group">
+
+              <!-- زر عرض التفاصيل -->
+              <button class="icon-btn view" title="عرض التفاصيل" (click)="openRequestDetails(row.requestID)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+
+              <button *ngIf="!row.isCompleted" class="icon-btn upload" title="إرفاق المستندات"
+                (click)="addMissingAttachments(row.requestID)">
+                <mat-icon>cloud_upload</mat-icon>
+              </button>
+
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row empty-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div class="empty-state">
+              <mat-icon>folder_off</mat-icon>
+              <p>لا توجد محاضر مطابقة للبحث</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Pagination Footer -->
+    <div class="pagination-footer">
+      <span class="total-badge">إجمالي النتائج: {{ totalCount }}</span>
+
+      <div class="page-controls">
+        <button class="page-btn" [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <span class="page-indicator">{{ currentPage }} / {{ totalPages || 1 }}</span>
+        <button class="page-btn" [disabled]="currentPage === totalPages || totalPages === 0"
+          (click)="changePage(currentPage + 1)">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

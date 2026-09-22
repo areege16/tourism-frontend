@@ -1,0 +1,295 @@
+<div class="dashboard-clay-container" dir="rtl">
+
+  <!-- 1. شريط الفلاتر والبحث التفاعلي -->
+  <section class="clay-card filter-bar-card" [formGroup]="filterForm">
+    <div class="filter-header">
+      <div class="title-wrap">
+        <mat-icon>query_stats</mat-icon>
+        <h3>لوحة مؤشرات وإحصائيات محاضر الإيقاف والإزالة</h3>
+      </div>
+      <button type="button" class="btn-clear" (click)="resetFilters()" matTooltip="إعادة تعيين الفلاتر">
+        <mat-icon>refresh</mat-icon>
+        <span>تفريغ الفلاتر</span>
+      </button>
+    </div>
+
+    <div class="filters-grid">
+      <div class="input-group">
+        <label>من تاريخ</label>
+        <div class="clay-datepicker-wrapper">
+          <input matInput [matDatepicker]="pickerFrom" formControlName="fromDate"
+            placeholder="يوم / شهر / سنة" class="clay-input-field" (dateChange)="applyFilters()" readonly (click)="pickerFrom.open()" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFrom" class="clay-picker-toggle"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>إلى تاريخ</label>
+        <div class="clay-datepicker-wrapper">
+          <input matInput [matDatepicker]="pickerTo" formControlName="toDate"
+            placeholder="يوم / شهر / سنة" class="clay-input-field" (dateChange)="applyFilters()" readonly (click)="pickerTo.open()" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerTo" class="clay-picker-toggle"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>المحافظة</label>
+        <mat-select formControlName="governorateID" placeholder="جميع المحافظات" class="clay-select-field"
+          (selectionChange)="onGovernorateChange($event.value)">
+          <mat-option [value]="null">-- الكل --</mat-option>
+          <mat-option *ngFor="let g of governorates" [value]="g.governorateID">{{ g.governorateName }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="input-group">
+        <label>المركز / الحي</label>
+        <mat-select formControlName="regionID" placeholder="جميع المراكز" class="clay-select-field"
+          (selectionChange)="onRegionChange($event.value)">
+          <mat-option [value]="null">-- الكل --</mat-option>
+          <mat-option *ngFor="let r of regions" [value]="r.regionID">{{ r.regionName }}</mat-option>
+        </mat-select>
+      </div>
+
+      <div class="input-group">
+        <label>القرية / المنطقة</label>
+        <mat-select formControlName="areaID" placeholder="جميع القرى" class="clay-select-field"
+          (selectionChange)="applyFilters()">
+          <mat-option [value]="null">-- الكل --</mat-option>
+          <mat-option *ngFor="let a of areas" [value]="a.areaID">{{ a.areaName }}</mat-option>
+        </mat-select>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. كروت الملخص العلوي (Summary KPI Cards) -->
+  <section class="stats-summary-grid" *ngIf="dashboardData?.summary as s">
+    <div class="clay-stat-card periwinkle">
+      <div class="stat-icon-wrapper"><mat-icon>inventory_2</mat-icon></div>
+      <span class="stat-title">إجمالي المحاضر المسجلة</span>
+      <span class="stat-value">{{ s.totalRequests | number }}</span>
+      <span class="stat-badge">سجلات النظام بالكامل</span>
+    </div>
+
+    <div class="clay-stat-card mint">
+      <div class="stat-icon-wrapper"><mat-icon>task_alt</mat-icon></div>
+      <span class="stat-title">المحاضر المكتملة</span>
+      <span class="stat-value">{{ s.completedRequests | number }}</span>
+      <span class="stat-badge completed">{{ s.completionPercentage }}% نسبة الاكتمال</span>
+    </div>
+
+    <div class="clay-stat-card peach">
+      <div class="stat-icon-wrapper"><mat-icon>pending_actions</mat-icon></div>
+      <span class="stat-title">محاضر قيد الإجراء (نواقص)</span>
+      <span class="stat-value">{{ s.incompleteRequests | number }}</span>
+      <span class="stat-badge pending">{{ s.incompletePercentage }}% بحاجة لاستكمال</span>
+    </div>
+  </section>
+
+  <!-- 3. قسم الرسوم البيانية التفاعلية (Interactive Charts) -->
+  <section class="dashboard-charts-grid" *ngIf="dashboardData">
+    <!-- الرسم الخطي للنشاط اليومي -->
+    <div class="clay-card chart-card large">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-mint">insights</mat-icon>
+          <h4>معدل التسجيل اليومي للمحاضر</h4>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="lineChartType"></canvas>
+      </div>
+    </div>
+
+    <!-- الرسم الدائري لنسبة الإنجاز -->
+    <div class="clay-card chart-card small">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-peach">pie_chart</mat-icon>
+          <h4>نسبة حالة المستندات</h4>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="doughnutChartType"></canvas>
+      </div>
+    </div>
+
+    <!-- الرسم العمودي للمراكز الأكثر تسجيلاً -->
+    <div class="clay-card chart-card full-width">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-butter">bar_chart</mat-icon>
+          <h4>مقارنة المراكز (المكتمل مقابل المعلق)</h4>
+        </div>
+      </div>
+      <div class="chart-wrapper">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. شبكة الجداول والمؤشرات الميدانية -->
+  <div class="dashboard-tables-grid" *ngIf="dashboardData">
+
+    <!-- كارت إحصائيات المراكز والمدن -->
+    <div class="clay-card section-table-card">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-mint">holiday_village</mat-icon>
+          <h4>توزيع المحاضر حسب المراكز</h4>
+        </div>
+        <span class="count-tag">{{ dashboardData.byRegion.length }} مركز</span>
+      </div>
+
+      <div class="table-container">
+        <table class="clay-inner-table">
+          <thead>
+            <tr>
+              <th>المركز</th>
+              <th>الإجمالي</th>
+              <th>المكتمل</th>
+              <th>المعلق</th>
+              <th>نسبة الإنجاز</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reg of dashboardData.byRegion">
+              <td><strong>{{ reg.name }}</strong></td>
+              <td>{{ reg.totalRequests }}</td>
+              <td class="text-mint">{{ reg.completedRequests }}</td>
+              <td class="text-peach">{{ reg.incompleteRequests }}</td>
+              <td>
+                <div class="progress-wrapper">
+                  <div class="progress-bar-track">
+                    <div class="progress-bar-fill" [style.width.%]="reg.completionPercentage"></div>
+                  </div>
+                  <span class="pct-txt">{{ reg.completionPercentage }}%</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- كارت التوزيع الجغرافي بالقرى والمناطق -->
+    <div class="clay-card section-table-card">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-butter">pin_drop</mat-icon>
+          <h4>توزيع المحاضر حسب القرى والوحدات المحلية</h4>
+        </div>
+        <span class="count-tag">{{ dashboardData.byArea.length }} قرية</span>
+      </div>
+
+      <div class="table-container">
+        <table class="clay-inner-table">
+          <thead>
+            <tr>
+              <th>القرية / المنطقة</th>
+              <th>الإجمالي</th>
+              <th>المكتمل</th>
+              <th>المعلق</th>
+              <th>نسبة الإنجاز</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let area of dashboardData.byArea">
+              <td><strong>{{ area.name }}</strong></td>
+              <td>{{ area.totalRequests }}</td>
+              <td class="text-mint">{{ area.completedRequests }}</td>
+              <td class="text-peach">{{ area.incompleteRequests }}</td>
+              <td>
+                <div class="progress-wrapper">
+                  <div class="progress-bar-track">
+                    <div class="progress-bar-fill" [style.width.%]="area.completionPercentage"></div>
+                  </div>
+                  <span class="pct-txt">{{ area.completionPercentage }}%</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- كارت النشاط الزمني اليومي -->
+    <div class="clay-card section-table-card">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-peach">calendar_month</mat-icon>
+          <h4>التسجيل اليومي للمحاضر</h4>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="clay-inner-table">
+          <thead>
+            <tr>
+              <th>التاريخ</th>
+              <th>المسجل اليومي</th>
+              <th>مكتمل</th>
+              <th>معلق</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of dashboardData.byDate">
+              <td><strong>{{ d.date | date:'yyyy/MM/dd' }}</strong></td>
+              <td><span class="badge-num total">{{ d.totalRequests }}</span></td>
+              <td><span class="badge-num done">{{ d.completedRequests }}</span></td>
+              <td><span class="badge-num wait">{{ d.incompleteRequests }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- كارت أداء الموظفين ومدخلي البيانات -->
+    <div class="clay-card section-table-card">
+      <div class="card-title-bar">
+        <div class="t-title">
+          <mat-icon class="icon-mint">badge</mat-icon>
+          <h4>إنتاجية مدخلي البيانات</h4>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="clay-inner-table">
+          <thead>
+            <tr>
+              <th>اسم الموظف</th>
+              <th>الإجمالي</th>
+              <th>مكتمل</th>
+              <th>معلق</th>
+              <th>نسبة الإنجاز</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let u of dashboardData.byUser">
+              <td>
+                <div class="user-meta">
+                  <strong>{{ u.fullName || u.userName }}</strong>
+                  <small>{{ u.userName }}</small>
+                </div>
+              </td>
+              <td>{{ u.totalRequests }}</td>
+              <td class="text-mint">{{ u.completedRequests }}</td>
+              <td class="text-peach">{{ u.incompleteRequests }}</td>
+              <td>
+                <div class="progress-wrapper">
+                  <div class="progress-bar-track">
+                    <div class="progress-bar-fill" [style.width.%]="u.completionPercentage"></div>
+                  </div>
+                  <span class="pct-txt">{{ u.completionPercentage }}%</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>

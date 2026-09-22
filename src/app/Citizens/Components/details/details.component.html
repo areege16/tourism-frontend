@@ -1,0 +1,113 @@
+<div class="clay-dialog" dir="rtl">
+  
+  <!-- رأس النافذة -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon mint">
+        <mat-icon>badge</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">بطاقة بيانات المواطن</h2>
+        <p class="dialog-subtitle" *ngIf="citizenData">سجل رقم #{{ citizenData.citizenID }}</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- جسم النافذة -->
+  <div class="clay-dialog-body">
+
+    <!-- حالة التحميل -->
+    <div class="state-container" *ngIf="isLoading">
+      <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+      <span>جاري تحميل البيانات...</span>
+    </div>
+
+    <!-- بطاقة البيانات -->
+    <div class="citizen-profile-content" *ngIf="!isLoading && citizenData">
+      
+      <!-- الكارت العلوي للمواطن -->
+      <div class="profile-hero-card">
+        <div class="avatar-box">
+          <mat-icon>person</mat-icon>
+        </div>
+        <div class="hero-info">
+          <h3>{{ citizenData.fullName }}</h3>
+          <div class="hero-tags">
+            <span class="id-tag">
+              <mat-icon>fingerprint</mat-icon>
+              {{ citizenData.nationalID }}
+            </span>
+            <span class="requests-badge" [class.has-reqs]="citizenData.requestsCount > 0">
+              <mat-icon>gavel</mat-icon>
+              {{ citizenData.requestsCount }} محاضر مسجلة
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- شبكة التفاصيل -->
+      <div class="details-section-grid">
+
+        <div class="clay-info-tile">
+          <div class="tile-icon peach">
+            <mat-icon>location_city</mat-icon>
+          </div>
+          <div class="tile-text">
+            <label>المحافظة</label>
+            <strong>{{ citizenData.governorateName || '—' }}</strong>
+          </div>
+        </div>
+
+        <div class="clay-info-tile">
+          <div class="tile-icon butter">
+            <mat-icon>holiday_village</mat-icon>
+          </div>
+          <div class="tile-text">
+            <label>المركز / الحي</label>
+            <strong>{{ citizenData.regionName || '—' }}</strong>
+          </div>
+        </div>
+
+        <div class="clay-info-tile">
+          <div class="tile-icon mint">
+            <mat-icon>pin_drop</mat-icon>
+          </div>
+          <div class="tile-text">
+            <label>القرية / المنطقة</label>
+            <strong>{{ citizenData.areaName || '—' }}</strong>
+          </div>
+        </div>
+
+        <div class="clay-info-tile full-width">
+          <div class="tile-icon periwinkle">
+            <mat-icon>home</mat-icon>
+          </div>
+          <div class="tile-text">
+            <label>العنوان بالتفصيل</label>
+            <strong>{{ citizenData.addressDetails || 'لا يوجد عنوان مسجل' }}</strong>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- حالة الخطأ / عدم وجود بيانات -->
+    <div class="state-container empty" *ngIf="!isLoading && !citizenData">
+      <mat-icon>error_outline</mat-icon>
+      <span>لم يتم العثور على بيانات المواطن المطلوب</span>
+    </div>
+
+  </div>
+
+  <!-- الفوتر -->
+  <div class="clay-dialog-actions">
+    <button class="btn-dialog-cancel" (click)="onClose()" type="button">
+      إغلاق
+    </button>
+  </div>
+
+</div>

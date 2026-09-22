@@ -1,0 +1,112 @@
+<div class="clay-layout-wrapper" dir="rtl">
+  <mat-drawer-container class="clay-drawer-container" autosize [hasBackdrop]="false">
+    
+    <mat-drawer 
+      mode="side" 
+      opened="true" 
+      position="start"
+      class="clay-sidebar-drawer"
+      [class.sidebar-collapsed]="isCollapsed"
+    >
+      <div class="sidebar-inner-content">
+        <!-- User Profile Header -->
+        <div class="sidebar-profile">
+          <div class="avatar-ring">
+            <div class="avatar-img">
+              <mat-icon>person</mat-icon>
+            </div>
+          </div>
+          <div class="user-greeting" *ngIf="!isCollapsed">
+            <span>مرحباً،</span>
+            <h4>{{ userName }} 👋</h4>
+          </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="sidebar-nav">
+          <ul class="nav-list">
+            <li *ngFor="let item of navItems" class="nav-item">
+              <a
+                [routerLink]="item.route"
+                routerLinkActive="active-link"
+                [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+                class="nav-link"
+                [matTooltip]="isCollapsed ? item.label : ''"
+                matTooltipPosition="left"
+              >
+                <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+                <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- Bottom Action / Logout Button -->
+        <div class="sidebar-footer" [class.mini-footer]="isCollapsed">
+          <ng-container *ngIf="!isCollapsed">
+            <div class="footer-card">
+              <div class="footer-icon-wrapper">
+                <mat-icon>verified</mat-icon>
+              </div>
+              <h5>نظام الأرشفة المعتمد</h5>
+              <p>محاضر إزالات المحافظة الإلكترونية</p>
+              <button type="button" class="action-btn" (click)="logout()">
+                <span>تسجيل الخروج</span>
+              </button>
+            </div>
+          </ng-container>
+
+          <button 
+            *ngIf="isCollapsed" 
+            type="button" 
+            class="mini-logout-btn" 
+            (click)="logout()"
+            matTooltip="تسجيل الخروج"
+            matTooltipPosition="left"
+          >
+            <mat-icon>logout</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-drawer>
+
+    <!-- Main Viewport that expands smoothly -->
+    <mat-drawer-content class="clay-drawer-content">
+      <div class="clay-main-container">
+        
+        <header class="clay-topbar">
+          <div class="topbar-right-group">
+            <button 
+              type="button" 
+              class="clay-icon-button toggle-btn" 
+              (click)="toggleDrawer()" 
+              aria-label="تبديل القائمة"
+            >
+              <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+            </button>
+            <div class="topbar-title">
+              <h1>لوحة التحكم</h1>
+            </div>
+          </div>
+
+     
+
+          <div class="topbar-actions">
+            <button type="button" class="clay-icon-button badge-btn" aria-label="الإشعارات">
+              <mat-icon>notifications_none</mat-icon>
+              <span class="notification-dot">3</span>
+            </button>
+            <button type="button" class="clay-icon-button" aria-label="الملف الشخصي">
+              <mat-icon>account_circle</mat-icon>
+            </button>
+          </div>
+        </header>
+
+        <main class="clay-page-content">
+          <router-outlet></router-outlet>
+        </main>
+      </div>
+    </mat-drawer-content>
+
+  </mat-drawer-container>
+</div>

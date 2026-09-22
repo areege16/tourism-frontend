@@ -1,0 +1,98 @@
+<div class="clay-dialog" dir="rtl">
+
+    <!-- رأس النافذة -->
+    <div class="clay-dialog-header">
+        <div class="header-title-group">
+            <div class="dialog-header-icon periwinkle">
+                <mat-icon>person_add</mat-icon>
+            </div>
+            <div>
+                <h2 class="dialog-title">تسجيل مستخدم جديد</h2>
+                <p class="dialog-subtitle">إنشاء حساب وإسناد الصلاحية في منظومة المتغيرات المكانية والمخالفات</p>
+            </div>
+        </div>
+        <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <!-- جسم النافذة -->
+    <div class="clay-dialog-body" [formGroup]="registerForm">
+        <div class="form-inputs-grid">
+
+            <!-- الاسم بالكامل -->
+            <div class="input-group full-width">
+                <label>الاسم بالكامل <span class="req">*</span></label>
+                <input type="text" formControlName="fullName" placeholder="أدخل الاسم ثلاثي أو رباعي..."
+                    class="clay-input-field" />
+                <span class="field-error"
+                    *ngIf="registerForm.get('fullName')?.touched && registerForm.get('fullName')?.errors?.['required']">
+                    الاسم بالكامل مطلوب
+                </span>
+            </div>
+
+            <!-- اسم المستخدم (User Name) -->
+            <div class="input-group">
+                <label>اسم المستخدم (User Name) <span class="req">*</span></label>
+                <input type="text" formControlName="userName" placeholder="مثال: mahmoud.k" class="clay-input-field" />
+                <span class="field-error"
+                    *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.errors?.['required']">
+                    اسم المستخدم مطلوب
+                </span>
+                <span class="field-error"
+                    *ngIf="registerForm.get('userName')?.touched && registerForm.get('userName')?.errors?.['pattern']">
+                    يسمح فقط بالحروف الإنجليزية والأرقام و (.) و (_)
+                </span>
+            </div>
+
+         
+            <!-- الصلاحية / الدور -->
+            <div class="input-group">
+                <label>الدور / الصلاحية <span class="req">*</span></label>
+                <mat-select formControlName="roleID" placeholder="اختر الصلاحية" class="clay-select-field">
+                    <mat-option *ngFor="let role of roles" [value]="role.id">
+                        {{ role.name }}
+                    </mat-option>
+                </mat-select>
+                <span class="field-error"
+                    *ngIf="registerForm.get('roleID')?.touched && registerForm.get('roleID')?.errors?.['required']">
+                    يرجى تحديد دور المستخدم
+                </span>
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="input-group full-width">
+                <label>كلمة المرور <span class="req">*</span></label>
+                <div class="password-input-wrapper">
+                    <input [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                        placeholder="كلمة المرور (6 خانات على الأقل)..." class="clay-input-field" />
+                    <button type="button" class="btn-toggle-eye" (click)="hidePassword = !hidePassword" tabindex="-1">
+                        <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                    </button>
+                </div>
+                <span class="field-error"
+                    *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+                    كلمة المرور مطلوبة
+                </span>
+                <span class="field-error"
+                    *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']">
+                    يجب ألا تقل كلمة المرور عن 8 أحرف
+                </span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- أزرار الإجراءات -->
+    <div class="clay-dialog-actions">
+        <button class="btn-dialog-confirm" [disabled]="registerForm.invalid || isSubmitting" (click)="onSubmit()"
+            type="button">
+            <mat-icon>{{ isSubmitting ? 'sync' : 'check' }}</mat-icon>
+            {{ isSubmitting ? 'جاري التسجيل...' : 'تسجيل المستخدم' }}
+        </button>
+        <button class="btn-dialog-cancel" (click)="onClose()" type="button">
+            إلغاء
+        </button>
+    </div>
+
+</div>

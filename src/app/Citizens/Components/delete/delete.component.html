@@ -1,0 +1,75 @@
+<div class="clay-dialog" dir="rtl">
+  
+  <!-- رأس النافذة -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>delete_forever</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تأكيد حذف المواطن</h2>
+        <p class="dialog-subtitle">سجل رقم #{{ citizen.citizenID }}</p>
+      </div>
+    </div>
+    <button class="btn-close" (click)="onClose()" type="button" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- جسم النافذة -->
+  <div class="clay-dialog-body">
+
+    <!-- رسالة التحذير -->
+    <div class="delete-warning-box">
+      <div class="warn-icon">
+        <mat-icon>warning_amber</mat-icon>
+      </div>
+      <div class="warn-text">
+        <h4>هل أنت متأكد من رغبتك في حذف هذا السجل؟</h4>
+        <p>سيتم نقل السجل إلى الأرشيف وإيقاف تفعيله مع الاحتفاظ بكافة العمليات في سجل التدقيق.</p>
+      </div>
+    </div>
+
+    <!-- كارت ملخص بيانات المواطن المراد حذفه -->
+    <div class="target-citizen-card">
+      <div class="target-avatar">
+        <mat-icon>person_remove</mat-icon>
+      </div>
+      <div class="target-meta">
+        <strong>{{ citizen.fullName }}</strong>
+        <div class="target-tags">
+          <span class="id-badge">
+            <mat-icon>fingerprint</mat-icon>
+            {{ citizen.nationalID }}
+          </span>
+          <span class="location-badge" *ngIf="citizen.regionName || citizen.governorateName">
+            <mat-icon>location_on</mat-icon>
+            {{ citizen.governorateName }} - {{ citizen.regionName }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- الفوتر وأزرار التأكيد -->
+  <div class="clay-dialog-actions">
+    <button 
+      class="btn-dialog-danger" 
+      [disabled]="isDeleting" 
+      (click)="onConfirmDelete()" 
+      type="button">
+      <mat-icon>{{ isDeleting ? 'sync' : 'delete' }}</mat-icon>
+      <span>{{ isDeleting ? 'جاري الحذف...' : 'نعم، حذف السجل' }}</span>
+    </button>
+
+    <button 
+      class="btn-dialog-cancel" 
+      [disabled]="isDeleting" 
+      (click)="onClose()" 
+      type="button">
+      إلغاء
+    </button>
+  </div>
+
+</div>

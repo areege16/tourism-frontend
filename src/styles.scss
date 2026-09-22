@@ -1,0 +1,179 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+
+@include mat.core();
+@import './app/styles/toast';
+// --- 1. Custom Palettes Definition ---
+
+// Primary: Pastel Mint (#A3CFC3)
+$custom-primary-map: (
+  50: #f3f9f7,
+  100: #e1f0ec,
+  200: #cde6e0,
+  300: #b9dcd4,
+  400: #aed5cc,
+  500: #a3cfc3, // Main Mint
+  600: #8bbfae,
+  700: #6ca895,
+  800: #446860, // Forest Sage (Sidebar & Active Icons)
+  900: #2d4640,
+  contrast: (
+    500: #3a2e2c,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+  )
+);
+
+// Accent / CTA: Vibrant Salmon (#EE7E61)
+$custom-accent-map: (
+  50: #fdf1ee,
+  100: #fbded6,
+  200: #f6c4b4, // Soft Peach
+  300: #f2a58f,
+  400: #ef8e74,
+  500: #ee7e61, // Vibrant Salmon CTA
+  600: #e86d4e,
+  700: #de573a,
+  800: #d44326,
+  900: #c12b0e,
+  contrast: (
+    500: #ffffff,
+    200: #3a2e2c,
+  )
+);
+
+// Warn Palette - 
+$custom-warn-map: (
+  50: #fde8e8,
+  100: #fad2d2, // Added for lighter hue
+  200: #f7baba,
+  300: #f4a2a2,
+  400: #f18b8b,
+  500: #e57373, // Main warn color
+  600: #d66464,
+  700: #c25353, // Added for darker hue
+  800: #ae4242,
+  900: #9a3232,
+  contrast: (
+    500: #ffffff,
+    100: #3a2e2c,
+    700: #ffffff,
+  )
+);
+
+
+$app-primary: mat.define-palette($custom-primary-map, 500, 200, 800);
+$app-accent: mat.define-palette($custom-accent-map, 500, 200, 700);
+$app-warn: mat.define-palette($custom-warn-map, 500, 100, 700);
+
+// --- 2. Theme Configuration ---
+$app-theme: mat.define-light-theme((
+  color: (
+    primary: $app-primary,
+    accent: $app-accent,
+    warn: $app-warn,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: 'Roboto, "Helvetica Neue", sans-serif',
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($app-theme);
+
+// --- 3. CSS Variables & Global Clay Tokens ---
+:root {
+  // Base & Layout
+  --bg-app: #F8F3EA;
+  --bg-sidebar: #CBD8D4;
+  --bg-card: #FFFDF9;
+
+  // Accents / Pastels
+  --pastel-peach: #F6C4B4;
+  --pastel-mint: #A3CFC3;
+  --pastel-butter: #F6D79F;
+  --pastel-periwinkle: #B9CEE2;
+  --pastel-mauve: #DCBDD7;
+
+  // CTA & Text
+  --cta-salmon: #EE7E61;
+  --text-main: #3A2E2C;
+  --text-muted: #8C817D;
+  --icon-active: #446860;
+
+  // Claymorphism Shadows
+  --clay-card-shadow: 8px 8px 18px rgba(188, 175, 155, 0.35),
+                      -6px -6px 14px rgba(255, 255, 255, 0.9);
+  --clay-card-inset: inset 2px 2px 4px rgba(255, 255, 255, 0.7),
+                     inset -2px -2px 4px rgba(188, 175, 155, 0.2);
+}
+
+// --- 4. Global Styles & Overrides ---
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+// Global Text Classes
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+p, span, .subtext {
+  color: var(--text-muted);
+}
+
+// Claymorphism Card Utility
+.clay-card {
+  background-color: var(--bg-card);
+  border-radius: 24px;
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 1.5rem;
+  transition: all 0.25s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 10px 10px 22px rgba(188, 175, 155, 0.4),
+                -8px -8px 18px rgba(255, 255, 255, 0.95);
+  }
+}
+
+// Clay Button Base
+.clay-btn-primary {
+  background-color: var(--cta-salmon) !important;
+  color: #ffffff !important;
+  border-radius: 18px !important;
+  box-shadow: 4px 4px 10px rgba(238, 126, 97, 0.4),
+              inset 1px 1px 2px rgba(255, 255, 255, 0.6) !important;
+  border: none;
+  font-weight: 600;
+}
+
+// Angular Material Components Overrides
+.mat-mdc-card {
+  border-radius: 20px !important;
+  background-color: var(--bg-card) !important;
+  box-shadow: var(--clay-card-shadow) !important;
+}
+
+.mat-drawer-container,
+.mat-sidenav-container {
+  background-color: var(--bg-app) !important;
+}
+
+.mat-drawer,
+.mat-sidenav {
+  background-color: var(--bg-sidebar) !important;
+  border-right: none !important;
+  border-radius: 0 28px 28px 0;
+}

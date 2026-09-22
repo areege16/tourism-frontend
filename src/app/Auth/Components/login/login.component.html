@@ -1,0 +1,84 @@
+<div class="login-wrapper" dir="rtl">
+  <!-- شريط التنقل العلوي -->
+  <header class="top-nav">
+    <div class="brand">
+      <span class="brand-logo"></span>
+      <span class="brand-name">منظومة الأرشفة الإلكترونية</span>
+    </div>
+    <div class="nav-actions">
+      <button type="button" class="nav-link-btn">استعراض السجلات</button>
+      <button type="button" class="nav-signup-btn">دليل الاستخدام</button>
+    </div>
+  </header>
+
+  <!-- بطاقة تسجيل الدخول الرئيسية -->
+  <main class="login-container">
+    <div class="clay-login-card">
+      <div class="card-header">
+        <h2>تسجيل الدخول</h2>
+        <p>نظام أرشفة وإدارة محاضر الإزالات والمخالفات</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
+        <!-- رسالة الخطأ -->
+        <div *ngIf="errorMessage" class="error-banner">
+          {{ errorMessage }}
+        </div>
+
+        <!-- حقل اسم المستخدم -->
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            formControlName="userName" 
+            placeholder="اسم المستخدم أو البريد الإلكتروني"
+            [class.input-error]="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid"
+          />
+        </div>
+
+        <!-- حقل كلمة المرور -->
+        <div class="input-wrapper password-field">
+          <input 
+            [type]="hidePassword ? 'password' : 'text'" 
+            formControlName="password" 
+            placeholder="كلمة المرور"
+            [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+          />
+          <button type="button" class="icon-btn" (click)="togglePasswordVisibility()" aria-label="عرض كلمة المرور">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </div>
+
+        <div class="form-actions">
+          <a href="javascript:void(0)" class="forgot-link">نسيت كلمة المرور؟</a>
+        </div>
+
+        <!-- زر الدخول -->
+        <button type="submit" class="submit-btn" [disabled]="isLoading">
+          <span *ngIf="!isLoading">دخول للمنظومة</span>
+          <span *ngIf="isLoading">جاري التحقق...</span>
+        </button>
+      </form>
+
+      <!-- فاصل الدخول السريع -->
+      <div class="divider">
+        <span>- الدخول الموحد للجهات الحكومية -</span>
+      </div>
+
+      <!-- بوابات الدخول والربط -->
+      <div class="social-actions">
+        <button type="button" class="social-btn">
+          <mat-icon class="auth-icon">verified_user</mat-icon>
+          <span>النفاذ الموحد</span>
+        </button>
+        <button type="button" class="social-btn">
+          <mat-icon class="auth-icon">account_balance</mat-icon>
+          <span>المحافظة</span>
+        </button>
+        <button type="button" class="social-btn">
+          <mat-icon class="auth-icon">domain</mat-icon>
+          <span>الشبكة الوطنية</span>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
