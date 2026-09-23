@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HotelRouteModule } from './hotel-route.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { HotelRouteModule } from './hotel-route.module';
     MatTooltipModule,
     MatDialogModule,
     MatButtonModule,
-    HotelRouteModule
+    HotelRouteModule,
+    FormsModule
   ],
   exports: [ListComponent]
 })

@@ -1,1 +1,155 @@
-<p>list works!</p>
+<div class="clay-view-container" dir="rtl">
+  <!-- Stats -->
+  <section class="stats-grid">
+    <div class="clay-stat-card mint">
+      <div class="stat-icon-wrapper">
+        <mat-icon>hotel</mat-icon>
+      </div>
+      <span class="stat-title">إجمالي الفنادق</span>
+      <span class="stat-value">{{ (hotels?.length || 0) | number }}</span>
+      <span class="stat-badge">سجل معتمد</span>
+    </div>
+  </section>
+
+  <!-- Table Card -->
+  <section class="clay-card table-card">
+    <div class="table-header">
+      <div class="title-wrap">
+        <h3>قائمة الفنادق</h3>
+        <span class="results-count">(عرض {{ filteredHotels.length }} فندق)</span>
+      </div>
+      
+      <div style="display: flex; gap: 0.75rem; align-items: center;">
+        <input 
+          type="text" 
+          class="clay-input-field" 
+          placeholder="بحث بالاسم أو السعر..." 
+          [(ngModel)]="searchTerm" 
+          (input)="applyFilter()" />
+
+        <button
+          type="button"
+          class="clay-btn-primary add-btn"
+          routerLink="create"
+        >
+          <mat-icon>add_business</mat-icon>
+          <span>إضافة فندق جديد</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-scroll-container">
+      <table mat-table [dataSource]="filteredHotels" class="clay-mat-table">
+        <!-- Index -->
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let h; let i = index">
+            <span class="idx-badge">{{ i + 1 }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Hotel Name & Image & Location Link -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>الفندق</th>
+          <td mat-cell *matCellDef="let h">
+            <div class="item-name-cell">
+              <ng-container *ngIf="h.imageUrl && !hasImageError(h.imageUrl); else noImage">
+                <img
+                  [src]="getImage(h.imageUrl)"
+                  (error)="onImageError(h.imageUrl)"
+                  class="item-thumb"
+                  [alt]="h.name?.ar || h.name?.en"
+                />
+              </ng-container>
+              <ng-template #noImage>
+                <div class="item-thumb-fallback">
+                  <mat-icon>hotel</mat-icon>
+                </div>
+              </ng-template>
+
+              <div style="display: flex; flex-direction: column; gap: 2px;">
+                <strong>{{ h.name?.ar || h.name?.en }}</strong>
+                @if (h.latitude && h.longitude) {
+                  <a 
+                    href="javascript:void(0)" 
+                    (click)="openGoogleMaps(h.latitude, h.longitude, $event)"
+                    style="color: var(--icon-active); font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 3px;"
+                    title="عرض على خرائط Google">
+                    <mat-icon style="font-size: 0.9rem; width: 0.9rem; height: 0.9rem;">location_on</mat-icon>
+                    {{ h.latitude | number:'1.2-4' }}, {{ h.longitude | number:'1.2-4' }}
+                  </a>
+                }
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Rating -->
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell *matHeaderCellDef>التقييم</th>
+          <td mat-cell *matCellDef="let h">
+            <span class="value-badge">⭐ {{ h.rating || '0.0' }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Price Range -->
+        <ng-container matColumnDef="priceRange">
+          <th mat-header-cell *matHeaderCellDef>نطاق السعر</th>
+          <td mat-cell *matCellDef="let h">
+            <span class="value-badge">{{ h.priceRange?.ar || h.priceRange?.en || 'غير محدد' }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+          <td mat-cell *matCellDef="let h">
+            <div class="action-buttons-group">
+              <button
+                type="button"
+                class="action-icon-btn view"
+                matTooltip="عرض التفاصيل"
+                [routerLink]="['details', h.id]"
+              >
+                <mat-icon>info</mat-icon>
+              </button>
+              <button
+                type="button"
+                class="action-icon-btn edit"
+                matTooltip="تعديل"
+                [routerLink]="['edit', h.id]"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                type="button"
+                class="action-icon-btn delete"
+                matTooltip="حذف"
+                (click)="onDelete(h.id)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="clay-table-row"></tr>
+
+        <!-- Loading / Empty State -->
+        <tr class="mat-row state-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div *ngIf="isLoading" class="loading-state">
+              <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+              <span>جاري تحميل بيانات الفنادق...</span>
+            </div>
+            <div *ngIf="!isLoading" class="empty-state">
+              <mat-icon>folder_off</mat-icon>
+              <span>لا توجد فنادق مسجلة</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
+</div>

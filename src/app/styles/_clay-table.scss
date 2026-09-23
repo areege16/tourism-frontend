@@ -16,6 +16,7 @@
     justify-content: space-between;
     margin-bottom: 0.75rem;
     flex-shrink: 0;
+    gap: 1rem;
 
     .title-wrap {
       display: flex;
@@ -25,21 +26,14 @@
       h3 {
         margin: 0;
         font-size: 1.05rem;
+        font-weight: 800;
+        color: var(--text-main);
       }
 
       .results-count {
         font-size: 0.75rem;
         color: var(--text-muted);
       }
-    }
-
-    .add-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.5rem 1rem;
-      font-size: 0.85rem;
-      cursor: pointer;
     }
   }
 
@@ -77,17 +71,19 @@
       text-align: right;
     }
 
-    tr.mat-mdc-row {
+    tr.mat-mdc-row,
+    tr.clay-table-row {
       background-color: var(--bg-app);
       box-shadow: 2px 2px 5px rgba(188, 175, 155, 0.2),
-        -2px -2px 5px rgba(255, 255, 255, 0.8);
+                 -2px -2px 5px rgba(255, 255, 255, 0.8);
       transition: transform 0.15s ease;
 
       &:hover {
         transform: scale(1.002);
       }
 
-      td.mat-mdc-cell {
+      td.mat-mdc-cell,
+      td.mat-cell {
         border: none;
         padding: 0.65rem 0.75rem;
         font-size: 0.85rem;
@@ -116,17 +112,17 @@
       gap: 0.6rem;
 
       .item-thumb {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         object-fit: cover;
         box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.6);
       }
 
       .item-thumb-fallback {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -134,9 +130,9 @@
         box-shadow: inset 1px 1px 2px rgba(188, 175, 155, 0.25);
 
         mat-icon {
-          font-size: 1.1rem;
-          width: 1.1rem;
-          height: 1.1rem;
+          font-size: 1.15rem;
+          width: 1.15rem;
+          height: 1.15rem;
           color: var(--text-muted);
         }
       }
@@ -144,11 +140,14 @@
 
     .value-badge {
       background-color: #FFFDF9;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
+      padding: 0.25rem 0.55rem;
+      border-radius: 8px;
       font-weight: 600;
       box-shadow: inset 1px 1px 3px rgba(188, 175, 155, 0.2);
       white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
     }
 
     .action-buttons-group {
@@ -167,7 +166,7 @@
         cursor: pointer;
         background: #FFFDF9;
         box-shadow: 2px 2px 4px rgba(188, 175, 155, 0.25),
-          -2px -2px 4px rgba(255, 255, 255, 0.9);
+                   -2px -2px 4px rgba(255, 255, 255, 0.9);
         transition: transform 0.15s ease;
 
         mat-icon {
@@ -176,17 +175,9 @@
           height: 1.1rem;
         }
 
-        &.view mat-icon {
-          color: var(--icon-active);
-        }
-
-        &.edit mat-icon {
-          color: var(--cta-salmon);
-        }
-
-        &.delete mat-icon {
-          color: #c25353;
-        }
+        &.view mat-icon { color: var(--icon-active); }
+        &.edit mat-icon { color: var(--cta-salmon); }
+        &.delete mat-icon { color: #c25353; }
 
         &:hover {
           transform: translateY(-2px);
@@ -196,7 +187,7 @@
 
     .state-row td {
       text-align: center;
-      padding: 2rem 1rem !important;
+      padding: 2.5rem 1rem !important;
 
       .loading-state,
       .empty-state {
@@ -207,9 +198,9 @@
         color: var(--text-muted);
 
         mat-icon {
-          font-size: 1.8rem;
-          width: 1.8rem;
-          height: 1.8rem;
+          font-size: 2rem;
+          width: 2rem;
+          height: 2rem;
         }
       }
     }
