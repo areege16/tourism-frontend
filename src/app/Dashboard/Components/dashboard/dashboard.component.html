@@ -7,7 +7,7 @@
         <mat-icon>query_stats</mat-icon>
         <h3>لوحة مؤشرات وإحصائيات محاضر الإيقاف والإزالة</h3>
       </div>
-      <button type="button" class="btn-clear" (click)="resetFilters()" matTooltip="إعادة تعيين الفلاتر">
+      <button type="button" class="btn-clear"  matTooltip="إعادة تعيين الفلاتر">
         <mat-icon>refresh</mat-icon>
         <span>تفريغ الفلاتر</span>
       </button>
@@ -34,32 +34,7 @@
         </div>
       </div>
 
-      <div class="input-group">
-        <label>المحافظة</label>
-        <mat-select formControlName="governorateID" placeholder="جميع المحافظات" class="clay-select-field"
-          (selectionChange)="onGovernorateChange($event.value)">
-          <mat-option [value]="null">-- الكل --</mat-option>
-          <mat-option *ngFor="let g of governorates" [value]="g.governorateID">{{ g.governorateName }}</mat-option>
-        </mat-select>
-      </div>
-
-      <div class="input-group">
-        <label>المركز / الحي</label>
-        <mat-select formControlName="regionID" placeholder="جميع المراكز" class="clay-select-field"
-          (selectionChange)="onRegionChange($event.value)">
-          <mat-option [value]="null">-- الكل --</mat-option>
-          <mat-option *ngFor="let r of regions" [value]="r.regionID">{{ r.regionName }}</mat-option>
-        </mat-select>
-      </div>
-
-      <div class="input-group">
-        <label>القرية / المنطقة</label>
-        <mat-select formControlName="areaID" placeholder="جميع القرى" class="clay-select-field"
-          (selectionChange)="applyFilters()">
-          <mat-option [value]="null">-- الكل --</mat-option>
-          <mat-option *ngFor="let a of areas" [value]="a.areaID">{{ a.areaName }}</mat-option>
-        </mat-select>
-      </div>
+ 
     </div>
   </section>
 

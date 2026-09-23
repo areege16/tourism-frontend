@@ -15,6 +15,14 @@ const routes: Routes = [
             (m) => m.AttractionsModule,
           ),
       },
+        {
+        path: 'hotels',
+        loadChildren: () =>
+          import('../Hotels/hotel.module').then(
+            (m) => m.HotelModule,
+          ),
+      },
+      
       {
         path: 'statistics',
         loadComponent: () =>

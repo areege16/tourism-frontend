@@ -5,12 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
-
 import { AttractionsRoutingModule } from './attractions-routing.module';
 import { GetAllAttractionsComponent } from './Components/get-all-attractions/get-all-attractions.component';
-import { CreateComponent } from './Components/create/create.component';
-import { EditComponent } from './Components/edit/edit.component';
-import { DeleteComponent } from './Components/delete/delete.component';
 import { DetailsComponent } from './Components/details/details.component';
 
 @NgModule({

@@ -1,7 +1,4 @@
-export interface LocalizedText {
-  en: string;
-  ar: string;
-}
+import { LocalizedText } from "../../Shared/Models/localizedText";
 
 export interface AttractionFeature {
   en: string;

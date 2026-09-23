@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Attraction } from '../../Models/attraction';
 import { AttractionService } from '../../Services/attraction.service';
-import { apiUrl } from '../../../Shared/Env/env';
 import { DetailsComponent  } from '../details/details.component';
+import { getFullImageUrl as resolveFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-get-all-attractions',
@@ -40,10 +40,10 @@ export class GetAllAttractionsComponent implements OnInit {
     });
   }
 
-  getFullImageUrl(path: string): string {
-    if (!path) return '';
-    return path.startsWith('http') ? path : `${apiUrl}${path}`;
-  }
+getFullImageUrl(path: string): string {
+  if (!path) return '';
+  return resolveFullImageUrl(path);
+}
 
   hasImageError(imageUrl: string): boolean {
     return this.failedImages.has(imageUrl);

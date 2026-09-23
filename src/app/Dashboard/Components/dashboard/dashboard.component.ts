@@ -7,9 +7,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
-import { LocationService } from '../../../Citizens/Services/location/location.service';
-import { GovernorateDto, RegionDto, AreaDto } from '../../../Citizens/Models/location.models';
 import { DashboardResponseDto, DashboardFilterDto } from '../../Models/dashboard.models';
 import { DashboardService } from '../../Services/dashboard.service';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -39,15 +36,11 @@ import { ChartType, ChartData, ChartConfiguration } from 'chart.js';
 export class DashboardComponent implements OnInit {
   private fb = inject(FormBuilder);
   private dashboardService = inject(DashboardService);
-  private locationService = inject(LocationService);
 
   filterForm!: FormGroup;
   dashboardData: DashboardResponseDto | null = null;
   isLoading = false;
 
-  governorates: GovernorateDto[] = [];
-  regions: RegionDto[] = [];
-  areas: AreaDto[] = [];
 
   // 1. Doughnut Chart (نسبة الاكتمال)
   doughnutChartType: ChartType = 'doughnut';
@@ -130,7 +123,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    this.loadGovernorates();
     this.fetchDashboardData();
   }
 
@@ -144,45 +136,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  private loadGovernorates(): void {
-    this.locationService.getGovernorates().subscribe({
-      next: (data) => this.governorates = data
-    });
-  }
 
-  onGovernorateChange(govId: number | null): void {
-    const regionCtrl = this.filterForm.get('regionID');
-    const areaCtrl = this.filterForm.get('areaID');
-    regionCtrl?.reset();
-    areaCtrl?.reset();
-    regionCtrl?.disable();
-    areaCtrl?.disable();
-    this.regions = [];
-    this.areas = [];
-
-    if (govId) {
-      this.locationService.getRegions(govId).subscribe(data => {
-        this.regions = data;
-        if (data.length > 0) regionCtrl?.enable();
-      });
-    }
-    this.applyFilters();
-  }
-
-  onRegionChange(regionId: number | null): void {
-    const areaCtrl = this.filterForm.get('areaID');
-    areaCtrl?.reset();
-    areaCtrl?.disable();
-    this.areas = [];
-
-    if (regionId) {
-      this.locationService.getAreas(regionId).subscribe(data => {
-        this.areas = data;
-        if (data.length > 0) areaCtrl?.enable();
-      });
-    }
-    this.applyFilters();
-  }
 
   applyFilters(): void {
     const val = this.filterForm.getRawValue();
@@ -266,14 +220,6 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  resetFilters(): void {
-    this.filterForm.reset();
-    this.filterForm.get('regionID')?.disable();
-    this.filterForm.get('areaID')?.disable();
-    this.regions = [];
-    this.areas = [];
-    this.fetchDashboardData();
-  }
 
   private toDateString(val: any): string {
     if (!val) return '';
