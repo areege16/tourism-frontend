@@ -1,0 +1,394 @@
+<div class="clay-dialog" dir="rtl">
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>edit_location_alt</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل المعلم السياحي</h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="clay-dialog-body" *ngIf="loading">
+    <div class="clay-loading">
+      <mat-icon class="spin-icon">autorenew</mat-icon>
+      <span>جارِ تحميل بيانات المعلم...</span>
+    </div>
+  </div>
+
+  <!-- Form -->
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body">
+      <!-- ===================== Basic Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>info</mat-icon>
+          البيانات الأساسية
+        </h3>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>الاسم (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameAr"
+              placeholder="اسم المعلم بالعربي"
+            />
+          </div>
+          <div class="clay-field">
+            <label>Name (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameEn"
+              placeholder="Attraction name"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>التصنيف (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="categoryAr"
+              placeholder="مثال: موقع تاريخي"
+            />
+          </div>
+          <div class="clay-field">
+            <label>Category (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="categoryEn"
+              placeholder="e.g. Historical Site"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="clay-field">
+          <label>الوصف (عربي)</label>
+          <textarea
+            class="clay-input-field"
+            rows="4"
+            formControlName="descriptionAr"
+          ></textarea>
+        </div>
+        <div class="clay-field">
+          <label>Description (English)</label>
+          <textarea
+            class="clay-input-field"
+            rows="4"
+            formControlName="descriptionEn"
+            dir="ltr"
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===================== Location ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>place</mat-icon>
+          الموقع
+        </h3>
+        <div class="field-row">
+          <div class="clay-field">
+            <label>خط العرض (Latitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="latitude"
+              dir="ltr"
+            />
+          </div>
+          <div class="clay-field">
+            <label>خط الطول (Longitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="longitude"
+              dir="ltr"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Visit Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>schedule</mat-icon>
+          معلومات الزيارة
+        </h3>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>مواعيد الزيارة (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHoursAr"
+              placeholder="٨:٠٠ ص - ٥:٠٠ م"
+            />
+          </div>
+          <div class="clay-field">
+            <label>Opening Hours (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHoursEn"
+              placeholder="8:00 AM - 5:00 PM"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>سعر التذكرة (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="ticketPriceAr"
+              placeholder="١٠٠ جنيه"
+            />
+          </div>
+          <div class="clay-field">
+            <label>Ticket Price (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="ticketPriceEn"
+              placeholder="100 EGP"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>رابط الحجز</label>
+            <input
+              class="clay-input-field"
+              formControlName="bookingUrl"
+              placeholder="https://..."
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>التقييم (0 - 5)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              formControlName="rating"
+              dir="ltr"
+            />
+          </div>
+          <div class="clay-field">
+            <label>عدد التقييمات</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              min="0"
+              formControlName="reviewCount"
+              dir="ltr"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Historical Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>museum</mat-icon>
+          المعلومات التاريخية
+        </h3>
+
+        <div class="field-row">
+          <div class="clay-field">
+            <label>الحقبة التاريخية (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="historicalPeriodAr"
+            />
+          </div>
+          <div class="clay-field">
+            <label>Historical Period (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="historicalPeriodEn"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="clay-field">
+          <label>الأهمية التاريخية (عربي)</label>
+          <textarea
+            class="clay-input-field"
+            rows="6"
+            formControlName="significanceAr"
+          ></textarea>
+        </div>
+        <div class="clay-field">
+          <label>Significance (English)</label>
+          <textarea
+            class="clay-input-field"
+            rows="6"
+            formControlName="significanceEn"
+            dir="ltr"
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ===================== Features ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>star</mat-icon>
+          المميزات
+        </h3>
+
+        <div formArrayName="features" class="features-list">
+          <div
+            class="feature-row"
+            *ngFor="let feature of features.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <input
+              class="clay-input-field"
+              formControlName="ar"
+              placeholder="الميزة (عربي)"
+            />
+            <input
+              class="clay-input-field"
+              formControlName="en"
+              placeholder="Feature (English)"
+              dir="ltr"
+            />
+            <button
+              type="button"
+              class="btn-remove-chip"
+              (click)="removeFeature(i)"
+              title="حذف"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="clay-btn-primary" (click)="addFeature()">
+          <mat-icon>add</mat-icon>
+          إضافة ميزة
+        </button>
+      </section>
+
+      <!-- ===================== Main Image ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>image</mat-icon>
+          الصورة الرئيسية
+        </h3>
+
+        <div class="main-image-picker">
+          <div class="image-preview" *ngIf="mainImagePreview">
+            <img [src]="mainImagePreview" alt="Main image preview" />
+          </div>
+          <div class="image-placeholder" *ngIf="!mainImagePreview">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>لا توجد صورة</span>
+          </div>
+
+          <label class="clay-btn-primary file-btn">
+            <mat-icon>upload</mat-icon>
+            {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onMainImageSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+
+      <!-- ===================== Gallery ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>photo_library</mat-icon>
+          معرض الصور
+        </h3>
+
+        <div class="gallery-grid">
+          <div
+            class="gallery-item"
+            *ngFor="let url of existingGalleryUrls; let i = index"
+          >
+            <img [src]="fullUrl(url)" alt="Gallery image" />
+            <button
+              type="button"
+              class="btn-remove-image"
+              (click)="removeExistingGalleryImage(i)"
+              title="حذف"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div
+            class="gallery-item new-item"
+            *ngFor="let preview of newGalleryPreviews; let i = index"
+          >
+            <img [src]="preview" alt="New gallery image" />
+            <span class="new-badge">جديد</span>
+            <button
+              type="button"
+              class="btn-remove-image"
+              (click)="removeNewGalleryImage(i)"
+              title="حذف"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <label class="clay-btn-primary file-btn">
+          <mat-icon>add_photo_alternate</mat-icon>
+          إضافة صور للمعرض
+          <input
+            type="file"
+            accept="image/*"
+            multiple
+            hidden
+            (change)="onGalleryFilesSelected($event)"
+          />
+        </label>
+      </section>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="saving">
+        <mat-icon *ngIf="!saving">save</mat-icon>
+        <mat-icon *ngIf="saving" class="spin-icon">autorenew</mat-icon>
+        {{ saving ? "جارِ الحفظ..." : "حفظ التعديلات" }}
+      </button>
+      <button
+        type="button"
+        class="btn-dialog-cancel"
+        (click)="onCancel()"
+        [disabled]="saving"
+      >
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>
