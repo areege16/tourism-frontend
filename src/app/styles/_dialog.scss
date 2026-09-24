@@ -1,3 +1,5 @@
+@import './clay-shared';
+
 // ==========================================
 // Claymorphism Mat-Dialog Global Theme
 // ==========================================
@@ -241,6 +243,7 @@
     }
   }
 
+  // --- محدد التاريخ (Datepicker) ---
   .clay-datepicker-wrapper {
     position: relative;
     display: flex;
@@ -262,6 +265,218 @@
         width: 32px;
         height: 32px;
         padding: 4px;
+      }
+    }
+  }
+}
+
+// ==========================================
+// Layout Grids & Custom Form Inputs
+// ==========================================
+
+.form-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-three-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .textarea-field {
+    resize: vertical;
+    border-radius: 14px;
+  }
+}
+
+.section-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px dashed rgba(188, 175, 155, 0.35);
+}
+
+.btn-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 16px;
+  background-color: var(--pastel-mint);
+  color: var(--icon-active);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: 3px 3px 6px rgba(188, 175, 155, 0.25);
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+// --- قسم الصورة ومعرض الصور ---
+.image-upload-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+
+  .image-preview-box {
+    width: 140px;
+    height: 95px;
+    border-radius: 16px;
+    background: var(--bg-app);
+    box-shadow: inset 2px 2px 5px rgba(188, 175, 155, 0.25);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      mat-icon { font-size: 1.5rem; }
+    }
+  }
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+  gap: 0.75rem;
+
+  .gallery-thumb {
+    position: relative;
+    width: 85px;
+    height: 85px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 2px 2px 6px rgba(188, 175, 155, 0.2);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .btn-remove-thumb {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(194, 83, 83, 0.9);
+      color: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      mat-icon { font-size: 14px; width: 14px; height: 14px; }
+    }
+  }
+
+  .gallery-add-card {
+    width: 85px;
+    height: 85px;
+    border-radius: 14px;
+    background: var(--bg-card);
+    border: 1.5px dashed rgba(188, 175, 155, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    cursor: pointer;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+
+    mat-icon {
+      font-size: 1.3rem;
+      width: 1.3rem;
+      height: 1.3rem;
+      color: var(--icon-active);
+    }
+
+    &:hover {
+      background: var(--bg-app);
+      border-color: var(--icon-active);
+    }
+  }
+}
+
+// --- القوائم الديناميكية ---
+.btn-add-item {
+  background: transparent;
+  border: none;
+  color: var(--icon-active);
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+.dynamic-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .dynamic-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    input {
+      flex: 1;
+    }
+
+    .btn-delete-row {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: none;
+      background: #FFFDF9;
+      box-shadow: 2px 2px 4px rgba(188, 175, 155, 0.25);
+      cursor: pointer;
+      color: #c25353;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        font-size: 1.1rem;
+        width: 1.1rem;
+        height: 1.1rem;
       }
     }
   }
