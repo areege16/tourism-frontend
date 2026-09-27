@@ -15,14 +15,18 @@ const routes: Routes = [
             (m) => m.AttractionsModule,
           ),
       },
-        {
+      {
         path: 'hotels',
         loadChildren: () =>
-          import('../Hotels/hotel.module').then(
-            (m) => m.HotelModule,
+          import('../Hotels/hotel.module').then((m) => m.HotelModule),
+      },
+      {
+        path: 'photographers',
+        loadChildren: () =>
+          import('../Photographers/photographers.module').then(
+            (m) => m.PhotographersModule,
           ),
       },
-      
       {
         path: 'statistics',
         loadComponent: () =>

@@ -1,0 +1,160 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>photo_camera</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">
+          {{ photographer?.name?.ar || "تفاصيل المصور" }}
+        </h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+      <span>جاري تحميل التفاصيل...</span>
+    </div>
+
+    <ng-container *ngIf="!isLoading && photographer">
+      <div class="gallery-section">
+        <img
+          [src]="getFullImageUrl(photographer.imageUrl)"
+          [alt]="photographer.name.ar"
+          class="main-image"
+        />
+      </div>
+
+      <!-- معلومات أساسية -->
+      <div class="dialog-info-card">
+        <mat-icon>info</mat-icon>
+        <p>{{ photographer.bio.ar }}</p>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <mat-icon>call</mat-icon>
+          <div>
+            <span class="detail-label">رقم الهاتف</span>
+            <span class="detail-value" dir="ltr">{{
+              photographer.phone.ar
+            }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>email</mat-icon>
+          <div>
+            <span class="detail-label">البريد الإلكتروني</span>
+            <span class="detail-value" dir="ltr">{{
+              photographer.email.ar
+            }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>star</mat-icon>
+          <div>
+            <span class="detail-label">التقييم</span>
+            <span class="detail-value">⭐ {{ photographer.rating }}</span>
+          </div>
+        </div>
+
+        <!-- الموقع الجغرافي -->
+        <div class="detail-item">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="detail-label">الموقع الجغرافي</span>
+            <a
+              class="detail-value map-link"
+              [href]="
+                getGoogleMapsUrl(
+                  photographer.location.latitude,
+                  photographer.location.longitude
+                )
+              "
+              target="_blank"
+              dir="ltr"
+            >
+              {{ photographer.location.address.ar }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- التخصصات -->
+      <div class="features-section" *ngIf="photographer.specialties?.length">
+        <h4>التخصصات</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngFor="let s of photographer.specialties">
+            <mat-icon>check_circle</mat-icon>
+            {{ s }}
+          </span>
+        </div>
+      </div>
+
+      <!-- روابط التواصل الاجتماعي -->
+      <div class="significance-section" *ngIf="photographer.social">
+        <h4>روابط التواصل الاجتماعي</h4>
+        <div class="features-chips">
+          <a
+            *ngIf="photographer.social.facebook"
+            [href]="photographer.social.facebook"
+            target="_blank"
+            class="booking-link"
+          >
+            <mat-icon>facebook</mat-icon>
+            <span>فيسبوك</span>
+          </a>
+          <a
+            *ngIf="photographer.social.instagram"
+            [href]="photographer.social.instagram"
+            target="_blank"
+            class="booking-link"
+          >
+            <mat-icon>camera_alt</mat-icon>
+            <span>إنستجرام</span>
+          </a>
+          <a
+            *ngIf="photographer.social.twitter"
+            [href]="photographer.social.twitter"
+            target="_blank"
+            class="booking-link"
+          >
+            <mat-icon>alternate_email</mat-icon>
+            <span>تويتر</span>
+          </a>
+          <a
+            *ngIf="photographer.social.tiktok"
+            [href]="photographer.social.tiktok"
+            target="_blank"
+            class="booking-link"
+          >
+            <mat-icon>music_note</mat-icon>
+            <span>تيك توك</span>
+          </a>
+          <a
+            *ngIf="photographer.social.youtube"
+            [href]="photographer.social.youtube"
+            target="_blank"
+            class="booking-link"
+          >
+            <mat-icon>smart_display</mat-icon>
+            <span>يوتيوب</span>
+          </a>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      إغلاق
+    </button>
+  </div>
+</div>
