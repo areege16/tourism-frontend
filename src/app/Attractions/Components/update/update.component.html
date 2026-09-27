@@ -32,8 +32,8 @@
           البيانات الأساسية
         </h3>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>الاسم (عربي)</label>
             <input
               class="clay-input-field"
@@ -41,7 +41,7 @@
               placeholder="اسم المعلم بالعربي"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>Name (English)</label>
             <input
               class="clay-input-field"
@@ -52,8 +52,8 @@
           </div>
         </div>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>التصنيف (عربي)</label>
             <input
               class="clay-input-field"
@@ -61,7 +61,7 @@
               placeholder="مثال: موقع تاريخي"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>Category (English)</label>
             <input
               class="clay-input-field"
@@ -72,18 +72,18 @@
           </div>
         </div>
 
-        <div class="clay-field">
+        <div class="field-group">
           <label>الوصف (عربي)</label>
           <textarea
-            class="clay-input-field"
+            class="clay-input-field textarea-field"
             rows="4"
             formControlName="descriptionAr"
           ></textarea>
         </div>
-        <div class="clay-field">
+        <div class="field-group">
           <label>Description (English)</label>
           <textarea
-            class="clay-input-field"
+            class="clay-input-field textarea-field"
             rows="4"
             formControlName="descriptionEn"
             dir="ltr"
@@ -97,8 +97,8 @@
           <mat-icon>place</mat-icon>
           الموقع
         </h3>
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>خط العرض (Latitude)</label>
             <input
               class="clay-input-field"
@@ -108,7 +108,7 @@
               dir="ltr"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>خط الطول (Longitude)</label>
             <input
               class="clay-input-field"
@@ -128,8 +128,8 @@
           معلومات الزيارة
         </h3>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>مواعيد الزيارة (عربي)</label>
             <input
               class="clay-input-field"
@@ -137,7 +137,7 @@
               placeholder="٨:٠٠ ص - ٥:٠٠ م"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>Opening Hours (English)</label>
             <input
               class="clay-input-field"
@@ -148,8 +148,8 @@
           </div>
         </div>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>سعر التذكرة (عربي)</label>
             <input
               class="clay-input-field"
@@ -157,7 +157,7 @@
               placeholder="١٠٠ جنيه"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>Ticket Price (English)</label>
             <input
               class="clay-input-field"
@@ -168,8 +168,8 @@
           </div>
         </div>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>رابط الحجز</label>
             <input
               class="clay-input-field"
@@ -180,8 +180,8 @@
           </div>
         </div>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>التقييم (0 - 5)</label>
             <input
               class="clay-input-field"
@@ -193,7 +193,7 @@
               dir="ltr"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>عدد التقييمات</label>
             <input
               class="clay-input-field"
@@ -213,15 +213,15 @@
           المعلومات التاريخية
         </h3>
 
-        <div class="field-row">
-          <div class="clay-field">
+        <div class="form-row-grid">
+          <div class="field-group">
             <label>الحقبة التاريخية (عربي)</label>
             <input
               class="clay-input-field"
               formControlName="historicalPeriodAr"
             />
           </div>
-          <div class="clay-field">
+          <div class="field-group">
             <label>Historical Period (English)</label>
             <input
               class="clay-input-field"
@@ -231,18 +231,18 @@
           </div>
         </div>
 
-        <div class="clay-field">
+        <div class="field-group">
           <label>الأهمية التاريخية (عربي)</label>
           <textarea
-            class="clay-input-field"
+            class="clay-input-field textarea-field"
             rows="6"
             formControlName="significanceAr"
           ></textarea>
         </div>
-        <div class="clay-field">
+        <div class="field-group">
           <label>Significance (English)</label>
           <textarea
-            class="clay-input-field"
+            class="clay-input-field textarea-field"
             rows="6"
             formControlName="significanceEn"
             dir="ltr"
@@ -257,9 +257,9 @@
           المميزات
         </h3>
 
-        <div formArrayName="features" class="features-list">
+        <div formArrayName="features" class="dynamic-list">
           <div
-            class="feature-row"
+            class="dynamic-row"
             *ngFor="let feature of features.controls; let i = index"
             [formGroupName]="i"
           >
@@ -276,7 +276,7 @@
             />
             <button
               type="button"
-              class="btn-remove-chip"
+              class="btn-delete-row"
               (click)="removeFeature(i)"
               title="حذف"
             >
@@ -285,7 +285,7 @@
           </div>
         </div>
 
-        <button type="button" class="clay-btn-primary" (click)="addFeature()">
+        <button type="button" class="btn-add-item" (click)="addFeature()">
           <mat-icon>add</mat-icon>
           إضافة ميزة
         </button>
@@ -298,16 +298,20 @@
           الصورة الرئيسية
         </h3>
 
-        <div class="main-image-picker">
-          <div class="image-preview" *ngIf="mainImagePreview">
-            <img [src]="mainImagePreview" alt="Main image preview" />
-          </div>
-          <div class="image-placeholder" *ngIf="!mainImagePreview">
-            <mat-icon>add_photo_alternate</mat-icon>
-            <span>لا توجد صورة</span>
+        <div class="image-upload-wrapper">
+          <div class="image-preview-box">
+            <img
+              *ngIf="mainImagePreview"
+              [src]="mainImagePreview"
+              alt="Main image preview"
+            />
+            <div class="placeholder-icon" *ngIf="!mainImagePreview">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>لا توجد صورة</span>
+            </div>
           </div>
 
-          <label class="clay-btn-primary file-btn">
+          <label class="btn-upload-label">
             <mat-icon>upload</mat-icon>
             {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
             <input
@@ -329,13 +333,13 @@
 
         <div class="gallery-grid">
           <div
-            class="gallery-item"
+            class="gallery-thumb"
             *ngFor="let url of existingGalleryUrls; let i = index"
           >
             <img [src]="fullUrl(url)" alt="Gallery image" />
             <button
               type="button"
-              class="btn-remove-image"
+              class="btn-remove-thumb"
               (click)="removeExistingGalleryImage(i)"
               title="حذف"
             >
@@ -344,33 +348,32 @@
           </div>
 
           <div
-            class="gallery-item new-item"
+            class="gallery-thumb"
             *ngFor="let preview of newGalleryPreviews; let i = index"
           >
             <img [src]="preview" alt="New gallery image" />
-            <span class="new-badge">جديد</span>
             <button
               type="button"
-              class="btn-remove-image"
+              class="btn-remove-thumb"
               (click)="removeNewGalleryImage(i)"
               title="حذف"
             >
               <mat-icon>delete</mat-icon>
             </button>
           </div>
-        </div>
 
-        <label class="clay-btn-primary file-btn">
-          <mat-icon>add_photo_alternate</mat-icon>
-          إضافة صور للمعرض
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            hidden
-            (change)="onGalleryFilesSelected($event)"
-          />
-        </label>
+          <label class="gallery-add-card">
+            <mat-icon>add_photo_alternate</mat-icon>
+            إضافة صور
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              (change)="onGalleryFilesSelected($event)"
+            />
+          </label>
+        </div>
       </section>
     </div>
 

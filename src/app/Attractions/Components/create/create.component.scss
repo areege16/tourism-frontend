@@ -1,0 +1,17 @@
+@import "../../../styles/dialog";
+
+.error-text {
+  display: block;
+  color: #c25353;
+  font-size: 1em;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+}
+.form-invalid-hint {
+  color: #c25353;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-inline-end: auto;
+  display: flex;
+  align-items: center;
+}

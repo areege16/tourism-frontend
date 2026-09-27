@@ -7,6 +7,7 @@ import { getFullImageUrl as resolveFullImageUrl } from '../../../Shared/Models/g
 import { UpdateComponent } from '../update/update.component';
 import { ConfirmDialogComponent } from '../../../Shared/Components/confirm-dialog/confirm-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CreateComponent } from '../create/create.component';
 
 @Component({
   selector: 'app-get-all-attractions',
@@ -63,7 +64,20 @@ export class GetAllAttractionsComponent implements OnInit {
     this.failedImages.add(imageUrl);
   }
 
-  createAttraction(): void {}
+  createAttraction(): void {
+    const ref = this.dialog.open(CreateComponent, {
+      width: '760px',
+      maxWidth: '95vw',
+      panelClass: 'clay-dialog',
+    });
+
+    ref.afterClosed().subscribe((created) => {
+      if (created) {
+        this.loadAttractions();
+      }
+    });
+  }
+
   openDetails(attraction: Attraction): void {
     this.dialog.open(DetailsComponent, {
       width: '700px',
@@ -72,6 +86,7 @@ export class GetAllAttractionsComponent implements OnInit {
       data: { id: attraction.id },
     });
   }
+
   openEdit(attraction: Attraction): void {
     const ref = this.dialog.open(UpdateComponent, {
       width: '760px',
@@ -82,10 +97,11 @@ export class GetAllAttractionsComponent implements OnInit {
 
     ref.afterClosed().subscribe((updated) => {
       if (updated) {
-        this.loadAttractions(); // ترجع تحمّل القائمة بعد التحديث
+        this.loadAttractions();
       }
     });
   }
+
   openDelete(id: string, name: string): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
@@ -105,7 +121,7 @@ export class GetAllAttractionsComponent implements OnInit {
             this.snackBar.open('تم حذف المعلم السياحي بنجاح', 'إغلاق', {
               duration: 3000,
             });
-            // هنا تعملي refresh للقايمة أو تشيلي العنصر من الـ array المحلي
+            this.loadAttractions(); 
           } else {
             this.snackBar.open(res.message || 'تعذر حذف المعلم', 'إغلاق', {
               duration: 3500,
