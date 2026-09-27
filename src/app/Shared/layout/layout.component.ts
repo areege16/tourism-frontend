@@ -25,6 +25,11 @@ export class LayoutComponent {
       icon: 'camera_alt',
       route: '/dashboard/photographers',
     },
+    {
+      label: 'المطاعم',
+      icon: 'restaurant',
+      route: '/dashboard/restaurants',
+    },
     { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
     { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
     {

@@ -28,6 +28,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'restaurants',
+        loadChildren: () =>
+          import('../Restaurants/restaurants.module').then(
+            (m) => m.RestaurantsModule,
+          ),
+      },
+      {
         path: 'statistics',
         loadComponent: () =>
           import('../Dashboard/Components/dashboard/dashboard.component').then(

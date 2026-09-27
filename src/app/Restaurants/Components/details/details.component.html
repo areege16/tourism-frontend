@@ -1,0 +1,159 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>restaurant</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">
+          {{ restaurant?.name?.ar || "تفاصيل المطعم" }}
+        </h2>
+        <p class="dialog-subtitle" *ngIf="restaurant">
+          {{ restaurant.cuisineType.ar }}
+        </p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+      <span>جاري تحميل التفاصيل...</span>
+    </div>
+
+    <ng-container *ngIf="!isLoading && restaurant">
+      <div class="gallery-section">
+        <img
+          [src]="activeImage"
+          [alt]="restaurant.name.ar"
+          class="main-image"
+        />
+        <div class="thumbnails-row" *ngIf="restaurant.imageGallery.length">
+          <img
+            *ngFor="let img of restaurant.imageGallery"
+            [src]="getFullImageUrl(img)"
+            (click)="setActiveImage(img)"
+            class="thumb-item"
+            [class.active]="activeImage === getFullImageUrl(img)"
+          />
+        </div>
+      </div>
+
+      <!-- معلومات أساسية -->
+      <div class="dialog-info-card">
+        <mat-icon>info</mat-icon>
+        <p>{{ restaurant.description.ar }}</p>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <mat-icon>schedule</mat-icon>
+          <div>
+            <span class="detail-label">مواعيد العمل</span>
+            <span class="detail-value">{{ restaurant.openingHours.ar }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>payments</mat-icon>
+          <div>
+            <span class="detail-label">الفئة السعرية</span>
+            <span class="detail-value">{{ restaurant.priceRange.ar }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>star</mat-icon>
+          <div>
+            <span class="detail-label">التقييم</span>
+            <span class="detail-value"
+              >⭐ {{ restaurant.rating }} ({{
+                restaurant.reviewCount
+              }}
+              تقييم)</span
+            >
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <mat-icon>call</mat-icon>
+          <div>
+            <span class="detail-label">رقم الهاتف</span>
+            <span class="detail-value" dir="ltr">{{
+              restaurant.contactInfo.phone.ar
+            }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="restaurant.contactInfo.email">
+          <mat-icon>email</mat-icon>
+          <div>
+            <span class="detail-label">البريد الإلكتروني</span>
+            <span class="detail-value" dir="ltr">{{
+              restaurant.contactInfo.email
+            }}</span>
+          </div>
+        </div>
+
+        <!-- الموقع الجغرافي -->
+        <div class="detail-item">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="detail-label">المنطقة</span>
+            <a
+              class="detail-value map-link"
+              [href]="
+                getGoogleMapsUrl(restaurant.latitude, restaurant.longitude)
+              "
+              target="_blank"
+            >
+              {{ restaurant.center.ar }}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- التخصصات -->
+      <div class="features-section" *ngIf="restaurant.specialties?.length">
+        <h4>التخصصات</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngFor="let s of restaurant.specialties">
+            <mat-icon>check_circle</mat-icon>
+            {{ s.ar }}
+          </span>
+        </div>
+      </div>
+
+      <!-- المميزات -->
+      <div class="features-section" *ngIf="restaurant.features?.length">
+        <h4>المميزات المتاحة</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngFor="let f of restaurant.features">
+            <mat-icon>check_circle</mat-icon>
+            {{ f.ar }}
+          </span>
+        </div>
+      </div>
+
+      <!-- رابط قائمة الطعام -->
+      <a
+        *ngIf="restaurant.menuUrl"
+        [href]="getFullImageUrl(restaurant.menuUrl)"
+        target="_blank"
+        class="booking-link"
+      >
+        <mat-icon>menu_book</mat-icon>
+        <span>عرض قائمة الطعام</span>
+      </a>
+    </ng-container>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      إغلاق
+    </button>
+  </div>
+</div>
