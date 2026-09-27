@@ -1,0 +1,93 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>إضافة منشور جديد</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="clay-form">
+    <div class="form-grid two-col">
+      <mat-form-field appearance="outline">
+        <mat-label>العنوان بالعربية</mat-label>
+        <input matInput formControlName="titleAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Title in English</mat-label>
+        <input matInput formControlName="titleEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>المحتوى بالعربية</mat-label>
+        <textarea matInput rows="4" formControlName="contentAr"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Content in English</mat-label>
+        <textarea matInput rows="4" formControlName="contentEn"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>ملخص بالعربية</mat-label>
+        <textarea matInput rows="3" formControlName="excerptAr"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Excerpt in English</mat-label>
+        <textarea matInput rows="3" formControlName="excerptEn"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>التصنيف بالعربية</mat-label>
+        <input matInput formControlName="categoryAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Category in English</mat-label>
+        <input matInput formControlName="categoryEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>اسم المؤلف بالعربية</mat-label>
+        <input matInput formControlName="authorAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Author name in English</mat-label>
+        <input matInput formControlName="authorEn" />
+      </mat-form-field>
+
+      
+
+      <mat-form-field appearance="outline">
+        <mat-label>هشتاج</mat-label>
+        <input matInput formControlName="tags" placeholder="travel, food, luxury" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>تاريخ النشر</mat-label>
+        <input matInput type="datetime-local" formControlName="publishDate" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>وقت القراءة (دقائق)</mat-label>
+        <input matInput type="number" min="1" formControlName="readTime" />
+      </mat-form-field>
+
+      <div class="checkbox-wrap">
+        <mat-checkbox formControlName="featured">مميز</mat-checkbox>
+      </div>
+
+      <div class="upload-wrap">
+        <label class="upload-label">ImageFile</label>
+        <input type="file" accept="image/*" (change)="onFileChange($event)" />
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+      <button type="submit" class="clay-btn-primary">حفظ</button>
+    </div>
+  </form>
+</div>

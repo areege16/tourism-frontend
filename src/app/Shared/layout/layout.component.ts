@@ -19,6 +19,7 @@ export class LayoutComponent {
   navItems: NavItem[] = [
     { label: 'المعالم السياحية', icon: 'place', route: '/dashboard/attractions' },
     { label: 'الفنادق', icon: 'hotel', route: '/dashboard/hotels' },
+    { label: 'المدونات', icon: 'article', route: '/dashboard/blogposts' },
     { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
     { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
     { label: 'الإعدادات والمستخدمين', icon: 'settings', route: '/dashboard/register' }
