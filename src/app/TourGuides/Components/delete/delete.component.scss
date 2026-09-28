@@ -1,0 +1,116 @@
+@import '../../../styles/clay-shared';
+@import '../../../styles/dialog';
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+:host-context(.cdk-overlay-pane) {
+  max-width: 440px !important;
+  width: auto !important;
+}
+
+.clay-dialog-shell {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 1rem 1.1rem 1.1rem;
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-sizing: border-box;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1.5px dashed rgba(188, 175, 155, 0.35);
+
+  h3 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+}
+
+.icon-close {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.delete-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0 1rem;
+}
+
+.warning-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 182, 112, 0.18);
+  color: #d97706;
+}
+
+.delete-body p,
+.delete-body strong {
+  margin: 0;
+  color: var(--text-main);
+}
+
+.delete-body strong {
+  font-size: 1rem;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.clay-btn-secondary,
+.clay-btn-danger {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 0.55rem 0.9rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.clay-btn-secondary {
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--text-main);
+}
+
+.clay-btn-danger {
+  background: linear-gradient(135deg, #f1a6a6, #d96d6d);
+  color: #fff;
+}

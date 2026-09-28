@@ -1,0 +1,168 @@
+@import '../../../styles/clay-shared';
+@import '../../../styles/dialog';
+
+:host {
+  display: block;
+  width: 100%;
+  max-width: 460px; /* عرض متناسق للكارد */
+  margin: 0 auto;
+}
+
+.clay-dialog-shell {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 0.6rem 0.85rem 0.85rem;
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  padding: 0.1rem 0.15rem 0.4rem;
+  border-bottom: 1.5px dashed rgba(188, 175, 155, 0.35);
+
+  h3 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+.icon-close {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  width: 26px;
+  height: 26px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.5);
+    color: var(--cta-salmon);
+  }
+}
+
+.clay-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* مسافة صغيرة ومناسبة بين العناصر */
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  margin-top: 0.3rem;
+  padding-top: 0.4rem;
+}
+
+.clay-btn-secondary,
+.clay-btn-primary {
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.clay-btn-secondary {
+  background: rgba(255, 255, 255, 0.35);
+  color: var(--text-main);
+}
+
+.clay-btn-primary {
+  background: var(--pastel-mint);
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.upload-wrap,
+.checkbox-wrap {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.upload-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-inline-end: 0.4rem;
+}
+
+/* --- تنسيقات حقول Material لمنع التداخل --- */
+
+:host ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none; /* إخفاء مساحة الخطأ والتلميحات السفلية لتوفير المساحة */
+}
+
+:host ::ng-deep .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* ضبط الارتفاع ليكون مناسباً لـ Material بدون قص أو تداخل */
+:host ::ng-deep .mat-mdc-form-field-flex {
+  min-height: 40px !important;
+  height: 40px !important;
+  align-items: center;
+}
+
+:host ::ng-deep .mat-mdc-text-field-wrapper {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-radius: 8px !important;
+  padding: 0 0.6rem !important;
+}
+
+/* تصغير وتضبيط مكان الـ Label المرفوع */
+:host ::ng-deep .mat-mdc-floating-label {
+  font-size: 0.75rem !important;
+  top: 50% !important;
+}
+
+:host ::ng-deep .mdc-floating-label--float-above {
+  transform: translateY(-22px) scale(0.85) !important;
+}
+
+/* تصغير خط المدخلات */
+:host ::ng-deep .mat-mdc-input-element {
+  font-size: 0.78rem !important;
+}
+
+/* ضبط ارتفاع حقول النص الطويل Textarea */
+:host ::ng-deep textarea.mat-mdc-input-element {
+  height: 42px !important;
+  min-height: 42px !important;
+}
+
+:host ::ng-deep .mdc-notched-outline__leading,
+:host ::ng-deep .mdc-notched-outline__notch,
+:host ::ng-deep .mdc-notched-outline__trailing {
+  border-color: rgba(188, 175, 155, 0.45) !important;
+}

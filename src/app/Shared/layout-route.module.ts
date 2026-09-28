@@ -30,6 +30,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'tourguides',
+        loadChildren: () =>
+          import('../TourGuides/tour-guides.module').then(
+            (m) => m.TourGuidesModule,
+          ),
+      },
+      {
+        path: 'services',
+        loadChildren: () =>
+          import('../Services/services.module').then(
+            (m) => m.ServicesModule,
+          ),
+      },
+      {
         path: 'statistics',
         loadComponent: () =>
           import('../Dashboard/Components/dashboard/dashboard.component').then(

@@ -1,0 +1,22 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>حذف المرشد</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="delete-body">
+    <div class="warning-icon">
+      <mat-icon>warning_amber</mat-icon>
+    </div>
+
+    <p>هل أنت متأكد أنك تريد حذف هذا المرشد؟</p>
+    <strong>{{ data.title || 'هذا المرشد' }}</strong>
+  </div>
+
+  <div class="dialog-actions">
+    <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+    <button type="button" class="clay-btn-danger" (click)="confirmDelete()">حذف</button>
+  </div>
+</div>
