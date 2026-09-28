@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Restaurant } from '../../Models/restaurant';
 import { RestaurantService } from '../../Services/restaurant.service';
 import { apiUrl } from '../../../Shared/Env/env';
+import { buildGoogleMapsUrl } from '../../../Shared/utils/maps.util';
 
 @Component({
   selector: 'app-restaurant-details',
@@ -12,6 +13,8 @@ import { apiUrl } from '../../../Shared/Env/env';
 export class DetailsComponent implements OnInit {
   private restaurantService = inject(RestaurantService);
   private dialogRef = inject(MatDialogRef<DetailsComponent>);
+
+  readonly buildGoogleMapsUrl = buildGoogleMapsUrl;
 
   restaurant: Restaurant | null = null;
   isLoading = false;
@@ -48,11 +51,6 @@ export class DetailsComponent implements OnInit {
   setActiveImage(path: string): void {
     this.activeImage = this.getFullImageUrl(path);
   }
-
-  getGoogleMapsUrl(lat: number, lng: number): string {
-    return `https://www.google.com/maps?q=${lat},${lng}`;
-  }
-
   close(): void {
     this.dialogRef.close();
   }

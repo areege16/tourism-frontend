@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Photographer } from '../../Models/photographer';
 import { PhotographerService } from '../../Services/photographer.service';
 import { apiUrl } from '../../../Shared/Env/env';
+import { buildGoogleMapsUrl } from '../../../Shared/utils/maps.util';
 
 @Component({
   selector: 'app-photographer-details',
@@ -12,6 +13,7 @@ import { apiUrl } from '../../../Shared/Env/env';
 export class DetailsComponent implements OnInit {
   private photographerService = inject(PhotographerService);
   private dialogRef = inject(MatDialogRef<DetailsComponent>);
+  readonly buildGoogleMapsUrl = buildGoogleMapsUrl;
 
   photographer: Photographer | null = null;
   isLoading = false;
@@ -41,10 +43,6 @@ export class DetailsComponent implements OnInit {
   getFullImageUrl(path: string): string {
     if (!path) return '';
     return path.startsWith('http') ? path : `${apiUrl}${path}`;
-  }
-
-  getGoogleMapsUrl(lat: number, lng: number): string {
-    return `https://www.google.com/maps?q=${lat},${lng}`;
   }
 
   close(): void {

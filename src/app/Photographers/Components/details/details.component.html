@@ -73,12 +73,13 @@
             <a
               class="detail-value map-link"
               [href]="
-                getGoogleMapsUrl(
+                buildGoogleMapsUrl(
                   photographer.location.latitude,
                   photographer.location.longitude
                 )
               "
               target="_blank"
+              rel="noopener noreferrer"
               dir="ltr"
             >
               {{ photographer.location.address.ar }}

@@ -106,9 +106,10 @@
             <a
               class="detail-value map-link"
               [href]="
-                getGoogleMapsUrl(restaurant.latitude, restaurant.longitude)
+                buildGoogleMapsUrl(restaurant.latitude, restaurant.longitude)
               "
               target="_blank"
+              rel="noopener noreferrer"
             >
               {{ restaurant.center.ar }}
             </a>
