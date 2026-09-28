@@ -1,0 +1,77 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تعديل معلومات السياحة</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-grid">
+      <div class="field-block" formGroupName="title">
+        <label class="field-label" for="tourism-edit-title-en">العنوان (EN)</label>
+        <mat-form-field appearance="outline">
+          <input id="tourism-edit-title-en" matInput formControlName="en" placeholder="Title" />
+        </mat-form-field>
+
+        <label class="field-label" for="tourism-edit-title-ar">العنوان (AR)</label>
+        <mat-form-field appearance="outline">
+          <input id="tourism-edit-title-ar" matInput formControlName="ar" placeholder="العنوان" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width" formGroupName="climate">
+        <label class="field-label" for="tourism-edit-climate-en">المناخ (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-climate-en" matInput formControlName="en" placeholder="Climate"></textarea>
+        </mat-form-field>
+
+        <label class="field-label" for="tourism-edit-climate-ar">المناخ (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-climate-ar" matInput formControlName="ar" placeholder="المناخ"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width" formGroupName="bestTimeToVisit">
+        <label class="field-label" for="tourism-edit-best-time-en">أفضل وقت للزيارة (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-best-time-en" matInput formControlName="en" placeholder="Best time to visit"></textarea>
+        </mat-form-field>
+
+        <label class="field-label" for="tourism-edit-best-time-ar">أفضل وقت للزيارة (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-best-time-ar" matInput formControlName="ar" placeholder="أفضل وقت للزيارة"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width" formGroupName="whatToWear">
+        <label class="field-label" for="tourism-edit-wear-en">ما الذي يلبس (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-wear-en" matInput formControlName="en" placeholder="What to wear"></textarea>
+        </mat-form-field>
+
+        <label class="field-label" for="tourism-edit-wear-ar">ما الذي يلبس (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-wear-ar" matInput formControlName="ar" placeholder="ما الذي يلبس"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width" formGroupName="notes">
+        <label class="field-label" for="tourism-edit-notes-en">ملاحظات (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-notes-en" matInput formControlName="en" placeholder="Notes"></textarea>
+        </mat-form-field>
+
+        <label class="field-label" for="tourism-edit-notes-ar">ملاحظات (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="tourism-edit-notes-ar" matInput formControlName="ar" placeholder="ملاحظات"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+      <button type="submit" class="clay-btn-primary">حفظ التعديلات</button>
+    </div>
+  </form>
+</div>

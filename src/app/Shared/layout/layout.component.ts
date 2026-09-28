@@ -22,6 +22,7 @@ export class LayoutComponent {
     { label: 'المدونات', icon: 'article', route: '/dashboard/blogposts' },
     { label: 'المرشدون السياحيون', icon: 'person_pin', route: '/dashboard/tourguides' },
     { label: 'الخدمات', icon: 'build', route: '/dashboard/services' },
+    { label: 'معلومات السياحة', icon: 'travel_explore', route: '/dashboard/tourisminfo' },
     { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
     { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
     { label: 'الإعدادات والمستخدمين', icon: 'settings', route: '/dashboard/register' }
