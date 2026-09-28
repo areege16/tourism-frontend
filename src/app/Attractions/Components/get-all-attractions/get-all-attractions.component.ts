@@ -52,7 +52,6 @@ export class GetAllAttractionsComponent implements OnInit {
   }
 
   getFullImageUrl(path: string): string {
-    if (!path) return '';
     return resolveFullImageUrl(path);
   }
 

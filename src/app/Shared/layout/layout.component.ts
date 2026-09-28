@@ -30,6 +30,11 @@ export class LayoutComponent {
       icon: 'restaurant',
       route: '/dashboard/restaurants',
     },
+    {
+      label: 'الهدايا التذكارية',
+      icon: 'storefront',
+      route: '/dashboard/souvenirs',
+    },
     { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
     { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
     {

@@ -1,0 +1,165 @@
+<div class="clay-view-container" dir="rtl">
+  <!-- Stats -->
+  <section class="stats-grid">
+    <div class="clay-stat-card mint">
+      <div class="stat-icon-wrapper">
+        <mat-icon>storefront</mat-icon>
+      </div>
+      <span class="stat-title">إجمالي محلات الهدايا التذكارية</span>
+      <span class="stat-value">{{ shops.length | number }}</span>
+      <span class="stat-badge">سجل معتمد</span>
+    </div>
+  </section>
+
+  <!-- Table Card -->
+  <section class="clay-card table-card">
+    <div class="table-header">
+      <div class="title-wrap">
+        <h3>قائمة محلات الهدايا التذكارية</h3>
+        <span class="results-count">(عرض {{ filteredShops.length }} محل)</span>
+      </div>
+      <button
+        type="button"
+        class="clay-btn-primary add-btn"
+        (click)="createShop()"
+      >
+        <mat-icon>add_business</mat-icon>
+        <span>إضافة محل جديد</span>
+      </button>
+    </div>
+
+    <!-- Category Filters -->
+    <div class="category-filters">
+      <button
+        type="button"
+        class="filter-chip"
+        [class.active]="selectedCategory === 'all'"
+        (click)="selectCategory('all')"
+      >
+        الكل
+      </button>
+
+      <button
+        type="button"
+        class="filter-chip"
+        *ngFor="let c of categories"
+        [class.active]="selectedCategory === c.key"
+        (click)="selectCategory(c.key)"
+      >
+        <mat-icon>{{ c.icon }}</mat-icon>
+        {{ c.nameAr }}
+      </button>
+    </div>
+
+    <div class="table-scroll-container">
+      <table mat-table [dataSource]="filteredShops" class="clay-mat-table">
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let s; let i = index">
+            <span class="idx-badge">{{ i + 1 }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>الاسم</th>
+          <td mat-cell *matCellDef="let s">
+            <div class="item-name-cell">
+              <ng-container *ngIf="!hasImageError(s.image); else noImage">
+                <img
+                  [src]="getFullImageUrl(s.image)"
+                  (error)="onImageError(s.image)"
+                  class="item-thumb"
+                  [alt]="s.nameAr"
+                />
+              </ng-container>
+              <ng-template #noImage>
+                <div class="item-thumb-fallback">
+                  <mat-icon>image_not_supported</mat-icon>
+                </div>
+              </ng-template>
+              <strong>{{ s.nameAr }}</strong>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>التصنيف</th>
+          <td mat-cell *matCellDef="let s">{{ s.categoryAr }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <th mat-header-cell *matHeaderCellDef>التقييم</th>
+          <td mat-cell *matCellDef="let s">
+            <span class="value-badge"
+              >⭐ {{ s.rating }} ({{ s.reviewCount }})</span
+            >
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+          <td mat-cell *matCellDef="let s">
+            <div class="action-buttons-group">
+              <button
+                type="button"
+                class="action-icon-btn view"
+                matTooltip="عرض التفاصيل"
+                (click)="openDetails(s)"
+              >
+                <mat-icon>info</mat-icon>
+              </button>
+              <button
+                type="button"
+                class="action-icon-btn edit"
+                matTooltip="تعديل"
+                (click)="openEdit(s)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                type="button"
+                class="action-icon-btn delete"
+                matTooltip="حذف"
+                (click)="openDelete(s.id, s.nameAr)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+
+              <button
+                type="button"
+                class="action-icon-btn products"
+                matTooltip="المنتجات"
+                (click)="openProducts(s)"
+              >
+                <mat-icon>inventory_2</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          class="clay-table-row"
+        ></tr>
+
+        <tr class="mat-row state-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div *ngIf="isLoading" class="loading-state">
+              <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+              <span>جاري تحميل المحلات...</span>
+            </div>
+            <div *ngIf="!isLoading" class="empty-state">
+              <mat-icon>folder_off</mat-icon>
+              <span>لا توجد محلات مسجلة</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
+</div>

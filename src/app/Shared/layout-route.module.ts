@@ -35,6 +35,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'souvenirs',
+        loadChildren: () =>
+          import('../Souvenirs/souvenirs.module').then(
+            (m) => m.SouvenirsModule,
+          ),
+      },
+      {
         path: 'statistics',
         loadComponent: () =>
           import('../Dashboard/Components/dashboard/dashboard.component').then(

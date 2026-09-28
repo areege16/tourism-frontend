@@ -1,0 +1,448 @@
+<div class="clay-dialog" dir="rtl">
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>edit</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل بيانات المحل</h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div class="clay-dialog-body" *ngIf="loading">
+    <div class="clay-loading">
+      <mat-icon class="spin-icon">autorenew</mat-icon>
+      <span>جارِ تحميل بيانات المحل...</span>
+    </div>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body">
+      <!-- ============ Basic Info ============ -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>info</mat-icon> البيانات الأساسية
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الاسم (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameAr"
+              placeholder="اسم المحل بالعربي"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('nameAr')?.hasError('required') &&
+                (form.get('nameAr')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Name (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="name"
+              placeholder="Shop name"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('name')?.hasError('required') &&
+                (form.get('name')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>التصنيف</label>
+          <select class="clay-input-field" formControlName="category">
+            <option value="" disabled>اختر التصنيف</option>
+            <option *ngFor="let c of categories" [value]="c.key">
+              {{ c.nameAr }}
+            </option>
+          </select>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('category')?.hasError('required') &&
+              (form.get('category')?.touched || attemptedSave)
+            "
+          >
+            التصنيف مطلوب
+          </span>
+        </div>
+
+        <div class="field-group">
+          <label>الوصف (عربي)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="descriptionAr"
+          ></textarea>
+        </div>
+        <div class="field-group">
+          <label>Description (English)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="description"
+            dir="ltr"
+          ></textarea>
+        </div>
+      </section>
+
+      <!-- ============ Contact & Location ============ -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>place</mat-icon> العنوان والتواصل
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>العنوان (عربي)</label>
+            <input class="clay-input-field" formControlName="addressAr" />
+          </div>
+          <div class="field-group">
+            <label>Address (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="address"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الهاتف</label>
+            <input class="clay-input-field" formControlName="phone" dir="ltr" />
+          </div>
+          <div class="field-group">
+            <label>البريد الإلكتروني</label>
+            <input class="clay-input-field" formControlName="email" dir="ltr" />
+            <span
+              class="error-text"
+              *ngIf="form.get('email')?.hasError('email')"
+            >
+              البريد الإلكتروني غير صحيح
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>خط العرض (Latitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="latitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('latitude')?.hasError('min') ||
+                form.get('latitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -90 و 90
+            </span>
+          </div>
+          <div class="field-group">
+            <label>خط الطول (Longitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="longitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('longitude')?.hasError('min') ||
+                form.get('longitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -180 و 180
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>المسافة (كم)</label>
+          <input
+            class="clay-input-field"
+            type="number"
+            step="0.1"
+            min="0"
+            formControlName="distanceKm"
+            dir="ltr"
+          />
+          <span
+            class="error-text"
+            *ngIf="form.get('distanceKm')?.hasError('min')"
+          >
+            المسافة لا يمكن أن تكون سالبة
+          </span>
+        </div>
+      </section>
+
+      <!-- ============ Operating Info ============ -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>schedule</mat-icon> معلومات التشغيل
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>مواعيد العمل (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHoursAr"
+              placeholder="يومياً من 9 صباحاً - 9 مساءً"
+            />
+          </div>
+          <div class="field-group">
+            <label>Opening Hours (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHours"
+              placeholder="Daily 9:00 AM - 9:00 PM"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>نطاق الأسعار</label>
+            <select class="clay-input-field" formControlName="priceRange">
+              <option [ngValue]="null">غير محدد</option>
+              <option *ngFor="let p of priceRanges" [value]="p.value">
+                {{ p.label }}
+              </option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label>التقييم (0 - 5)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              formControlName="rating"
+              dir="ltr"
+            />
+            <span class="error-text" *ngIf="form.get('rating')?.hasError('max')"
+              >التقييم لا يمكن أن يزيد عن 5</span
+            >
+            <span class="error-text" *ngIf="form.get('rating')?.hasError('min')"
+              >التقييم لا يمكن أن يقل عن 0</span
+            >
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>عدد التقييمات</label>
+          <input
+            class="clay-input-field"
+            type="number"
+            min="0"
+            formControlName="reviewCount"
+            dir="ltr"
+          />
+          <span
+            class="error-text"
+            *ngIf="form.get('reviewCount')?.hasError('min')"
+          >
+            عدد التقييمات لا يمكن أن يكون سالبًا
+          </span>
+        </div>
+
+        <div class="radio-group-field" *ngFor="let f of booleanFields">
+          <label class="radio-label">{{ f.label }}</label>
+          <div class="radio-options">
+            <label class="radio-item">
+              <input
+                type="radio"
+                [formControlName]="f.control"
+                [value]="true"
+              />
+              <span>نعم</span>
+            </label>
+            <label class="radio-item">
+              <input
+                type="radio"
+                [formControlName]="f.control"
+                [value]="false"
+              />
+              <span>لا</span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ Specialties ============ -->
+      <section class="form-section">
+        <h3 class="section-title"><mat-icon>star</mat-icon> التخصصات</h3>
+
+        <div formArrayName="specialties" class="dynamic-list">
+          <div
+            class="dynamic-row"
+            *ngFor="let sp of specialties.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="field-group">
+              <input
+                class="clay-input-field"
+                formControlName="ar"
+                placeholder="التخصص (عربي)"
+              />
+            </div>
+            <div class="field-group">
+              <input
+                class="clay-input-field"
+                formControlName="en"
+                placeholder="Specialty (English)"
+                dir="ltr"
+              />
+            </div>
+            <button
+              type="button"
+              class="btn-delete-row"
+              (click)="removeSpecialty(i)"
+              title="حذف"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-add-item" (click)="addSpecialty()">
+          <mat-icon>add</mat-icon>
+          إضافة تخصص
+        </button>
+      </section>
+
+      <!-- ============ Main Image ============ -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>image</mat-icon> الصورة الرئيسية
+        </h3>
+
+        <div class="image-upload-wrapper">
+          <div class="image-preview-box">
+            <img
+              *ngIf="mainImagePreview"
+              [src]="mainImagePreview"
+              alt="Main image preview"
+            />
+            <div class="placeholder-icon" *ngIf="!mainImagePreview">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+
+          <label class="btn-upload-label">
+            <mat-icon>upload</mat-icon>
+            {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onMainImageSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+
+      <!-- ============ Gallery ============ -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>photo_library</mat-icon> معرض الصور
+        </h3>
+
+        <div class="gallery-grid">
+          <!-- الصور الحالية -->
+          <div
+            class="gallery-thumb"
+            *ngFor="let img of existingImages; let i = index"
+          >
+            <img [src]="fullUrl(img)" alt="Gallery image" />
+            <button
+              type="button"
+              class="btn-remove-thumb"
+              (click)="removeExistingImage(i)"
+              title="حذف"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <!-- الصور الجديدة (لسه متحفظتش) -->
+          <div
+            class="gallery-thumb"
+            *ngFor="let preview of newImagesPreviews; let i = index"
+          >
+            <img [src]="preview" alt="New gallery image" />
+            <button
+              type="button"
+              class="btn-remove-thumb"
+              (click)="removeNewImage(i)"
+              title="حذف"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <label class="gallery-add-card">
+            <mat-icon>add_photo_alternate</mat-icon>
+            إضافة صور
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              (change)="onGalleryFilesSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="saving">
+        <mat-icon *ngIf="!saving">save</mat-icon>
+        <mat-icon *ngIf="saving" class="spin-icon">autorenew</mat-icon>
+        {{ saving ? "جارِ الحفظ..." : "حفظ التعديلات" }}
+      </button>
+      <button
+        type="button"
+        class="btn-dialog-cancel"
+        (click)="onCancel()"
+        [disabled]="saving"
+      >
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>
