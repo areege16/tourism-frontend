@@ -12,6 +12,7 @@ import { SouvenirProduct } from '../../Models/souvenir-shop';
 import { getFullImageUrl as resolveFullImageUrl } from '../../../Shared/Models/getImageUrl';
 import { ConfirmDialogComponent } from '../../../Shared/Components/confirm-dialog/confirm-dialog.component';
 import { CreateProductComponent } from '../create-product/create-product.component';
+import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
   selector: 'app-shop-products',
@@ -24,6 +25,7 @@ export class ShopProductsComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<ShopProductsComponent>);
   private snackBar = inject(MatSnackBar);
 
+  displayedColumns: string[] = ['index', 'name', 'price', 'stock', 'actions'];
   products: SouvenirProduct[] = [];
   isLoading = false;
   failedImages = new Set<string>();
@@ -106,6 +108,15 @@ export class ShopProductsComponent implements OnInit {
           });
         },
       });
+    });
+  }
+
+  openProductDetails(product: SouvenirProduct): void {
+    this.dialog.open(ProductDetailsComponent, {
+      width: '700px',
+      maxWidth: '95vw',
+      panelClass: 'clay-dialog',
+      data: { product },
     });
   }
 

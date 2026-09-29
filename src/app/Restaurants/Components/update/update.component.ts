@@ -1,18 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormArray,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogModule,
 } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { RestaurantService } from '../../Services/restaurant.service';
@@ -21,8 +17,6 @@ import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-restaurant-update',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatIconModule],
   templateUrl: './update.component.html',
   styleUrl: './update.component.scss',
 })
@@ -60,8 +54,14 @@ export class UpdateComponent implements OnInit {
       nameAr: ['', Validators.required],
       descriptionEn: ['', Validators.required],
       descriptionAr: ['', Validators.required],
-      latitude: [0, [Validators.required, Validators.min(-90), Validators.max(90)]],
-      longitude: [0, [Validators.required, Validators.min(-180), Validators.max(180)]],
+      latitude: [
+        0,
+        [Validators.required, Validators.min(-90), Validators.max(90)],
+      ],
+      longitude: [
+        0,
+        [Validators.required, Validators.min(-180), Validators.max(180)],
+      ],
       rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
       reviewCount: [0, [Validators.required, Validators.min(0)]],
       cuisineTypeEn: ['', Validators.required],
@@ -96,9 +96,13 @@ export class UpdateComponent implements OnInit {
         if (res.success && res.data) {
           this.patchForm(res.data);
         } else {
-          this.snackBar.open(res.message || 'تعذر تحميل بيانات المطعم', 'إغلاق', {
-            duration: 3500,
-          });
+          this.snackBar.open(
+            res.message || 'تعذر تحميل بيانات المطعم',
+            'إغلاق',
+            {
+              duration: 3500,
+            },
+          );
         }
         this.loading = false;
       },
@@ -202,7 +206,8 @@ export class UpdateComponent implements OnInit {
     files.forEach((file) => {
       this.newGalleryFiles.push(file);
       const reader = new FileReader();
-      reader.onload = () => this.newGalleryPreviews.push(reader.result as string);
+      reader.onload = () =>
+        this.newGalleryPreviews.push(reader.result as string);
       reader.readAsDataURL(file);
     });
 

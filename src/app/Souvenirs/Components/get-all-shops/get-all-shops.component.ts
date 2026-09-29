@@ -151,8 +151,8 @@ export class GetAllShopsComponent implements OnInit {
 
   openProducts(shop: SouvenirShop): void {
     this.dialog.open(ShopProductsComponent, {
-      width: '760px',
-      maxWidth: '95vw',
+      width: '1000px',
+      maxWidth: '150vw',
       panelClass: 'clay-dialog',
       data: { shopId: shop.id, shopName: shop.nameAr },
     });

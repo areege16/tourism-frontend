@@ -1,9 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { Photographer } from '../../Models/photographer';
@@ -16,14 +12,6 @@ import { CreateComponent } from '../create/create.component';
 
 @Component({
   selector: 'app-get-all-photographers',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTableModule,
-    MatTooltipModule,
-  ],
   templateUrl: './get-all-photographers.component.html',
   styleUrl: './get-all-photographers.component.scss',
 })

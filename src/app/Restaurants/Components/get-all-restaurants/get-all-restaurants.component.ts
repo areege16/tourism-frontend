@@ -16,14 +16,6 @@ import { ConfirmDialogComponent } from '../../../Shared/Components/confirm-dialo
 
 @Component({
   selector: 'app-get-all-restaurants',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatDialogModule,
-    MatIconModule,
-    MatTableModule,
-    MatTooltipModule,
-  ],
   templateUrl: './get-all-restaurants.component.html',
   styleUrl: './get-all-restaurants.component.scss',
 })

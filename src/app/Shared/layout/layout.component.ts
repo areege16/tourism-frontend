@@ -35,13 +35,6 @@ export class LayoutComponent {
       icon: 'storefront',
       route: '/dashboard/souvenirs',
     },
-    { label: 'احصائيات', icon: 'query_stats', route: '/dashboard/statistics' },
-    { label: 'تقارير', icon: 'summarize', route: '/dashboard/reports' },
-    {
-      label: 'الإعدادات والمستخدمين',
-      icon: 'settings',
-      route: '/dashboard/register',
-    },
   ];
   toggleDrawer(): void {
     this.isCollapsed = !this.isCollapsed;

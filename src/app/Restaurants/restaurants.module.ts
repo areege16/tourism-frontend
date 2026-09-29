@@ -11,10 +11,14 @@ import { GetAllRestaurantsComponent } from './Components/get-all-restaurants/get
 import { CreateComponent } from './Components/create/create.component';
 import { DetailsComponent } from './Components/details/details.component';
 import { UpdateComponent } from './Components/update/update.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     DetailsComponent,
+    GetAllRestaurantsComponent,
+    CreateComponent,
+    UpdateComponent,
   ],
   imports: [
     CommonModule,
@@ -24,9 +28,7 @@ import { UpdateComponent } from './Components/update/update.component';
     MatTooltipModule,
     MatDialogModule,
     MatButtonModule,
-    GetAllRestaurantsComponent,
-    CreateComponent,
-    UpdateComponent, 
+    ReactiveFormsModule,
   ],
 })
 export class RestaurantsModule {}

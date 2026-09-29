@@ -1,32 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormArray,
   Validators,
-  ReactiveFormsModule,
-  AbstractControl,
-  ValidationErrors,
 } from '@angular/forms';
-import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AttractionService } from '../../Services/attraction.service';
+import { minLengthArray } from '../../../Shared/utils/validators.util';
 
-function minLengthArray(min: number) {
-  return (control: AbstractControl): ValidationErrors | null => {
-    if (control.value && control.value.length >= min) {
-      return null;
-    }
-    return { minLengthArray: { requiredLength: min } };
-  };
-}
 @Component({
   selector: 'app-create',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatIconModule],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })

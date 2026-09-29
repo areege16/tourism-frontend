@@ -1,5 +1,4 @@
-import { LocalizedText } from "../../Shared/Models/localizedText";
-
+import { LocalizedText } from '../../Shared/Models/localizedText';
 
 export interface Attraction {
   id: string;

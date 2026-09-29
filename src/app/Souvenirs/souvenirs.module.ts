@@ -14,9 +14,18 @@ import { DetailsComponent } from './Components/details/details.component';
 import { UpdateComponent } from './Components/update/update.component';
 import { ShopProductsComponent } from './Components/shop-products/shop-products.component';
 import { CreateProductComponent } from './Components/create-product/create-product.component';
+import { ProductDetailsComponent } from './Components/product-details/product-details.component';
 
-@NgModule({
-  declarations: [GetAllShopsComponent, CreateComponent, DetailsComponent,UpdateComponent, ShopProductsComponent, CreateProductComponent],
+@NgModule({  
+  declarations: [
+    GetAllShopsComponent,
+    CreateComponent,
+    DetailsComponent,
+    UpdateComponent,
+    ShopProductsComponent,
+    CreateProductComponent,
+    ProductDetailsComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

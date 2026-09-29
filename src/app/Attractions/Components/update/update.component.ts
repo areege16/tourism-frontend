@@ -1,18 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
   FormArray,
   Validators,
-  ReactiveFormsModule,
 } from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
-  MatDialogModule,
 } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AttractionService } from '../../Services/attraction.service';
@@ -21,9 +17,7 @@ import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-update',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, MatDialogModule, MatIconModule],
-  templateUrl: './update.component.html',
+   templateUrl: './update.component.html',
   styleUrl: './update.component.scss',
 })
 export class UpdateComponent implements OnInit {
