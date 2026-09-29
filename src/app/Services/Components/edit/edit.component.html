@@ -1,0 +1,276 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تعديل الخدمة</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-grid">
+      <div class="field-block">
+        <label class="field-label" for="service-edit-name-en">اسم الخدمة (EN)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-name-en" matInput formControlName="name" placeholder="اسم الخدمة (EN)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-name-ar">اسم الخدمة (AR)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-name-ar" matInput formControlName="nameAr" placeholder="اسم الخدمة (AR)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-type-en">النوع (EN)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-type-en" matInput formControlName="type" placeholder="النوع (EN)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-type-ar">النوع (AR)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-type-ar" matInput formControlName="typeAr" placeholder="النوع (AR)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-description-en">الوصف (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="service-edit-description-en" matInput formControlName="description" placeholder="الوصف (EN)"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-description-ar">الوصف (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea id="service-edit-description-ar" matInput formControlName="descriptionAr" placeholder="الوصف (AR)"></textarea>
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-address-en">العنوان (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input id="service-edit-address-en" matInput formControlName="address" placeholder="العنوان (EN)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-address-ar">العنوان (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input id="service-edit-address-ar" matInput formControlName="addressAr" placeholder="العنوان (AR)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-phone">الهاتف</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-phone" matInput formControlName="phone" placeholder="الهاتف" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-email">البريد الإلكتروني</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-email" matInput type="email" formControlName="email" placeholder="البريد الإلكتروني" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-image">الصورة الحالية</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-image" matInput formControlName="image" placeholder="الرابط أو اسم الصورة" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-image-file">رفع صورة جديدة</label>
+        <input id="service-edit-image-file" type="file" accept="image/*" (change)="onFileChange($event)" />
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-longitude">خط الطول</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-longitude" matInput type="number" formControlName="longitude" placeholder="خط الطول" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-latitude">خط العرض</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-latitude" matInput type="number" formControlName="latitude" placeholder="خط العرض" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-distance">المسافة (كم)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-distance" matInput type="number" formControlName="distanceKm" placeholder="المسافة (كم)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-rating">التقييم</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-rating" matInput type="number" min="0" max="5" formControlName="rating" placeholder="التقييم" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-comments">عدد التعليقات</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-comments" matInput type="number" formControlName="commentsCount" placeholder="عدد التعليقات" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-specialty">التخصص</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-specialty" matInput formControlName="specialty" placeholder="التخصص" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-specialty-ar">التخصص (AR)</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-specialty-ar" matInput formControlName="specialtyAr" placeholder="التخصص (AR)" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-features">المزايا (EN)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input id="service-edit-features" matInput formControlName="features" placeholder="Feature 1, Feature 2" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block full-width">
+        <label class="field-label" for="service-edit-features-ar">المزايا (AR)</label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input id="service-edit-features-ar" matInput formControlName="featuresAr" placeholder="ميزة 1, ميزة 2" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-mon-en">ساعات العمل EN - الاثنين</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-mon-en" matInput formControlName="openingHoursEnMonday" placeholder="ساعات العمل EN - الاثنين" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-mon-ar">ساعات العمل AR - الاثنين</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-mon-ar" matInput formControlName="openingHoursArMonday" placeholder="ساعات العمل AR - الاثنين" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-tue-en">ساعات العمل EN - الثلاثاء</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-tue-en" matInput formControlName="openingHoursEnTuesday" placeholder="ساعات العمل EN - الثلاثاء" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-tue-ar">ساعات العمل AR - الثلاثاء</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-tue-ar" matInput formControlName="openingHoursArTuesday" placeholder="ساعات العمل AR - الثلاثاء" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-wed-en">ساعات العمل EN - الأربعاء</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-wed-en" matInput formControlName="openingHoursEnWednesday" placeholder="ساعات العمل EN - الأربعاء" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-wed-ar">ساعات العمل AR - الأربعاء</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-wed-ar" matInput formControlName="openingHoursArWednesday" placeholder="ساعات العمل AR - الأربعاء" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-thu-en">ساعات العمل EN - الخميس</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-thu-en" matInput formControlName="openingHoursEnThursday" placeholder="ساعات العمل EN - الخميس" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-thu-ar">ساعات العمل AR - الخميس</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-thu-ar" matInput formControlName="openingHoursArThursday" placeholder="ساعات العمل AR - الخميس" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-fri-en">ساعات العمل EN - الجمعة</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-fri-en" matInput formControlName="openingHoursEnFriday" placeholder="ساعات العمل EN - الجمعة" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-fri-ar">ساعات العمل AR - الجمعة</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-fri-ar" matInput formControlName="openingHoursArFriday" placeholder="ساعات العمل AR - الجمعة" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-sat-en">ساعات العمل EN - السبت</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-sat-en" matInput formControlName="openingHoursEnSaturday" placeholder="ساعات العمل EN - السبت" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-sat-ar">ساعات العمل AR - السبت</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-sat-ar" matInput formControlName="openingHoursArSaturday" placeholder="ساعات العمل AR - السبت" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-sun-en">ساعات العمل EN - الأحد</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-sun-en" matInput formControlName="openingHoursEnSunday" placeholder="ساعات العمل EN - الأحد" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block">
+        <label class="field-label" for="service-edit-opening-sun-ar">ساعات العمل AR - الأحد</label>
+        <mat-form-field appearance="outline">
+          <input id="service-edit-opening-sun-ar" matInput formControlName="openingHoursArSunday" placeholder="ساعات العمل AR - الأحد" />
+        </mat-form-field>
+      </div>
+
+      <div class="field-block checkbox-block">
+        <mat-checkbox formControlName="is24h">24 ساعة</mat-checkbox>
+      </div>
+      <div class="field-block checkbox-block">
+        <mat-checkbox formControlName="isEmergency">طوارئ</mat-checkbox>
+      </div>
+      <div class="field-block checkbox-block">
+        <mat-checkbox formControlName="isFeatured">مميز</mat-checkbox>
+      </div>
+      <div class="field-block checkbox-block">
+        <mat-checkbox formControlName="hasDelivery">التوصيل</mat-checkbox>
+      </div>
+      <div class="field-block checkbox-block">
+        <mat-checkbox formControlName="acceptsInsurance">التأمين</mat-checkbox>
+      </div>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+      <button type="submit" class="clay-btn-primary">حفظ التعديلات</button>
+    </div>
+  </form>
+</div>

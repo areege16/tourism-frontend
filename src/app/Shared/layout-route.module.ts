@@ -35,6 +35,34 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'blogposts',
+        loadChildren: () =>
+          import('../BlogPosts/blog-posts.module').then(
+            (m) => m.BlogPostsModule,
+          ),
+      },
+      {
+        path: 'tourguides',
+        loadChildren: () =>
+          import('../TourGuides/tour-guides.module').then(
+            (m) => m.TourGuidesModule,
+          ),
+      },
+      {
+        path: 'services',
+        loadChildren: () =>
+          import('../Services/services.module').then(
+            (m) => m.ServicesModule,
+          ),
+      },
+      {
+        path: 'tourisminfo',
+        loadChildren: () =>
+          import('../TourismInfo/tourism-info.module').then(
+            (m) => m.TourismInfoModule,
+          ),
+      },
+      {
         path: 'souvenirs',
         loadChildren: () =>
           import('../Souvenirs/souvenirs.module').then(

@@ -20,6 +20,10 @@ export class LayoutComponent {
       route: '/dashboard/attractions',
     },
     { label: 'الفنادق', icon: 'hotel', route: '/dashboard/hotels' },
+    { label: 'المدونات', icon: 'article', route: '/dashboard/blogposts' },
+    { label: 'المرشدون السياحيون', icon: 'person_pin', route: '/dashboard/tourguides' },
+    { label: 'الخدمات', icon: 'build', route: '/dashboard/services' },
+    { label: 'معلومات السياحة', icon: 'travel_explore', route: '/dashboard/tourisminfo' },
     {
       label: 'المصورون',
       icon: 'camera_alt',

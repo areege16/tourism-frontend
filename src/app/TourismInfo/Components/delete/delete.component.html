@@ -1,0 +1,9 @@
+<div class="delete-dialog" dir="rtl">
+  <h3>تأكيد الحذف</h3>
+  <p>هل أنت متأكد من حذف <strong>{{ title }}</strong>؟</p>
+
+  <div class="actions">
+    <button mat-stroked-button color="primary" (click)="close()">إلغاء</button>
+    <button mat-flat-button color="warn" (click)="confirm()">حذف</button>
+  </div>
+</div>

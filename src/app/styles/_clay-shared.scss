@@ -186,3 +186,21 @@
     transform: rotate(360deg);
   }
 }
+/* إلغاء حواف وخلفية Angular Material بشكل كامل على مستوى الطبقة الخارجية */
+.cdk-overlay-pane:has(.clay-dialog-shell) {
+  width: auto !important;
+  max-width: fit-content !important;
+}
+
+.cdk-overlay-pane:has(.clay-dialog-shell) .mat-mdc-dialog-container {
+  padding: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.cdk-overlay-pane:has(.clay-dialog-shell) .mdc-dialog__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
