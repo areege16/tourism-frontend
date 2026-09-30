@@ -15,14 +15,60 @@ const routes: Routes = [
             (m) => m.AttractionsModule,
           ),
       },
-        {
+      {
         path: 'hotels',
         loadChildren: () =>
-          import('../Hotels/hotel.module').then(
-            (m) => m.HotelModule,
+          import('../Hotels/hotel.module').then((m) => m.HotelModule),
+      },
+      {
+        path: 'photographers',
+        loadChildren: () =>
+          import('../Photographers/photographers.module').then(
+            (m) => m.PhotographersModule,
           ),
       },
-      
+      {
+        path: 'restaurants',
+        loadChildren: () =>
+          import('../Restaurants/restaurants.module').then(
+            (m) => m.RestaurantsModule,
+          ),
+      },
+      {
+        path: 'blogposts',
+        loadChildren: () =>
+          import('../BlogPosts/blog-posts.module').then(
+            (m) => m.BlogPostsModule,
+          ),
+      },
+      {
+        path: 'tourguides',
+        loadChildren: () =>
+          import('../TourGuides/tour-guides.module').then(
+            (m) => m.TourGuidesModule,
+          ),
+      },
+      {
+        path: 'services',
+        loadChildren: () =>
+          import('../Services/services.module').then(
+            (m) => m.ServicesModule,
+          ),
+      },
+      {
+        path: 'tourisminfo',
+        loadChildren: () =>
+          import('../TourismInfo/tourism-info.module').then(
+            (m) => m.TourismInfoModule,
+          ),
+      },
+      {
+        path: 'souvenirs',
+        loadChildren: () =>
+          import('../Souvenirs/souvenirs.module').then(
+            (m) => m.SouvenirsModule,
+          ),
+      },
       {
         path: 'statistics',
         loadComponent: () =>

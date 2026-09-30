@@ -1,0 +1,105 @@
+@import "../../../styles/clay-shared";
+@import "../../../styles/clay-table";
+
+// غيّر الألوان دي لو عندك variables في clay-shared
+$chip-bg: var(--clay-surface, #f1f4f9);
+$chip-text: var(--clay-text, #4a5568);
+$chip-accent: var(--clay-accent, #2fb98d); // mint زي الـ stat card
+$chip-accent-dark: var(--clay-accent-dark, #1f9a73);
+$chip-shadow-dark: rgba(163, 177, 198, 0.55);
+$chip-shadow-light: rgba(255, 255, 255, 0.95);
+
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px 18px;
+  margin-bottom: 8px;
+  border-bottom: 1px dashed rgba(163, 177, 198, 0.4);
+
+  // على الموبايل: سطر واحد وسكرول أفقي
+  @media (max-width: 768px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 14px;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.filter-chip {
+  all: unset; // يشيل ستايل الـ button الافتراضي
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 10px 18px;
+  border-radius: 18px;
+  font-family: inherit;
+  font-size: 0.8em;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  color: $chip-text;
+  background: $chip-bg;
+  cursor: pointer;
+  user-select: none;
+  box-shadow:
+    6px 6px 12px $chip-shadow-dark,
+    -6px -6px 12px $chip-shadow-light;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+
+  mat-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 20px;
+    color: $chip-accent;
+    transition: color 0.2s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      8px 8px 16px $chip-shadow-dark,
+      -8px -8px 16px $chip-shadow-light;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow:
+      inset 4px 4px 8px $chip-shadow-dark,
+      inset -4px -4px 8px $chip-shadow-light;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $chip-accent;
+    outline-offset: 3px;
+  }
+
+  &.active {
+    color: #fff;
+    background: linear-gradient(145deg, $chip-accent, $chip-accent-dark);
+    box-shadow:
+      inset 3px 3px 6px rgba(0, 0, 0, 0.18),
+      inset -3px -3px 6px rgba(255, 255, 255, 0.2),
+      0 6px 14px rgba(47, 185, 141, 0.35);
+
+    mat-icon {
+      color: #fff;
+    }
+  }
+}
+
+.table-card .clay-mat-table .action-buttons-group .action-icon-btn.products mat-icon {
+  color: #7a8fd6; // periwinkle
+}

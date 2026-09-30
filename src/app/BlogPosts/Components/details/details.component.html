@@ -1,0 +1,89 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تفاصيل المنشور</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="details-body" *ngIf="post">
+    <div class="hero-image-wrap" *ngIf="post.imageUrl">
+      <img [src]="getImage(post.imageUrl)" [alt]="getLocalizedText(post.title)" />
+    </div>
+
+    <div class="meta-row">
+      <span class="pill">{{ getLocalizedText(post.category) }}</span>
+      <span class="pill">{{ post.readTime }} دقيقة</span>
+      <span class="pill">{{ post.publishDate | date: 'dd/MM/yyyy' }}</span>
+      <span class="pill" *ngIf="post.featured">مميز</span>
+    </div>
+
+    <div class="title-block">
+      <span class="label">العنوان</span>
+      <h4>{{ getLocalizedText(post.title) }}</h4>
+    </div>
+
+    <div class="summary-block">
+      <span class="label">الملخص</span>
+      <p class="excerpt">{{ getLocalizedText(post.excerpt) }}</p>
+    </div>
+
+    <div class="content-block">
+      <span class="label">المحتوى</span>
+      <div class="content-box">
+        <h5>English</h5>
+        <p>{{ getContentText(post.content) }}</p>
+        <h5>العربية</h5>
+        <p>{{ getLocalizedText(post.content) }}</p>
+      </div>
+    </div>
+
+    <div class="author-box">
+      <div class="avatar">
+        <mat-icon>person</mat-icon>
+      </div>
+      <div class="author-meta">
+        <strong>{{ getLocalizedText(post.author) }}</strong>
+        <small>{{ getStatusLabel(post.status) }}</small>
+      </div>
+    </div>
+
+    <div class="meta-grid">
+      <div class="info-card">
+        <span class="label">المؤلف</span>
+        <strong>{{ getLocalizedText(post.author) }}</strong>
+      </div>
+
+      <div class="info-card">
+        <span class="label">التصنيف</span>
+        <strong>{{ getLocalizedText(post.category) }}</strong>
+      </div>
+
+      <div class="info-card">
+        <span class="label">تاريخ النشر</span>
+        <strong>{{ post.publishDate | date: 'dd/MM/yyyy' }}</strong>
+      </div>
+
+      <div class="info-card">
+        <span class="label">وقت القراءة</span>
+        <strong>{{ post.readTime }} دقيقة</strong>
+      </div>
+    </div>
+
+    <div class="tags-block" *ngIf="getTags().length">
+      <span class="label">Tags</span>
+      <div class="tags-row">
+        <span class="tag" *ngFor="let tag of getTags()">{{ tag }}</span>
+      </div>
+    </div>
+
+    <div class="featured-box" *ngIf="post.featured">
+      <span class="label">Featured</span>
+      <strong>مميز</strong>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button type="button" class="clay-btn-primary" (click)="close()">إغلاق</button>
+  </div>
+</div>

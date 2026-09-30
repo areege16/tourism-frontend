@@ -1,0 +1,122 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تعديل المرشد السياحي</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
+    <div class="form-grid two-col">
+      <mat-form-field appearance="outline">
+        <mat-label>الاسم (EN)</mat-label>
+        <input matInput formControlName="nameEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>الاسم (AR)</mat-label>
+        <input matInput formControlName="nameAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>السيرة (EN)</mat-label>
+        <textarea matInput formControlName="bioEn"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>السيرة (AR)</mat-label>
+        <textarea matInput formControlName="bioAr"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>الهاتف (EN)</mat-label>
+        <input matInput formControlName="phoneEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>الهاتف (AR)</mat-label>
+        <input matInput formControlName="phoneAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>البريد (EN)</mat-label>
+        <input matInput type="email" formControlName="emailEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>البريد (AR)</mat-label>
+        <input matInput formControlName="emailAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>اللغات</mat-label>
+        <input matInput formControlName="languages" placeholder="إنجليزي, عربي, فرنسي" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>رابط الصورة</mat-label>
+        <input matInput formControlName="imageUrl" />
+      </mat-form-field>
+
+      <div class="upload-wrap full-width">
+        <label class="upload-label">رفع صورة</label>
+        <input type="file" accept="image/*" (change)="onFileChange($event)" />
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>فيسبوك</mat-label>
+        <input matInput formControlName="facebook" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>إنستغرام</mat-label>
+        <input matInput formControlName="instagram" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>تويتر</mat-label>
+        <input matInput formControlName="twitter" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>تيك توك</mat-label>
+        <input matInput formControlName="tiktok" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>يوتيوب</mat-label>
+        <input matInput formControlName="youtube" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Latitude</mat-label>
+        <input matInput type="number" formControlName="latitude" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Longitude</mat-label>
+        <input matInput type="number" formControlName="longitude" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>عنوان (EN)</mat-label>
+        <input matInput formControlName="addressEn" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>عنوان (AR)</mat-label>
+        <input matInput formControlName="addressAr" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>التقييم</mat-label>
+        <input matInput type="number" min="0" max="5" formControlName="rating" />
+      </mat-form-field>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+      <button type="submit" class="clay-btn-primary">تحديث</button>
+    </div>
+  </form>
+</div>

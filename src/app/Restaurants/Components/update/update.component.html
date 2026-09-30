@@ -1,0 +1,286 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>edit</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل بيانات المطعم</h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body" *ngIf="loading">
+    <div class="clay-loading">
+      <mat-icon class="spin-icon">autorenew</mat-icon>
+      <span>جارِ تحميل بيانات المطعم...</span>
+    </div>
+  </div>
+
+  <form *ngIf="!loading" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body">
+      <!-- ===================== Basic Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>info</mat-icon>
+          البيانات الأساسية
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الاسم (عربي)</label>
+            <input class="clay-input-field" formControlName="nameAr" />
+          </div>
+          <div class="field-group">
+            <label>Name (English)</label>
+            <input class="clay-input-field" formControlName="nameEn" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>الوصف (عربي)</label>
+          <textarea class="clay-input-field textarea-field" rows="4" formControlName="descriptionAr"></textarea>
+        </div>
+        <div class="field-group">
+          <label>Description (English)</label>
+          <textarea class="clay-input-field textarea-field" rows="4" formControlName="descriptionEn" dir="ltr"></textarea>
+        </div>
+      </section>
+
+      <!-- ===================== Classification ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>restaurant_menu</mat-icon>
+          نوع المطبخ والسعر
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>نوع المطبخ (عربي)</label>
+            <input class="clay-input-field" formControlName="cuisineTypeAr" />
+          </div>
+          <div class="field-group">
+            <label>Cuisine Type (English)</label>
+            <input class="clay-input-field" formControlName="cuisineTypeEn" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الفئة السعرية (عربي)</label>
+            <input class="clay-input-field" formControlName="priceRangeAr" />
+          </div>
+          <div class="field-group">
+            <label>Price Range (English)</label>
+            <input class="clay-input-field" formControlName="priceRangeEn" dir="ltr" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Location ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>place</mat-icon>
+          الموقع
+        </h3>
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>خط العرض (Latitude)</label>
+            <input class="clay-input-field" type="number" step="any" formControlName="latitude" dir="ltr" />
+          </div>
+          <div class="field-group">
+            <label>خط الطول (Longitude)</label>
+            <input class="clay-input-field" type="number" step="any" formControlName="longitude" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>المنطقة/المركز (عربي)</label>
+            <input class="clay-input-field" formControlName="centerAr" />
+          </div>
+          <div class="field-group">
+            <label>Center (English)</label>
+            <input class="clay-input-field" formControlName="centerEn" dir="ltr" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Visit Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>schedule</mat-icon>
+          معلومات الزيارة
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>مواعيد العمل (عربي)</label>
+            <input class="clay-input-field" formControlName="openingHoursAr" />
+          </div>
+          <div class="field-group">
+            <label>Opening Hours (English)</label>
+            <input class="clay-input-field" formControlName="openingHoursEn" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>التقييم (0 - 5)</label>
+            <input class="clay-input-field" type="number" step="0.1" min="0" max="5" formControlName="rating" dir="ltr" />
+          </div>
+          <div class="field-group">
+            <label>عدد التقييمات</label>
+            <input class="clay-input-field" type="number" min="0" formControlName="reviewCount" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>رابط قائمة الطعام (Menu URL)</label>
+            <input class="clay-input-field" formControlName="menuUrl" dir="ltr" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Contact ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>call</mat-icon>
+          بيانات التواصل
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>رقم الهاتف (عربي)</label>
+            <input class="clay-input-field" formControlName="phoneAr" dir="ltr" />
+          </div>
+          <div class="field-group">
+            <label>Phone (English)</label>
+            <input class="clay-input-field" formControlName="phoneEn" dir="ltr" />
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>البريد الإلكتروني (اختياري)</label>
+          <input class="clay-input-field" formControlName="email" dir="ltr" />
+        </div>
+      </section>
+
+      <!-- ===================== Specialties ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>star</mat-icon>
+          التخصصات
+        </h3>
+
+        <div formArrayName="specialties" class="dynamic-list">
+          <div class="dynamic-row" *ngFor="let s of specialties.controls; let i = index" [formGroupName]="i">
+            <input class="clay-input-field" formControlName="ar" placeholder="التخصص (عربي)" />
+            <input class="clay-input-field" formControlName="en" placeholder="Specialty (English)" dir="ltr" />
+            <button type="button" class="btn-delete-row" (click)="removeSpecialty(i)" title="حذف">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-add-item" (click)="addSpecialty()">
+          <mat-icon>add</mat-icon>
+          إضافة تخصص
+        </button>
+      </section>
+
+      <!-- ===================== Features ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>check_circle</mat-icon>
+          المميزات
+        </h3>
+
+        <div formArrayName="features" class="dynamic-list">
+          <div class="dynamic-row" *ngFor="let feature of features.controls; let i = index" [formGroupName]="i">
+            <input class="clay-input-field" formControlName="ar" placeholder="الميزة (عربي)" />
+            <input class="clay-input-field" formControlName="en" placeholder="Feature (English)" dir="ltr" />
+            <button type="button" class="btn-delete-row" (click)="removeFeature(i)" title="حذف">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-add-item" (click)="addFeature()">
+          <mat-icon>add</mat-icon>
+          إضافة ميزة
+        </button>
+      </section>
+
+      <!-- ===================== Main Image ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>image</mat-icon>
+          الصورة الرئيسية
+        </h3>
+
+        <div class="image-upload-wrapper">
+          <div class="image-preview-box">
+            <img *ngIf="mainImagePreview" [src]="mainImagePreview" alt="Main image preview" />
+            <div class="placeholder-icon" *ngIf="!mainImagePreview">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+
+          <label class="btn-upload-label">
+            <mat-icon>upload</mat-icon>
+            {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
+            <input type="file" accept="image/*" hidden (change)="onMainImageSelected($event)" />
+          </label>
+        </div>
+      </section>
+
+      <!-- ===================== Gallery ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>photo_library</mat-icon>
+          معرض الصور
+        </h3>
+
+        <div class="gallery-grid">
+          <div class="gallery-thumb" *ngFor="let url of existingGalleryUrls; let i = index">
+            <img [src]="fullUrl(url)" alt="Gallery image" />
+            <button type="button" class="btn-remove-thumb" (click)="removeExistingGalleryImage(i)" title="حذف">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <div class="gallery-thumb" *ngFor="let preview of newGalleryPreviews; let i = index">
+            <img [src]="preview" alt="New gallery image" />
+            <button type="button" class="btn-remove-thumb" (click)="removeNewGalleryImage(i)" title="حذف">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <label class="gallery-add-card">
+            <mat-icon>add_photo_alternate</mat-icon>
+            إضافة صور
+            <input type="file" accept="image/*" multiple hidden (change)="onGalleryFilesSelected($event)" />
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="saving">
+        <mat-icon *ngIf="!saving">save</mat-icon>
+        <mat-icon *ngIf="saving" class="spin-icon">autorenew</mat-icon>
+        {{ saving ? "جارِ الحفظ..." : "حفظ التعديلات" }}
+      </button>
+      <button type="button" class="btn-dialog-cancel" (click)="onCancel()" [disabled]="saving">
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>

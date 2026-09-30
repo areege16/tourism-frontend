@@ -1,0 +1,84 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تفاصيل المرشد</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="details-body" *ngIf="guide; else loadingState">
+    <div class="hero-image-wrap" *ngIf="guide.imageUrl">
+      <img [src]="getImage(guide.imageUrl)" [alt]="getDisplayName()" />
+    </div>
+
+    <div class="meta-row">
+      <span class="pill">{{ getDisplayName() }}</span>
+      <span class="pill">التقييم: {{ guide.rating ?? 0 }}</span>
+    </div>
+
+    <div class="title-block">
+      <span class="label">الاسم</span>
+      <h4>{{ getDisplayName() }}</h4>
+    </div>
+
+    <div class="summary-block">
+      <span class="label">السيرة</span>
+      <p class="excerpt">{{ getDisplayBio() }}</p>
+    </div>
+
+    <div class="meta-grid">
+      <div class="info-card">
+        <span class="label">البريد</span>
+        <strong>{{ getDisplayEmail() }}</strong>
+      </div>
+
+      <div class="info-card">
+        <span class="label">الهاتف</span>
+        <strong>{{ getDisplayPhone() }}</strong>
+      </div>
+
+      <div class="info-card full-width">
+        <span class="label">اللغات</span>
+        <strong>{{ getLanguages().join(', ') || '—' }}</strong>
+      </div>
+
+      <div class="info-card full-width">
+        <span class="label">العنوان</span>
+        <strong>{{ getDisplayAddress() }}</strong>
+      </div>
+
+      <div class="info-card full-width">
+        <span class="label">الإحداثيات</span>
+        <strong>
+          {{ guide.location?.latitude ?? 0 }}, {{ guide.location?.longitude ?? 0 }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="social-block" *ngIf="guide.social">
+      <span class="label">وسائل التواصل</span>
+      <div class="social-row">
+        <a *ngIf="guide.social.facebook" [href]="guide.social.facebook" target="_blank" rel="noopener">Facebook</a>
+        <a *ngIf="guide.social.instagram" [href]="guide.social.instagram" target="_blank" rel="noopener">Instagram</a>
+        <a *ngIf="guide.social.twitter" [href]="guide.social.twitter" target="_blank" rel="noopener">Twitter</a>
+        <a *ngIf="guide.social.tiktok" [href]="guide.social.tiktok" target="_blank" rel="noopener">TikTok</a>
+        <a *ngIf="guide.social.youtube" [href]="guide.social.youtube" target="_blank" rel="noopener">YouTube</a>
+      </div>
+    </div>
+
+    <div class="tags-block" *ngIf="getLanguages().length">
+      <span class="label">اللغات</span>
+      <div class="tags-row">
+        <span class="tag" *ngFor="let language of getLanguages()">{{ language }}</span>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #loadingState>
+    <div class="loading-state">جارٍ تحميل التفاصيل...</div>
+  </ng-template>
+
+  <div class="dialog-actions">
+    <button type="button" class="clay-btn-primary" (click)="close()">إغلاق</button>
+  </div>
+</div>

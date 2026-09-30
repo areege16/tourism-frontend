@@ -8,14 +8,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { AttractionsRoutingModule } from './attractions-routing.module';
 import { GetAllAttractionsComponent } from './Components/get-all-attractions/get-all-attractions.component';
 import { DetailsComponent } from './Components/details/details.component';
+import { CreateComponent } from './Components/create/create.component';
+import { UpdateComponent } from './Components/update/update.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     GetAllAttractionsComponent,
-    // CreateComponent,
-    // EditComponent,
-    // DeleteComponent,
-    DetailsComponent
+    CreateComponent,
+    UpdateComponent,   
+    DetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { DetailsComponent } from './Components/details/details.component';
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    MatButtonModule
-  ]
+    MatButtonModule,
+     ReactiveFormsModule,
+  ],
 })
-export class AttractionsModule { }
+export class AttractionsModule {}

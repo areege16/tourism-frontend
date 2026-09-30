@@ -1,0 +1,106 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">{{ product.nameAr || "تفاصيل المنتج" }}</h2>
+        <p class="dialog-subtitle" *ngIf="product.categoryAr">
+          {{ product.categoryAr }}
+        </p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body">
+    <!-- الصور -->
+    <div class="gallery-section" *ngIf="allImages.length">
+      <img
+        *ngIf="activeImage && !hasImageError(activeImage)"
+        [src]="activeImage"
+        [alt]="product.nameAr"
+        class="main-image"
+        (error)="onImageError(activeImage)"
+      />
+      <div class="thumbnails-row" *ngIf="allImages.length > 1">
+        <img
+          *ngFor="let img of allImages"
+          [src]="getFullImageUrl(img)"
+          [alt]="product.nameAr"
+          (click)="setActiveImage(img)"
+          class="thumb-item"
+          [class.active]="activeImage === getFullImageUrl(img)"
+        />
+      </div>
+    </div>
+
+    <!-- الوصف -->
+    <div class="dialog-info-card" *ngIf="product.descriptionAr">
+      <mat-icon>info</mat-icon>
+      <p>{{ product.descriptionAr }}</p>
+    </div>
+
+    <div class="details-grid">
+      <div class="detail-item" *ngIf="product.price != null">
+        <mat-icon>payments</mat-icon>
+        <div>
+          <span class="detail-label">السعر</span>
+          <span class="detail-value" dir="ltr">
+            {{ product.price | number: "1.0-2" }} {{ product.currency }}
+          </span>
+        </div>
+      </div>
+
+      <div class="detail-item" *ngIf="product.materialAr">
+        <mat-icon>layers</mat-icon>
+        <div>
+          <span class="detail-label">الخامة</span>
+          <span class="detail-value">{{ product.materialAr }}</span>
+        </div>
+      </div>
+
+      <div class="detail-item" *ngIf="product.originAr">
+        <mat-icon>public</mat-icon>
+        <div>
+          <span class="detail-label">بلد المنشأ</span>
+          <span class="detail-value">{{ product.originAr }}</span>
+        </div>
+      </div>
+
+      <div class="detail-item" *ngIf="product.categoryAr">
+        <mat-icon>category</mat-icon>
+        <div>
+          <span class="detail-label">التصنيف</span>
+          <span class="detail-value">{{ product.categoryAr }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- الحالة -->
+    <div
+      class="features-section"
+      *ngIf="product.inStock != null || product.handmade != null"
+    >
+      <h4>المواصفات</h4>
+      <div class="features-chips">
+        <span class="feature-chip" *ngIf="product.inStock != null">
+          <mat-icon>{{ product.inStock ? "check_circle" : "cancel" }}</mat-icon>
+          {{ product.inStock ? "متوفر في المخزون" : "غير متوفر" }}
+        </span>
+        <span class="feature-chip" *ngIf="product.handmade">
+          <mat-icon>handyman</mat-icon> صناعة يدوية
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      إغلاق
+    </button>
+  </div>
+</div>

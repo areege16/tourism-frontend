@@ -1,0 +1,29 @@
+@import '../../../styles/dialog';
+
+.radio-group-field {
+  margin-bottom: 1rem;
+
+  .radio-label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+  }
+
+  .radio-options {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+
+    input[type='radio'] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+  }
+}
