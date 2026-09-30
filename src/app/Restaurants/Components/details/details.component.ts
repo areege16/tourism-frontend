@@ -2,7 +2,7 @@ import { Component, inject, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Restaurant } from '../../Models/restaurant';
 import { RestaurantService } from '../../Services/restaurant.service';
-import { apiUrl } from '../../../Shared/Env/env';
+import { getFullImageUrl as resolveFullImageUrl } from '../../../Shared/Models/getImageUrl';
 import { buildGoogleMapsUrl } from '../../../Shared/utils/maps.util';
 
 @Component({
@@ -44,10 +44,9 @@ export class DetailsComponent implements OnInit {
   }
 
   getFullImageUrl(path: string): string {
-    if (!path) return '';
-    return path.startsWith('http') ? path : `${apiUrl}${path}`;
+    return resolveFullImageUrl(path);
   }
-
+  
   setActiveImage(path: string): void {
     this.activeImage = this.getFullImageUrl(path);
   }
