@@ -481,3 +481,16 @@
     }
   }
 }
+
+.clay-input-field.is-invalid {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
+}
+
+.field-error {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 600;
+  margin-top: 0.2rem;
+}

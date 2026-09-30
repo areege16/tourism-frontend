@@ -7,12 +7,16 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HotelRouteModule } from './hotel-route.module';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DetailsComponent } from './Component/details/details.component';
+import { CreateComponent } from './Component/create/create.component';
+import { DeleteComponent } from './Component/delete/delete.component';
+import { UpdateComponent } from './Component/update/update.component';
 
 
 
 @NgModule({
-  declarations: [ ListComponent],
+  declarations: [ ListComponent,DetailsComponent,CreateComponent,UpdateComponent,DeleteComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -21,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     MatDialogModule,
     MatButtonModule,
     HotelRouteModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [ListComponent]
 })

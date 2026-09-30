@@ -1,1 +1,51 @@
-<p>delete works!</p>
+<div class="clay-dialog" dir="rtl">
+  <!-- هيدر الديالوج -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <!-- استخدام كلاس peach المخصص لعمليات الحذف والتحذير -->
+      <div class="dialog-header-icon peach">
+        <mat-icon>delete_forever</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تأكيد حذف الفندق</h2>
+        <p class="dialog-subtitle">إجراء نهائي لإزالة البيانات والصور المرتبطة</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()" aria-label="إغلاق" [disabled]="isDeleting">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- محتوى التأكيد -->
+  <div mat-dialog-content class="clay-dialog-body delete-dialog-content">
+    <div class="dialog-info-card warning-card">
+      <mat-icon>warning_amber</mat-icon>
+      <p>تنبيه: سيؤدي هذا الإجراء إلى حذف جميع تفاصيل الفندق، بالإضافة إلى حذف الصورة الرئيسية وصور المعرض من الخادم نهائياً.</p>
+    </div>
+
+    <p class="confirmation-message">
+      هل أنت متأكد من رغبتك في حذف الفندق؟  لا يمكن التراجع عن هذا الإجراء.
+    </p>
+  </div>
+
+  <!-- أزرار الإجراءات -->
+  <div mat-dialog-actions class="clay-dialog-actions">
+    <button 
+      type="button" 
+      class="btn-dialog-confirm delete-btn" 
+      (click)="onConfirmDelete()" 
+      [disabled]="isDeleting">
+      <mat-icon *ngIf="!isDeleting">delete</mat-icon>
+      <mat-icon *ngIf="isDeleting" class="spin-icon">hourglass_empty</mat-icon>
+      <span>{{ isDeleting ? 'جاري الحذف...' : 'تأكيد الحذف' }}</span>
+    </button>
+
+    <button 
+      type="button" 
+      class="btn-dialog-cancel" 
+      (click)="onCancel()" 
+      [disabled]="isDeleting">
+      إلغاء
+    </button>
+  </div>
+</div>
