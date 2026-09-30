@@ -22,7 +22,13 @@ const routes: Routes = [
             (m) => m.HotelModule,
           ),
       },
-      
+      {
+        path: 'blogposts',
+        loadChildren: () =>
+          import('../BlogPosts/blog-posts.module').then(
+            (m) => m.BlogPostsModule,
+          ),
+      },
       {
         path: 'statistics',
         loadComponent: () =>

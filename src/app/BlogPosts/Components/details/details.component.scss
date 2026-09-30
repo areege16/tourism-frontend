@@ -1,0 +1,225 @@
+@import '../../../styles/clay-shared';
+
+/* 1. تضييق الكارد ووسطنته */
+:host {
+  display: block;
+  width: 100%;
+  max-width: 500px; /* العرض الأقصى المطلوب للكارد */
+  margin: 0 auto;
+}
+
+/* 2. إلغاء خلفية وشكل Angular Material الافتراضي ليحل محله تصميمك */
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+:host-context(.cdk-overlay-pane) {
+  max-width: 500px !important;
+  width: auto !important;
+}
+
+/* 3. تصميم الكارد الرئيسي */
+.clay-dialog-shell {
+  background: var(--bg-card);
+  border-radius: 20px;
+  padding: 0.75rem 1rem 1rem;
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-sizing: border-box;
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+
+  h3 {
+    margin: 0;
+    color: var(--text-main);
+    font-size: 1.05rem;
+    font-weight: 800;
+  }
+}
+
+.icon-close {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 8px;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.4);
+    color: var(--cta-salmon);
+  }
+}
+
+.details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hero-image-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-app);
+  box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8);
+
+  img {
+    width: 100%;
+    max-height: 140px; /* تقليل ارتفاع الصورة قليلاً لتوفير مساحة رأسية */
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.meta-row,
+.tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.pill,
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-main);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.title-block,
+.summary-block,
+.content-block,
+.tags-block,
+.featured-box {
+  display: flex;
+  flex-direction: column;
+}
+
+h4 {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.excerpt,
+.content-box p {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.4;
+  font-size: 0.8rem;
+}
+
+.content-box {
+  background: rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  max-height: 140px; /* تحديد ارتفاع مناسب لمربع النص مع سكرول بار */
+  overflow-y: auto;
+
+  h5 {
+    margin: 0 0 0.2rem;
+    color: var(--text-main);
+    font-size: 0.8rem;
+  }
+
+  p + h5 {
+    margin-top: 0.4rem;
+  }
+}
+
+.author-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.35);
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--pastel-mint);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .author-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  strong {
+    display: block;
+    color: var(--text-main);
+    font-size: 0.8rem;
+  }
+
+  small {
+    color: var(--text-muted);
+    text-transform: capitalize;
+    font-size: 0.65rem;
+    letter-spacing: 0.02em;
+  }
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  padding: 0.4rem 0.65rem;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  strong {
+    color: var(--text-main);
+    font-size: 0.8rem;
+  }
+}
+
+.featured-box {
+  background: rgba(163, 207, 195, 0.22);
+  border: 1px solid rgba(163, 207, 195, 0.5);
+  border-radius: 10px;
+  padding: 0.4rem 0.65rem;
+
+  strong {
+    color: var(--text-main);
+    font-size: 0.8rem;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+}

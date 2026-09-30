@@ -1,0 +1,130 @@
+<div class="clay-view-container" dir="rtl">
+  <section class="stats-grid">
+    <div class="clay-stat-card peach">
+      <div class="stat-icon-wrapper">
+        <mat-icon>article</mat-icon>
+      </div>
+      <span class="stat-title">إجمالي منشورات المدونة</span>
+      <span class="stat-value">{{ (posts.length || 0) | number }}</span>
+      <span class="stat-badge">سجل منشور</span>
+    </div>
+  </section>
+
+  <section class="clay-card table-card">
+    <div class="table-header">
+      <div class="title-wrap">
+        <h3>قائمة منشورات المدونة</h3>
+        <span class="results-count">(عرض {{ filteredPosts.length }} منشور)</span>
+      </div>
+
+      <div class="table-actions">
+        <input
+          type="text"
+          class="clay-input-field"
+          placeholder="بحث بالعنوان أو التصنيف..."
+          [(ngModel)]="searchTerm"
+          (input)="applyFilter()"
+        />
+
+        <button type="button" class="clay-btn-primary add-btn" (click)="openCreate()">
+          <mat-icon>post_add</mat-icon>
+          <span>إضافة منشور جديد</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="table-scroll-container">
+      <table mat-table [dataSource]="filteredPosts" class="clay-mat-table">
+        <ng-container matColumnDef="index">
+          <th mat-header-cell *matHeaderCellDef>#</th>
+          <td mat-cell *matCellDef="let post; let i = index">
+            <span class="idx-badge">{{ i + 1 }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef>العنوان</th>
+          <td mat-cell *matCellDef="let post">
+            <div class="item-name-cell">
+              <ng-container *ngIf="post.imageUrl && !hasImageError(post.imageUrl); else noImage">
+                <img
+                  [src]="getImage(post.imageUrl)"
+                  (error)="onImageError(post.imageUrl)"
+                  class="item-thumb"
+                  [alt]="getLocalizedText(post.title)"
+                />
+              </ng-container>
+              <ng-template #noImage>
+                <div class="item-thumb-fallback">
+                  <mat-icon>article</mat-icon>
+                </div>
+              </ng-template>
+
+              <div class="post-title-box">
+                <strong>{{ getLocalizedText(post.title) }}</strong>
+                <span class="meta-sub">{{ getLocalizedText(post.excerpt) }}</span>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>التصنيف</th>
+          <td mat-cell *matCellDef="let post">
+            <span class="value-badge">{{ getLocalizedText(post.category) }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="author">
+          <th mat-header-cell *matHeaderCellDef>المؤلف</th>
+          <td mat-cell *matCellDef="let post">
+            <div class="author-cell">
+              <span class="author-name">{{ getLocalizedText(post.author) }}</span>
+              <small>{{ post.readTime }}</small>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>تاريخ النشر</th>
+          <td mat-cell *matCellDef="let post">
+            <span class="value-badge">{{ post.publishDate | date: 'dd/MM/yyyy' }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+          <td mat-cell *matCellDef="let post">
+            <div class="action-buttons-group">
+              <button type="button" class="action-icon-btn view" matTooltip="عرض التفاصيل" (click)="openDetails(post)">
+                <mat-icon>info</mat-icon>
+              </button>
+              <button type="button" class="action-icon-btn edit" matTooltip="تعديل" (click)="openEdit(post)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" class="action-icon-btn delete" matTooltip="حذف" (click)="openDelete(post)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="clay-table-row"></tr>
+
+        <tr class="mat-row state-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div *ngIf="isLoading" class="loading-state">
+              <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+              <span>جاري تحميل منشورات المدونة...</span>
+            </div>
+            <div *ngIf="!isLoading" class="empty-state">
+              <mat-icon>article</mat-icon>
+              <span>لا توجد منشورات مسجلة</span>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
+</div>
