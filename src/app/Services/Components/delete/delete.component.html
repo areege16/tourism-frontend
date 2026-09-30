@@ -1,0 +1,13 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <mat-icon color="warn">warning</mat-icon>
+    <h3>تأكيد الحذف</h3>
+  </div>
+
+  <p>هل أنت متأكد من حذف الخدمة <strong>{{ data.title || 'هذه الخدمة' }}</strong>؟</p>
+
+  <div class="dialog-actions">
+    <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
+    <button type="button" class="clay-btn-danger" (click)="confirmDelete()">حذف</button>
+  </div>
+</div>

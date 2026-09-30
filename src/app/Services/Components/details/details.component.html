@@ -1,0 +1,77 @@
+<div class="clay-dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تفاصيل الخدمة</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+    <span>جاري تحميل التفاصيل...</span>
+  </div>
+
+  <div *ngIf="!isLoading && service" class="details-content">
+    <div class="service-hero">
+      <img *ngIf="service.image; else fallback" [src]="getImage(service.image)" alt="{{ getName() }}" />
+      <ng-template #fallback>
+        <div class="fallback-image">
+          <mat-icon>build</mat-icon>
+        </div>
+      </ng-template>
+
+      <div class="service-meta">
+        <h4>{{ getName() }}</h4>
+        <span class="pill">{{ getType() }}</span>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <label>التقييم</label>
+        <span>{{ service.rating ?? 0 }}</span>
+      </div>
+      <div class="info-card">
+        <label>المسافة</label>
+        <span>{{ service.distanceKm ?? 0 }} كم</span>
+      </div>
+      <div class="info-card">
+        <label>الحالة</label>
+        <span>{{ service.isFeatured ? 'مميز' : 'عادي' }}</span>
+      </div>
+    </div>
+
+    <div class="detail-block">
+      <h5>الوصف</h5>
+      <p>{{ getDescription() }}</p>
+    </div>
+
+    <div class="detail-block">
+      <h5>العنوان</h5>
+      <p>{{ getAddress() }}</p>
+    </div>
+
+    <div class="detail-row">
+      <div class="detail-block">
+        <h5>الهاتف</h5>
+        <p>{{ service.phone || 'لا يوجد هاتف' }}</p>
+      </div>
+
+      <div class="detail-block">
+        <h5>التخصص</h5>
+        <p>{{ getSpecialty() }}</p>
+      </div>
+    </div>
+
+    <div class="detail-block" *ngIf="getFeatures().length">
+      <h5>المزايا</h5>
+      <ul class="feature-list">
+        <li *ngFor="let feature of getFeatures()">{{ feature }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button type="button" class="clay-btn-secondary" (click)="close()">إغلاق</button>
+  </div>
+</div>
