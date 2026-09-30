@@ -15,11 +15,23 @@ const routes: Routes = [
             (m) => m.AttractionsModule,
           ),
       },
-        {
+      {
         path: 'hotels',
         loadChildren: () =>
-          import('../Hotels/hotel.module').then(
-            (m) => m.HotelModule,
+          import('../Hotels/hotel.module').then((m) => m.HotelModule),
+      },
+      {
+        path: 'photographers',
+        loadChildren: () =>
+          import('../Photographers/photographers.module').then(
+            (m) => m.PhotographersModule,
+          ),
+      },
+      {
+        path: 'restaurants',
+        loadChildren: () =>
+          import('../Restaurants/restaurants.module').then(
+            (m) => m.RestaurantsModule,
           ),
       },
       {
@@ -48,6 +60,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../TourismInfo/tourism-info.module').then(
             (m) => m.TourismInfoModule,
+          ),
+      },
+      {
+        path: 'souvenirs',
+        loadChildren: () =>
+          import('../Souvenirs/souvenirs.module').then(
+            (m) => m.SouvenirsModule,
           ),
       },
       {

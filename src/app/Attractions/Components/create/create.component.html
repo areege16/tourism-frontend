@@ -1,1 +1,620 @@
-<p>create works!</p>
+<div class="clay-dialog" dir="rtl">
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>add_location_alt</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">إضافة معلم سياحي جديد</h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body">
+      <!-- ===================== Basic Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>info</mat-icon>
+          البيانات الأساسية
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الاسم (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameAr"
+              placeholder="اسم المعلم بالعربي"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('nameAr')?.hasError('required') &&
+                (form.get('nameAr')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Name (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameEn"
+              placeholder="Attraction name"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('nameEn')?.hasError('required') &&
+                (form.get('nameEn')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>التصنيف (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="categoryAr"
+              placeholder="مثال: موقع تاريخي"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('categoryAr')?.hasError('required') &&
+                (form.get('categoryAr')?.touched || attemptedSave)
+              "
+            >
+              التصنيف بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Category (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="categoryEn"
+              placeholder="e.g. Historical Site"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('categoryEn')?.hasError('required') &&
+                (form.get('categoryEn')?.touched || attemptedSave)
+              "
+            >
+              التصنيف بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>الوصف (عربي)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="descriptionAr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('descriptionAr')?.hasError('required') &&
+              (form.get('descriptionAr')?.touched || attemptedSave)
+            "
+          >
+            الوصف بالعربي مطلوب
+          </span>
+        </div>
+        <div class="field-group">
+          <label>Description (English)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="descriptionEn"
+            dir="ltr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('descriptionEn')?.hasError('required') &&
+              (form.get('descriptionEn')?.touched || attemptedSave)
+            "
+          >
+            الوصف بالإنجليزي مطلوب
+          </span>
+        </div>
+      </section>
+
+      <!-- ===================== Location ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>place</mat-icon>
+          الموقع
+        </h3>
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>خط العرض (Latitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="latitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('latitude')?.hasError('required') &&
+                (form.get('latitude')?.touched || attemptedSave)
+              "
+            >
+              خط العرض مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('latitude')?.hasError('min') ||
+                form.get('latitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -90 و 90
+            </span>
+          </div>
+          <div class="field-group">
+            <label>خط الطول (Longitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="longitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('longitude')?.hasError('required') &&
+                (form.get('longitude')?.touched || attemptedSave)
+              "
+            >
+              خط الطول مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('longitude')?.hasError('min') ||
+                form.get('longitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -180 و 180
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Visit Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>schedule</mat-icon>
+          معلومات الزيارة
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>مواعيد الزيارة (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHoursAr"
+              placeholder="٨:٠٠ ص - ٥:٠٠ م"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('openingHoursAr')?.hasError('required') &&
+                (form.get('openingHoursAr')?.touched || attemptedSave)
+              "
+            >
+              مواعيد الزيارة بالعربي مطلوبة
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Opening Hours (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="openingHoursEn"
+              placeholder="8:00 AM - 5:00 PM"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('openingHoursEn')?.hasError('required') &&
+                (form.get('openingHoursEn')?.touched || attemptedSave)
+              "
+            >
+              مواعيد الزيارة بالإنجليزي مطلوبة
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>سعر التذكرة (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="ticketPriceAr"
+              placeholder="١٠٠ جنيه"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('ticketPriceAr')?.hasError('required') &&
+                (form.get('ticketPriceAr')?.touched || attemptedSave)
+              "
+            >
+              سعر التذكرة بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Ticket Price (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="ticketPriceEn"
+              placeholder="100 EGP"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('ticketPriceEn')?.hasError('required') &&
+                (form.get('ticketPriceEn')?.touched || attemptedSave)
+              "
+            >
+              سعر التذكرة بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>رابط الحجز</label>
+            <input
+              class="clay-input-field"
+              formControlName="bookingUrl"
+              placeholder="https://..."
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="form.get('bookingUrl')?.hasError('pattern')"
+            >
+              الرابط غير صحيح، يجب أن يبدأ بـ http:// أو https://
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>التقييم (0 - 5)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              formControlName="rating"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('rating')?.hasError('required') &&
+                (form.get('rating')?.touched || attemptedSave)
+              "
+            >
+              التقييم مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="form.get('rating')?.hasError('max')"
+            >
+              التقييم لا يمكن أن يزيد عن 5
+            </span>
+            <span
+              class="error-text"
+              *ngIf="form.get('rating')?.hasError('min')"
+            >
+              التقييم لا يمكن أن يقل عن 0
+            </span>
+          </div>
+          <div class="field-group">
+            <label>عدد التقييمات</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              min="0"
+              formControlName="reviewCount"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('reviewCount')?.hasError('required') &&
+                (form.get('reviewCount')?.touched || attemptedSave)
+              "
+            >
+              عدد التقييمات مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="form.get('reviewCount')?.hasError('min')"
+            >
+              عدد التقييمات لا يمكن أن يكون سالبًا
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Historical Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>museum</mat-icon>
+          المعلومات التاريخية
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الحقبة التاريخية (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="historicalPeriodAr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('historicalPeriodAr')?.hasError('required') &&
+                (form.get('historicalPeriodAr')?.touched || attemptedSave)
+              "
+            >
+              الحقبة التاريخية بالعربي مطلوبة
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Historical Period (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="historicalPeriodEn"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('historicalPeriodEn')?.hasError('required') &&
+                (form.get('historicalPeriodEn')?.touched || attemptedSave)
+              "
+            >
+              الحقبة التاريخية بالإنجليزي مطلوبة
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>الأهمية التاريخية (عربي)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="6"
+            formControlName="significanceAr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('significanceAr')?.hasError('required') &&
+              (form.get('significanceAr')?.touched || attemptedSave)
+            "
+          >
+            الأهمية التاريخية بالعربي مطلوبة
+          </span>
+        </div>
+        <div class="field-group">
+          <label>Significance (English)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="6"
+            formControlName="significanceEn"
+            dir="ltr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('significanceEn')?.hasError('required') &&
+              (form.get('significanceEn')?.touched || attemptedSave)
+            "
+          >
+            الأهمية التاريخية بالإنجليزي مطلوبة
+          </span>
+        </div>
+      </section>
+
+      <!-- ===================== Features ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>star</mat-icon>
+          المميزات
+        </h3>
+
+        <div formArrayName="features" class="dynamic-list">
+          <div
+            class="dynamic-row"
+            *ngFor="let feature of features.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="field-group">
+              <input
+                class="clay-input-field"
+                formControlName="ar"
+                placeholder="الميزة (عربي)"
+              />
+              <span
+                class="error-text"
+                *ngIf="
+                  feature.get('ar')?.hasError('required') &&
+                  (feature.get('ar')?.touched || attemptedSave)
+                "
+              >
+                الميزة بالعربي مطلوبة
+              </span>
+            </div>
+            <div class="field-group">
+              <input
+                class="clay-input-field"
+                formControlName="en"
+                placeholder="Feature (English)"
+                dir="ltr"
+              />
+              <span
+                class="error-text"
+                *ngIf="
+                  feature.get('en')?.hasError('required') &&
+                  (feature.get('en')?.touched || attemptedSave)
+                "
+              >
+                الميزة بالإنجليزي مطلوبة
+              </span>
+            </div>
+            <button
+              type="button"
+              class="btn-delete-row"
+              (click)="removeFeature(i)"
+              title="حذف"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <span
+          class="error-text"
+          *ngIf="
+            features.hasError('minLengthArray') &&
+            (features.touched || attemptedSave)
+          "
+        >
+          يجب إضافة ميزة واحدة على الأقل
+        </span>
+
+        <button type="button" class="btn-add-item" (click)="addFeature()">
+          <mat-icon>add</mat-icon>
+          إضافة ميزة
+        </button>
+      </section>
+
+      <!-- ===================== Main Image ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>image</mat-icon>
+          الصورة الرئيسية
+        </h3>
+
+        <div class="image-upload-wrapper">
+          <div class="image-preview-box">
+            <img
+              *ngIf="mainImagePreview"
+              [src]="mainImagePreview"
+              alt="Main image preview"
+            />
+            <div class="placeholder-icon" *ngIf="!mainImagePreview">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn-delete-row"
+            *ngIf="mainImagePreview"
+            (click)="removeMainImage()"
+            title="حذف"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <label class="btn-upload-label">
+            <mat-icon>upload</mat-icon>
+            {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onMainImageSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+
+      <!-- ===================== Gallery ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>photo_library</mat-icon>
+          معرض الصور
+        </h3>
+
+        <div class="gallery-grid">
+          <div
+            class="gallery-thumb"
+            *ngFor="let preview of galleryPreviews; let i = index"
+          >
+            <img [src]="preview" alt="Gallery image" />
+            <button
+              type="button"
+              class="btn-remove-thumb"
+              (click)="removeGalleryImage(i)"
+              title="حذف"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <label class="gallery-add-card">
+            <mat-icon>add_photo_alternate</mat-icon>
+            إضافة صور
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              (change)="onGalleryFilesSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="saving">
+        <mat-icon *ngIf="!saving">save</mat-icon>
+        <mat-icon *ngIf="saving" class="spin-icon">autorenew</mat-icon>
+        {{ saving ? "جارِ الحفظ..." : "حفظ" }}
+      </button>
+      <button
+        type="button"
+        class="btn-dialog-cancel"
+        (click)="onCancel()"
+        [disabled]="saving"
+      >
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>

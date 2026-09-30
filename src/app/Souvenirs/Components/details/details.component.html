@@ -1,0 +1,177 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>storefront</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">{{ shop?.nameAr || "تفاصيل المحل" }}</h2>
+        <p class="dialog-subtitle" *ngIf="shop?.categoryAr">
+          {{ shop?.categoryAr }}
+        </p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body">
+    <div *ngIf="isLoading" class="loading-state">
+      <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+      <span>جاري تحميل التفاصيل...</span>
+    </div>
+
+    <ng-container *ngIf="!isLoading && shop">
+      <!-- الصور -->
+      <div class="gallery-section">
+        <img
+          *ngIf="activeImage"
+          [src]="activeImage"
+          [alt]="shop.nameAr"
+          class="main-image"
+        />
+        <div class="thumbnails-row" *ngIf="shop.images?.length">
+          <img
+            *ngFor="let img of shop.images"
+            [src]="getFullImageUrl(img)"
+            (click)="setActiveImage(img)"
+            class="thumb-item"
+            [class.active]="activeImage === getFullImageUrl(img)"
+          />
+        </div>
+      </div>
+
+      <!-- الوصف -->
+      <div class="dialog-info-card" *ngIf="shop.descriptionAr">
+        <mat-icon>info</mat-icon>
+        <p>{{ shop.descriptionAr }}</p>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item" *ngIf="shop.openingHoursAr">
+          <mat-icon>schedule</mat-icon>
+          <div>
+            <span class="detail-label">مواعيد العمل</span>
+            <span class="detail-value">{{ shop.openingHoursAr }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="shop.priceRange">
+          <mat-icon>payments</mat-icon>
+          <div>
+            <span class="detail-label">نطاق الأسعار</span>
+            <span class="detail-value" dir="ltr">{{ shop.priceRange }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="shop.rating != null">
+          <mat-icon>star</mat-icon>
+          <div>
+            <span class="detail-label">التقييم</span>
+            <span class="detail-value">
+              ⭐ {{ shop.rating }}
+              <ng-container *ngIf="shop.reviewCount != null">
+                ({{ shop.reviewCount }} تقييم)
+              </ng-container>
+            </span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="shop.phone">
+          <mat-icon>call</mat-icon>
+          <div>
+            <span class="detail-label">رقم الهاتف</span>
+            <span class="detail-value" dir="ltr">{{ shop.phone }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="shop.email">
+          <mat-icon>email</mat-icon>
+          <div>
+            <span class="detail-label">البريد الإلكتروني</span>
+            <span class="detail-value" dir="ltr">{{ shop.email }}</span>
+          </div>
+        </div>
+
+        <div class="detail-item" *ngIf="shop.distanceKm != null">
+          <mat-icon>straighten</mat-icon>
+          <div>
+            <span class="detail-label">المسافة</span>
+            <span class="detail-value">{{ shop.distanceKm }} كم</span>
+          </div>
+        </div>
+
+        <!-- الموقع -->
+        <div
+          class="detail-item"
+          *ngIf="
+            shop.addressAr || (shop.latitude != null && shop.longitude != null)
+          "
+        >
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <span class="detail-label">العنوان</span>
+            <span class="detail-value" *ngIf="shop.addressAr">{{
+              shop.addressAr
+            }}</span>
+            <a
+              *ngIf="shop.latitude != null && shop.longitude != null"
+              class="detail-value map-link"
+              [href]="buildGoogleMapsUrl(shop.latitude, shop.longitude)"
+              target="_blank"
+              rel="noopener noreferrer"
+              dir="ltr"
+            >
+              عرض على الخريطة
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- الخدمات (booleans) -->
+      <div
+        class="features-section"
+        *ngIf="
+          shop.isFeatured != null ||
+          shop.acceptsCreditCard != null ||
+          shop.hasDelivery != null ||
+          shop.hasOnlineStore != null
+        "
+      >
+        <h4>الخدمات</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngIf="shop.isFeatured">
+            <mat-icon>verified</mat-icon> محل مميز
+          </span>
+          <span class="feature-chip" *ngIf="shop.acceptsCreditCard">
+            <mat-icon>credit_card</mat-icon> يقبل البطاقات الائتمانية
+          </span>
+          <span class="feature-chip" *ngIf="shop.hasDelivery">
+            <mat-icon>local_shipping</mat-icon> خدمة التوصيل
+          </span>
+          <span class="feature-chip" *ngIf="shop.hasOnlineStore">
+            <mat-icon>shopping_cart</mat-icon> متجر إلكتروني
+          </span>
+        </div>
+      </div>
+
+      <!-- التخصصات -->
+      <div class="features-section" *ngIf="shop.specialtiesAr?.length">
+        <h4>التخصصات</h4>
+        <div class="features-chips">
+          <span class="feature-chip" *ngFor="let s of shop.specialtiesAr">
+            <mat-icon>check_circle</mat-icon>
+            {{ s }}
+          </span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      إغلاق
+    </button>
+  </div>
+</div>

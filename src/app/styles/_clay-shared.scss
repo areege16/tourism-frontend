@@ -13,7 +13,7 @@
 }
 
 .stats-grid {
-   display: grid;
+  display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   flex-shrink: 0;
@@ -33,7 +33,9 @@
   position: relative;
   border: 1px solid rgba(255, 255, 255, 0.7);
   box-shadow: var(--clay-card-shadow);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   &:hover {
     transform: translateY(-3px);
@@ -48,8 +50,9 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 0.75rem;
-    box-shadow: inset 1px 1px 2px rgba(255, 255, 255, 0.8),
-                2px 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow:
+      inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+      2px 2px 5px rgba(0, 0, 0, 0.05);
 
     mat-icon {
       font-size: 1.4rem;
@@ -84,11 +87,21 @@
   }
 
   // Pastel Color Variants
-  &.mint { background-color: var(--pastel-mint); }
-  &.peach { background-color: var(--pastel-peach); }
-  &.butter { background-color: var(--pastel-butter); }
-  &.periwinkle { background-color: var(--pastel-periwinkle); }
-  &.mauve { background-color: var(--pastel-mauve); }
+  &.mint {
+    background-color: var(--pastel-mint);
+  }
+  &.peach {
+    background-color: var(--pastel-peach);
+  }
+  &.butter {
+    background-color: var(--pastel-butter);
+  }
+  &.periwinkle {
+    background-color: var(--pastel-periwinkle);
+  }
+  &.mauve {
+    background-color: var(--pastel-mauve);
+  }
 }
 
 // ==========================================
@@ -104,9 +117,11 @@
   color: var(--text-main);
   outline: none;
   font-family: inherit;
-  box-shadow: inset 2px 2px 5px rgba(188, 175, 155, 0.2),
-              inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    inset 2px 2px 5px rgba(188, 175, 155, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
   transition: border-color 0.2s ease;
+  margin: 1em 0;
 
   &::placeholder {
     color: var(--text-muted);
@@ -130,8 +145,14 @@
   font-weight: 700;
   font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: var(--clay-button-shadow, 3px 3px 6px rgba(188, 175, 155, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.9));
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: var(
+    --clay-button-shadow,
+    3px 3px 6px rgba(188, 175, 155, 0.3),
+    -3px -3px 6px rgba(255, 255, 255, 0.9)
+  );
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 
   mat-icon {
     font-size: 1.2rem;
@@ -158,8 +179,12 @@
 }
 
 @keyframes clay-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 /* إلغاء حواف وخلفية Angular Material بشكل كامل على مستوى الطبقة الخارجية */
 .cdk-overlay-pane:has(.clay-dialog-shell) {

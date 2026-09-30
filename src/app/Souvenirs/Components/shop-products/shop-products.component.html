@@ -1,0 +1,116 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">منتجات المحل</h2>
+        <p class="dialog-subtitle">{{ data.shopName }}</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="clay-dialog-body">
+    <section class="table-card">
+      <div class="table-header">
+        <div class="title-wrap">
+          <h3>قائمة المنتجات</h3>
+          <span class="results-count">(عرض {{ products.length }} منتج)</span>
+        </div>
+        <button type="button" class="clay-btn-primary add-btn" (click)="addProduct()">
+          <mat-icon>add</mat-icon>
+          <span>إضافة منتج جديد</span>
+        </button>
+      </div>
+
+      <div class="table-scroll-container">
+        <table mat-table [dataSource]="products" class="clay-mat-table">
+          <ng-container matColumnDef="index">
+            <th mat-header-cell *matHeaderCellDef>#</th>
+            <td mat-cell *matCellDef="let p; let i = index">
+              <span class="idx-badge">{{ i + 1 }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>الاسم</th>
+            <td mat-cell *matCellDef="let p">
+              <div class="item-name-cell">
+                <ng-container *ngIf="p.image && !hasImageError(p.image); else noImage">
+                  <img
+                    [src]="getFullImageUrl(p.image)"
+                    (error)="onImageError(p.image)"
+                    class="item-thumb"
+                    [alt]="p.nameAr"
+                  />
+                </ng-container>
+                <ng-template #noImage>
+                  <div class="item-thumb-fallback">
+                    <mat-icon>image_not_supported</mat-icon>
+                  </div>
+                </ng-template>
+                <strong>{{ p.nameAr }}</strong>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef>السعر</th>
+            <td mat-cell *matCellDef="let p">
+              <span class="value-badge" dir="ltr">
+                {{ p.price | number: '1.0-2' }} {{ p.currency }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="stock">
+            <th mat-header-cell *matHeaderCellDef>الحالة</th>
+            <td mat-cell *matCellDef="let p">
+              <span class="value-badge">{{ p.inStock ? 'متوفر' : 'غير متوفر' }}</span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+            <td mat-cell *matCellDef="let p">
+              <div class="action-buttons-group">
+                <button type="button" class="action-icon-btn view" matTooltip="عرض التفاصيل"
+                        (click)="openProductDetails(p)">
+                  <mat-icon>info</mat-icon>
+                </button>
+                <button type="button" class="action-icon-btn delete" matTooltip="حذف"
+                        (click)="openDelete(p)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns" class="clay-table-row"></tr>
+
+          <tr class="mat-row state-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+              <div *ngIf="isLoading" class="loading-state">
+                <mat-icon class="spin-icon">hourglass_empty</mat-icon>
+                <span>جاري تحميل المنتجات...</span>
+              </div>
+              <div *ngIf="!isLoading" class="empty-state">
+                <mat-icon>inventory</mat-icon>
+                <span>لا توجد منتجات لهذا المحل</span>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">إغلاق</button>
+  </div>
+</div>

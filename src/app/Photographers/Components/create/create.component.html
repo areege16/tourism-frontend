@@ -1,0 +1,479 @@
+<div class="clay-dialog" dir="rtl">
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">إضافة مصور جديد</h2>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="clay-dialog-body">
+      <!-- ===================== Basic Info ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>info</mat-icon>
+          البيانات الأساسية
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>الاسم (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameAr"
+              placeholder="اسم المصور بالعربي"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('nameAr')?.hasError('required') &&
+                (form.get('nameAr')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Name (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="nameEn"
+              placeholder="Photographer name"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('nameEn')?.hasError('required') &&
+                (form.get('nameEn')?.touched || attemptedSave)
+              "
+            >
+              الاسم بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>نبذة (عربي)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="bioAr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('bioAr')?.hasError('required') &&
+              (form.get('bioAr')?.touched || attemptedSave)
+            "
+          >
+            النبذة بالعربي مطلوبة
+          </span>
+        </div>
+        <div class="field-group">
+          <label>Bio (English)</label>
+          <textarea
+            class="clay-input-field textarea-field"
+            rows="4"
+            formControlName="bioEn"
+            dir="ltr"
+          ></textarea>
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('bioEn')?.hasError('required') &&
+              (form.get('bioEn')?.touched || attemptedSave)
+            "
+          >
+            النبذة بالإنجليزي مطلوبة
+          </span>
+        </div>
+      </section>
+
+      <!-- ===================== Contact ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>call</mat-icon>
+          بيانات التواصل
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>رقم الهاتف (عربي)</label>
+            <input
+              class="clay-input-field"
+              formControlName="phoneAr"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('phoneAr')?.hasError('required') &&
+                (form.get('phoneAr')?.touched || attemptedSave)
+              "
+            >
+              رقم الهاتف بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Phone (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="phoneEn"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('phoneEn')?.hasError('required') &&
+                (form.get('phoneEn')?.touched || attemptedSave)
+              "
+            >
+              رقم الهاتف بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>البريد الإلكتروني</label>
+          <input
+            class="clay-input-field"
+            formControlName="email"
+            dir="ltr"
+            placeholder="example@mail.com"
+          />
+          <span
+            class="error-text"
+            *ngIf="
+              form.get('email')?.hasError('required') &&
+              (form.get('email')?.touched || attemptedSave)
+            "
+          >
+            البريد الإلكتروني مطلوب
+          </span>
+          <span class="error-text" *ngIf="form.get('email')?.hasError('email')">
+            صيغة البريد الإلكتروني غير صحيحة
+          </span>
+        </div>
+      </section>
+
+      <!-- ===================== Social ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>public</mat-icon>
+          روابط التواصل الاجتماعي
+        </h3>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>فيسبوك</label>
+            <input
+              class="clay-input-field"
+              formControlName="facebook"
+              dir="ltr"
+            />
+          </div>
+          <div class="field-group">
+            <label>إنستجرام</label>
+            <input
+              class="clay-input-field"
+              formControlName="instagram"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>تويتر</label>
+            <input
+              class="clay-input-field"
+              formControlName="twitter"
+              dir="ltr"
+            />
+          </div>
+          <div class="field-group">
+            <label>تيك توك</label>
+            <input
+              class="clay-input-field"
+              formControlName="tiktok"
+              dir="ltr"
+            />
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>يوتيوب</label>
+            <input
+              class="clay-input-field"
+              formControlName="youtube"
+              dir="ltr"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Location ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>place</mat-icon>
+          الموقع
+        </h3>
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>خط العرض (Latitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="latitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('latitude')?.hasError('required') &&
+                (form.get('latitude')?.touched || attemptedSave)
+              "
+            >
+              خط العرض مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('latitude')?.hasError('min') ||
+                form.get('latitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -90 و 90
+            </span>
+          </div>
+          <div class="field-group">
+            <label>خط الطول (Longitude)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="any"
+              formControlName="longitude"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('longitude')?.hasError('required') &&
+                (form.get('longitude')?.touched || attemptedSave)
+              "
+            >
+              خط الطول مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('longitude')?.hasError('min') ||
+                form.get('longitude')?.hasError('max')
+              "
+            >
+              القيمة يجب أن تكون بين -180 و 180
+            </span>
+          </div>
+        </div>
+
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>العنوان (عربي)</label>
+            <input class="clay-input-field" formControlName="addressAr" />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('addressAr')?.hasError('required') &&
+                (form.get('addressAr')?.touched || attemptedSave)
+              "
+            >
+              العنوان بالعربي مطلوب
+            </span>
+          </div>
+          <div class="field-group">
+            <label>Address (English)</label>
+            <input
+              class="clay-input-field"
+              formControlName="addressEn"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('addressEn')?.hasError('required') &&
+                (form.get('addressEn')?.touched || attemptedSave)
+              "
+            >
+              العنوان بالإنجليزي مطلوب
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Rating ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>star</mat-icon>
+          التقييم
+        </h3>
+        <div class="form-row-grid">
+          <div class="field-group">
+            <label>التقييم (0 - 5)</label>
+            <input
+              class="clay-input-field"
+              type="number"
+              step="0.1"
+              min="0"
+              max="5"
+              formControlName="rating"
+              dir="ltr"
+            />
+            <span
+              class="error-text"
+              *ngIf="
+                form.get('rating')?.hasError('required') &&
+                (form.get('rating')?.touched || attemptedSave)
+              "
+            >
+              التقييم مطلوب
+            </span>
+            <span
+              class="error-text"
+              *ngIf="form.get('rating')?.hasError('max')"
+            >
+              التقييم لا يمكن أن يزيد عن 5
+            </span>
+            <span
+              class="error-text"
+              *ngIf="form.get('rating')?.hasError('min')"
+            >
+              التقييم لا يمكن أن يقل عن 0
+            </span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== Specialties ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>camera_alt</mat-icon>
+          التخصصات
+        </h3>
+
+        <div formArrayName="specialties" class="dynamic-list">
+          <div
+            class="dynamic-row"
+            *ngFor="let s of specialties.controls; let i = index"
+          >
+            <div class="field-group">
+              <input
+                class="clay-input-field"
+                [formControlName]="i"
+                placeholder="التخصص"
+              />
+              <span
+                class="error-text"
+                *ngIf="s.hasError('required') && (s.touched || attemptedSave)"
+              >
+                التخصص مطلوب
+              </span>
+            </div>
+            <button
+              type="button"
+              class="btn-delete-row"
+              (click)="removeSpecialty(i)"
+              title="حذف"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <span
+          class="error-text"
+          *ngIf="
+            specialties.hasError('minLengthArray') &&
+            (specialties.touched || attemptedSave)
+          "
+        >
+          يجب إضافة تخصص واحد على الأقل
+        </span>
+
+        <button type="button" class="btn-add-item" (click)="addSpecialty()">
+          <mat-icon>add</mat-icon>
+          إضافة تخصص
+        </button>
+      </section>
+
+      <!-- ===================== Main Image ===================== -->
+      <section class="form-section">
+        <h3 class="section-title">
+          <mat-icon>image</mat-icon>
+          الصورة الرئيسية
+        </h3>
+
+        <div class="image-upload-wrapper">
+          <div class="image-preview-box">
+            <img
+              *ngIf="mainImagePreview"
+              [src]="mainImagePreview"
+              alt="Main image preview"
+            />
+            <div class="placeholder-icon" *ngIf="!mainImagePreview">
+              <mat-icon>add_photo_alternate</mat-icon>
+              <span>لا توجد صورة</span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="btn-delete-row"
+            *ngIf="mainImagePreview"
+            (click)="removeMainImage()"
+            title="حذف"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+
+          <label class="btn-upload-label">
+            <mat-icon>upload</mat-icon>
+            {{ mainImagePreview ? "تغيير الصورة" : "رفع صورة" }}
+            <input
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onMainImageSelected($event)"
+            />
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <!-- Actions -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="saving">
+        <mat-icon *ngIf="!saving">save</mat-icon>
+        <mat-icon *ngIf="saving" class="spin-icon">autorenew</mat-icon>
+        {{ saving ? "جارِ الحفظ..." : "حفظ" }}
+      </button>
+      <button
+        type="button"
+        class="btn-dialog-cancel"
+        (click)="onCancel()"
+        [disabled]="saving"
+      >
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>

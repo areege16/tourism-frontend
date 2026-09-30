@@ -1,9 +1,12 @@
 <div class="clay-layout-wrapper" dir="rtl">
-  <mat-drawer-container class="clay-drawer-container" autosize [hasBackdrop]="false">
-    
-    <mat-drawer 
-      mode="side" 
-      opened="true" 
+  <mat-drawer-container
+    class="clay-drawer-container"
+    autosize
+    [hasBackdrop]="false"
+  >
+    <mat-drawer
+      mode="side"
+      opened="true"
       position="start"
       class="clay-sidebar-drawer"
       [class.sidebar-collapsed]="isCollapsed"
@@ -29,13 +32,17 @@
               <a
                 [routerLink]="item.route"
                 routerLinkActive="active-link"
-                [routerLinkActiveOptions]="{ exact: item.route === '/dashboard' }"
+                [routerLinkActiveOptions]="{
+                  exact: item.route === '/dashboard',
+                }"
                 class="nav-link"
                 [matTooltip]="isCollapsed ? item.label : ''"
                 matTooltipPosition="left"
               >
                 <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
-                <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+                <span class="nav-label" *ngIf="!isCollapsed">{{
+                  item.label
+                }}</span>
               </a>
             </li>
           </ul>
@@ -56,10 +63,10 @@
             </div>
           </ng-container>
 
-          <button 
-            *ngIf="isCollapsed" 
-            type="button" 
-            class="mini-logout-btn" 
+          <button
+            *ngIf="isCollapsed"
+            type="button"
+            class="mini-logout-btn"
             (click)="logout()"
             matTooltip="تسجيل الخروج"
             matTooltipPosition="left"
@@ -73,30 +80,27 @@
     <!-- Main Viewport that expands smoothly -->
     <mat-drawer-content class="clay-drawer-content">
       <div class="clay-main-container">
-        
         <header class="clay-topbar">
           <div class="topbar-right-group">
-            <button 
-              type="button" 
-              class="clay-icon-button toggle-btn" 
-              (click)="toggleDrawer()" 
+            <button
+              type="button"
+              class="clay-icon-button toggle-btn"
+              (click)="toggleDrawer()"
               aria-label="تبديل القائمة"
             >
-              <mat-icon>{{ isCollapsed ? 'menu' : 'menu_open' }}</mat-icon>
+              <mat-icon>{{ isCollapsed ? "menu" : "menu_open" }}</mat-icon>
             </button>
             <div class="topbar-title">
               <h1>لوحة التحكم</h1>
             </div>
           </div>
 
-     
-
           <div class="topbar-actions">
-            <button type="button" class="clay-icon-button badge-btn" aria-label="الإشعارات">
-              <mat-icon>notifications_none</mat-icon>
-              <span class="notification-dot">3</span>
-            </button>
-            <button type="button" class="clay-icon-button" aria-label="الملف الشخصي">
+            <button
+              type="button"
+              class="clay-icon-button"
+              aria-label="الملف الشخصي"
+            >
               <mat-icon>account_circle</mat-icon>
             </button>
           </div>
@@ -107,6 +111,5 @@
         </main>
       </div>
     </mat-drawer-content>
-
   </mat-drawer-container>
 </div>

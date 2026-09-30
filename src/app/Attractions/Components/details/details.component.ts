@@ -2,7 +2,8 @@ import { Component, inject, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Attraction } from '../../Models/attraction';
 import { AttractionService } from '../../Services/attraction.service';
-import { apiUrl } from '../../../Shared/Env/env';
+import { getFullImageUrl as resolveFullImageUrl } from '../../../Shared/Models/getImageUrl';
+import { buildGoogleMapsUrl } from '../../../Shared/utils/maps.util';
 
 @Component({
   selector: 'app-attraction-details',
@@ -13,6 +14,7 @@ export class DetailsComponent implements OnInit {
   private attractionService = inject(AttractionService);
   private dialogRef = inject(MatDialogRef<DetailsComponent>);
 
+  readonly buildGoogleMapsUrl = buildGoogleMapsUrl;
   attraction: Attraction | null = null;
   isLoading = false;
   activeImage = '';
@@ -41,16 +43,11 @@ export class DetailsComponent implements OnInit {
   }
 
   getFullImageUrl(path: string): string {
-    if (!path) return '';
-    return path.startsWith('http') ? path : `${apiUrl}${path}`;
+    return resolveFullImageUrl(path);
   }
 
   setActiveImage(path: string): void {
     this.activeImage = this.getFullImageUrl(path);
-  }
-
-  getGoogleMapsUrl(lat: number, lng: number): string {
-    return `https://www.google.com/maps?q=${lat},${lng}`;
   }
 
   close(): void {
