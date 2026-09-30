@@ -1,0 +1,72 @@
+<div class="clay-page-shell" dir="rtl">
+  <div class="page-header">
+    <div>
+      <p class="page-kicker">إدارة المحتوى</p>
+      <h2>معلومات السياحة</h2>
+    </div>
+
+    <button mat-flat-button color="primary" (click)="openCreate()">
+      <mat-icon>add</mat-icon>
+      إضافة جديدة
+    </button>
+  </div>
+
+  <div class="toolbar">
+    <mat-form-field appearance="outline">
+      <mat-label>بحث</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="applyFilter()" placeholder="ابحث عن عنوان أو فئة" />
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="isLoading" class="empty-state">جارٍ تحميل البيانات...</div>
+
+  <div *ngIf="!isLoading && filteredItems.length === 0" class="empty-state">
+    لا توجد عناصر لعرضها
+  </div>
+
+  <div *ngIf="!isLoading && filteredItems.length > 0" class="table-wrap">
+    <table mat-table [dataSource]="filteredItems" class="clay-mat-table">
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef>العنوان</th>
+        <td mat-cell *matCellDef="let element">{{ getDisplayTitle(element) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>المناخ</th>
+        <td mat-cell *matCellDef="let element">{{ getDisplayClimate(element) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>آخر تحديث</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.lastUpdated || '—' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="action-group">
+            <button mat-icon-button color="primary" matTooltip="عرض" (click)="openDetails(element)">
+              <mat-icon>visibility</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" matTooltip="تعديل" (click)="openEdit(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="حذف" (click)="openDelete(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>

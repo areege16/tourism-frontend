@@ -44,6 +44,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'tourisminfo',
+        loadChildren: () =>
+          import('../TourismInfo/tourism-info.module').then(
+            (m) => m.TourismInfoModule,
+          ),
+      },
+      {
         path: 'statistics',
         loadComponent: () =>
           import('../Dashboard/Components/dashboard/dashboard.component').then(

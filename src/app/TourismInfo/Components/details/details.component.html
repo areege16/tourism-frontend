@@ -1,0 +1,44 @@
+<div class="dialog-shell" dir="rtl">
+  <div class="dialog-header">
+    <h3>تفاصيل معلومات السياحة</h3>
+    <button type="button" class="icon-close" (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="empty-state">جارٍ تحميل التفاصيل...</div>
+
+  <div *ngIf="!isLoading && info" class="details-body">
+    <div class="info-row wide">
+      <span class="label">العنوان</span>
+      <span class="value">{{ getTitle() }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">المناخ</span>
+      <span class="value">{{ getClimate() }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">أفضل وقت للزيارة</span>
+      <span class="value">{{ getBestTimeToVisit() }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="label">ما الذي يلبس</span>
+      <span class="value">{{ getWhatToWear() }}</span>
+    </div>
+
+    <div class="info-row wide">
+      <span class="label">ملاحظات</span>
+      <span class="value">{{ getNotes() }}</span>
+    </div>
+
+    <div class="info-row wide">
+      <span class="label">آخر تحديث</span>
+      <span class="value">{{ info.lastUpdated || '—' }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading && !info" class="empty-state">لا توجد بيانات للعرض</div>
+</div>
