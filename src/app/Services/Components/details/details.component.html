@@ -1,77 +1,153 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>تفاصيل الخدمة</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 680px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>room_service</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل الخدمة</h2>
+        <p class="dialog-subtitle">عرض كامل بيانات الخدمة والمزايا وبيانات الاتصال</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div *ngIf="isLoading" class="loading-state">
-    <mat-icon class="spin-icon">hourglass_empty</mat-icon>
-    <span>جاري تحميل التفاصيل...</span>
+  <!-- حالة التحميل -->
+  <div class="clay-dialog-body" *ngIf="isLoading" style="text-align: center; padding: 3rem 1rem;">
+    <div class="dialog-info-card" style="justify-content: center;">
+      <mat-icon class="spin-icon">sync</mat-icon>
+      <p>جارٍ تحميل تفاصيل الخدمة...</p>
+    </div>
   </div>
 
-  <div *ngIf="!isLoading && service" class="details-content">
-    <div class="service-hero">
-      <img *ngIf="service.image; else fallback" [src]="getImage(service.image)" alt="{{ getName() }}" />
-      <ng-template #fallback>
-        <div class="fallback-image">
-          <mat-icon>build</mat-icon>
+  <!-- محتوى التفاصيل (Body) -->
+  <div class="clay-dialog-body" *ngIf="!isLoading && service">
+    
+    <!-- صورة الخدمة الأساسية -->
+    <div class="image-upload-wrapper" style="margin-bottom: 1.25rem;">
+      <div class="image-preview-box" style="width: 100%; height: 220px; border-radius: 20px;">
+        <img 
+          *ngIf="service.image; else fallback" 
+          [src]="getImage(service.image)" 
+          [alt]="getName()" />
+        <ng-template #fallback>
+          <div class="placeholder-icon">
+            <mat-icon style="font-size: 2.5rem; width: 2.5rem; height: 2.5rem;">build</mat-icon>
+            <span>لا توجد صورة متوفرة</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+
+    <!-- بطاقات سريعة: الاسم والنوع -->
+    <div class="form-row-grid" style="margin-bottom: 0.75rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>store</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">اسم الخدمة</p>
+          <p>{{ getName() }}</p>
         </div>
-      </ng-template>
+      </div>
 
-      <div class="service-meta">
-        <h4>{{ getName() }}</h4>
-        <span class="pill">{{ getType() }}</span>
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>category</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">النوع</p>
+          <p>{{ getType() }}</p>
+        </div>
       </div>
     </div>
 
-    <div class="info-grid">
-      <div class="info-card">
-        <label>التقييم</label>
-        <span>{{ service.rating ?? 0 }}</span>
-      </div>
-      <div class="info-card">
-        <label>المسافة</label>
-        <span>{{ service.distanceKm ?? 0 }} كم</span>
-      </div>
-      <div class="info-card">
-        <label>الحالة</label>
-        <span>{{ service.isFeatured ? 'مميز' : 'عادي' }}</span>
-      </div>
-    </div>
-
-    <div class="detail-block">
-      <h5>الوصف</h5>
-      <p>{{ getDescription() }}</p>
-    </div>
-
-    <div class="detail-block">
-      <h5>العنوان</h5>
-      <p>{{ getAddress() }}</p>
-    </div>
-
-    <div class="detail-row">
-      <div class="detail-block">
-        <h5>الهاتف</h5>
-        <p>{{ service.phone || 'لا يوجد هاتف' }}</p>
+    <!-- مقاييس وإحصائيات سريعة -->
+    <div class="form-three-grid" style="margin-bottom: 1.25rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon style="color: var(--cta-salmon);">star</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">التقييم</p>
+          <p>{{ service.rating ?? 0 }} / 5</p>
+        </div>
       </div>
 
-      <div class="detail-block">
-        <h5>التخصص</h5>
-        <p>{{ getSpecialty() }}</p>
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>near_me</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">المسافة</p>
+          <p>{{ service.distanceKm ?? 0 }} كم</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>verified</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">الحالة</p>
+          <p>{{ service.isFeatured ? 'خدمة مميزة' : 'عادي' }}</p>
+        </div>
       </div>
     </div>
 
-    <div class="detail-block" *ngIf="getFeatures().length">
-      <h5>المزايا</h5>
-      <ul class="feature-list">
-        <li *ngFor="let feature of getFeatures()">{{ feature }}</li>
-      </ul>
+    <!-- الوصف -->
+    <div class="field-group" style="margin-bottom: 1rem;">
+      <div class="section-title">الوصف</div>
+      <div class="clay-input-field textarea-field" 
+           style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+        {{ getDescription() || 'لا يوجد وصف متوفر' }}
+      </div>
     </div>
+
+    <!-- بيانات الاتصال والعنوان -->
+    <div class="section-title">الموقع وبيانات الاتصال</div>
+
+    <div class="field-group" style="margin-bottom: 0.75rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>location_on</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">العنوان</p>
+          <p>{{ getAddress() || 'لا يوجد عنوان محدد' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>phone</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">الهاتف</p>
+          <p dir="ltr" style="text-align: right;">{{ service.phone || 'لا يوجد هاتف' }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>workspace_premium</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">التخصص</p>
+          <p>{{ getSpecialty() || '—' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- المزايا -->
+    <div class="field-group" *ngIf="getFeatures().length" style="margin-bottom: 0.5rem;">
+      <div class="section-title">المزايا المتاحة</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span 
+          *ngFor="let feature of getFeatures()" 
+          class="btn-upload-label" 
+          style="cursor: default; padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+          <mat-icon style="font-size: 1rem; width: 1rem; height: 1rem;">check_circle</mat-icon>
+          <span>{{ feature }}</span>
+        </span>
+      </div>
+    </div>
+
   </div>
 
-  <div class="dialog-actions">
-    <button type="button" class="clay-btn-secondary" (click)="close()">إغلاق</button>
+  <!-- الفوتر (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إغلاق</span>
+    </button>
   </div>
 </div>

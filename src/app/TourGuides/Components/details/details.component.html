@@ -1,84 +1,156 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>تفاصيل المرشد</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 680px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>badge</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل المرشد</h2>
+        <p class="dialog-subtitle">عرض كامل بيانات المرشد السياحي وحساباته</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div class="details-body" *ngIf="guide; else loadingState">
-    <div class="hero-image-wrap" *ngIf="guide.imageUrl">
-      <img [src]="getImage(guide.imageUrl)" [alt]="getDisplayName()" />
-    </div>
-
-    <div class="meta-row">
-      <span class="pill">{{ getDisplayName() }}</span>
-      <span class="pill">التقييم: {{ guide.rating ?? 0 }}</span>
-    </div>
-
-    <div class="title-block">
-      <span class="label">الاسم</span>
-      <h4>{{ getDisplayName() }}</h4>
-    </div>
-
-    <div class="summary-block">
-      <span class="label">السيرة</span>
-      <p class="excerpt">{{ getDisplayBio() }}</p>
-    </div>
-
-    <div class="meta-grid">
-      <div class="info-card">
-        <span class="label">البريد</span>
-        <strong>{{ getDisplayEmail() }}</strong>
-      </div>
-
-      <div class="info-card">
-        <span class="label">الهاتف</span>
-        <strong>{{ getDisplayPhone() }}</strong>
-      </div>
-
-      <div class="info-card full-width">
-        <span class="label">اللغات</span>
-        <strong>{{ getLanguages().join(', ') || '—' }}</strong>
-      </div>
-
-      <div class="info-card full-width">
-        <span class="label">العنوان</span>
-        <strong>{{ getDisplayAddress() }}</strong>
-      </div>
-
-      <div class="info-card full-width">
-        <span class="label">الإحداثيات</span>
-        <strong>
-          {{ guide.location?.latitude ?? 0 }}, {{ guide.location?.longitude ?? 0 }}
-        </strong>
+  <!-- محتوى التفاصيل (Body) -->
+  <div class="clay-dialog-body" *ngIf="guide; else loadingState">
+    
+    <!-- الصورة الشخصية للمرشد -->
+    <div class="image-upload-wrapper" *ngIf="guide.imageUrl" style="margin-bottom: 1.25rem;">
+      <div class="image-preview-box" style="width: 100%; height: 220px; border-radius: 20px;">
+        <img [src]="getImage(guide.imageUrl)" [alt]="getDisplayName()" />
       </div>
     </div>
 
-    <div class="social-block" *ngIf="guide.social">
-      <span class="label">وسائل التواصل</span>
-      <div class="social-row">
-        <a *ngIf="guide.social.facebook" [href]="guide.social.facebook" target="_blank" rel="noopener">Facebook</a>
-        <a *ngIf="guide.social.instagram" [href]="guide.social.instagram" target="_blank" rel="noopener">Instagram</a>
-        <a *ngIf="guide.social.twitter" [href]="guide.social.twitter" target="_blank" rel="noopener">Twitter</a>
-        <a *ngIf="guide.social.tiktok" [href]="guide.social.tiktok" target="_blank" rel="noopener">TikTok</a>
-        <a *ngIf="guide.social.youtube" [href]="guide.social.youtube" target="_blank" rel="noopener">YouTube</a>
+    <!-- بطاقات سريعة: الاسم والتقييم -->
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>person</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">اسم المرشد</p>
+          <p>{{ getDisplayName() }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon style="color: var(--cta-salmon);">star</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">التقييم</p>
+          <p>{{ guide.rating ?? 0 }} / 5</p>
+        </div>
       </div>
     </div>
 
-    <div class="tags-block" *ngIf="getLanguages().length">
-      <span class="label">اللغات</span>
-      <div class="tags-row">
-        <span class="tag" *ngFor="let language of getLanguages()">{{ language }}</span>
+    <!-- السيرة الذاتية (Bio) -->
+    <div class="field-group" style="margin-bottom: 1rem;">
+      <div class="section-title">نبذة تعريفية (السيرة)</div>
+      <div class="clay-input-field textarea-field" 
+           style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+        {{ getDisplayBio() || 'لا توجد نبذة متوفرة' }}
       </div>
     </div>
+
+    <!-- بطاقات الاتصال والعنوان -->
+    <div class="section-title">بيانات التواصل والموقع</div>
+
+    <div class="form-row-grid" style="margin-bottom: 0.75rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>email</mat-icon>
+        <div style="word-break: break-all;">
+          <p style="font-size: 0.72rem; color: var(--text-muted);">البريد الإلكتروني</p>
+          <p>{{ getDisplayEmail() || '—' }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>phone</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">رقم الهاتف</p>
+          <p dir="ltr" style="text-align: right;">{{ getDisplayPhone() || '—' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>location_on</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">العنوان</p>
+          <p>{{ getDisplayAddress() || '—' }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>my_location</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">الإحداثيات</p>
+          <p dir="ltr" style="text-align: right;">
+            {{ guide.location?.latitude ?? 0 }}, {{ guide.location?.longitude ?? 0 }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- اللغات المتقنة -->
+    <div class="field-group" *ngIf="getLanguages().length" style="margin-bottom: 1.25rem;">
+      <div class="section-title">اللغات المتقنة</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span 
+          *ngFor="let lang of getLanguages()" 
+          class="btn-upload-label" 
+          style="cursor: default; padding: 0.35rem 0.85rem; font-size: 0.8rem;">
+          <mat-icon style="font-size: 1rem; width: 1rem; height: 1rem;">translate</mat-icon>
+          <span>{{ lang }}</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- وسائل التواصل الاجتماعي -->
+    <div class="field-group" *ngIf="guide.social" style="margin-bottom: 0.5rem;">
+      <div class="section-title">روابط التواصل الاجتماعي</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
+        <a *ngIf="guide.social.facebook" [href]="guide.social.facebook" target="_blank" rel="noopener" class="btn-upload-label" style="text-decoration: none;">
+          <mat-icon>public</mat-icon>
+          <span>Facebook</span>
+        </a>
+        <a *ngIf="guide.social.instagram" [href]="guide.social.instagram" target="_blank" rel="noopener" class="btn-upload-label" style="text-decoration: none;">
+          <mat-icon>photo_camera</mat-icon>
+          <span>Instagram</span>
+        </a>
+        <a *ngIf="guide.social.twitter" [href]="guide.social.twitter" target="_blank" rel="noopener" class="btn-upload-label" style="text-decoration: none;">
+          <mat-icon>share</mat-icon>
+          <span>Twitter</span>
+        </a>
+        <a *ngIf="guide.social.tiktok" [href]="guide.social.tiktok" target="_blank" rel="noopener" class="btn-upload-label" style="text-decoration: none;">
+          <mat-icon>play_circle</mat-icon>
+          <span>TikTok</span>
+        </a>
+        <a *ngIf="guide.social.youtube" [href]="guide.social.youtube" target="_blank" rel="noopener" class="btn-upload-label" style="text-decoration: none;">
+          <mat-icon>smart_display</mat-icon>
+          <span>YouTube</span>
+        </a>
+      </div>
+    </div>
+
   </div>
 
+  <!-- حالة التحميل -->
   <ng-template #loadingState>
-    <div class="loading-state">جارٍ تحميل التفاصيل...</div>
+    <div class="clay-dialog-body" style="text-align: center; padding: 3rem 1rem;">
+      <div class="dialog-info-card" style="justify-content: center;">
+        <mat-icon class="spin-icon">sync</mat-icon>
+        <p>جارٍ تحميل تفاصيل المرشد...</p>
+      </div>
+    </div>
   </ng-template>
 
-  <div class="dialog-actions">
-    <button type="button" class="clay-btn-primary" (click)="close()">إغلاق</button>
+  <!-- الفوتر (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إغلاق</span>
+    </button>
   </div>
 </div>

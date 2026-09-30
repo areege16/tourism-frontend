@@ -10,15 +10,6 @@ import { TourGuideService } from '../../Services/tour-guide.service';
 
 @Component({
   selector: 'app-tour-guide-create',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })

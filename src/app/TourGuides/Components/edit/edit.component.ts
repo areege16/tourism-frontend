@@ -12,16 +12,6 @@ import { TourGuideService } from '../../Services/tour-guide.service';
 
 @Component({
   selector: 'app-tour-guide-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss',
 })

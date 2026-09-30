@@ -1,122 +1,280 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>تعديل المرشد السياحي</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 720px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>manage_accounts</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل المرشد السياحي</h2>
+        <p class="dialog-subtitle">تحديث بيانات المرشد ووسائل التواصل والموقع</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
-    <div class="form-grid two-col">
-      <mat-form-field appearance="outline">
-        <mat-label>الاسم (EN)</mat-label>
-        <input matInput formControlName="nameEn" />
-      </mat-form-field>
+  <!-- نموذج البيانات (Form Body) -->
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="clay-dialog-body">
 
-      <mat-form-field appearance="outline">
-        <mat-label>الاسم (AR)</mat-label>
-        <input matInput formControlName="nameAr" />
-      </mat-form-field>
+      <!-- القسم 1: المعلومات الشخصية -->
+      <div class="section-title">المعلومات الشخصية والبيو</div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>السيرة (EN)</mat-label>
-        <textarea matInput formControlName="bioEn"></textarea>
-      </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>الاسم بالعربية</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="nameAr" 
+            placeholder="اسم المرشد بالعربية..." />
+        </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>السيرة (AR)</mat-label>
-        <textarea matInput formControlName="bioAr"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>الهاتف (EN)</mat-label>
-        <input matInput formControlName="phoneEn" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>الهاتف (AR)</mat-label>
-        <input matInput formControlName="phoneAr" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>البريد (EN)</mat-label>
-        <input matInput type="email" formControlName="emailEn" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>البريد (AR)</mat-label>
-        <input matInput formControlName="emailAr" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>اللغات</mat-label>
-        <input matInput formControlName="languages" placeholder="إنجليزي, عربي, فرنسي" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>رابط الصورة</mat-label>
-        <input matInput formControlName="imageUrl" />
-      </mat-form-field>
-
-      <div class="upload-wrap full-width">
-        <label class="upload-label">رفع صورة</label>
-        <input type="file" accept="image/*" (change)="onFileChange($event)" />
+        <div class="field-group">
+          <label>Name in English</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="nameEn" 
+            dir="ltr"
+            placeholder="Guide name in English..." />
+        </div>
       </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>فيسبوك</mat-label>
-        <input matInput formControlName="facebook" />
-      </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>السيرة بالعربية</label>
+          <textarea 
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="bioAr" 
+            placeholder="نبذة تعريفية عن المرشد..."></textarea>
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>إنستغرام</mat-label>
-        <input matInput formControlName="instagram" />
-      </mat-form-field>
+        <div class="field-group">
+          <label>Bio in English</label>
+          <textarea 
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="bioEn" 
+            dir="ltr"
+            placeholder="Tour guide biography..."></textarea>
+        </div>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>تويتر</mat-label>
-        <input matInput formControlName="twitter" />
-      </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>اللغات</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="languages" 
+            placeholder="إنجليزي, عربي, فرنسي..." />
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>تيك توك</mat-label>
-        <input matInput formControlName="tiktok" />
-      </mat-form-field>
+        <div class="field-group">
+          <label>التقييم (من 0 إلى 5)</label>
+          <input 
+            type="number" 
+            step="0.1" 
+            min="0" 
+            max="5" 
+            class="clay-input-field" 
+            formControlName="rating" 
+            placeholder="4.8" />
+        </div>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>يوتيوب</mat-label>
-        <input matInput formControlName="youtube" />
-      </mat-form-field>
+      <!-- الصورة ورابطها -->
+      <div class="form-row-grid" style="align-items: center;">
+        <div class="field-group">
+          <label>رابط الصورة</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="imageUrl" 
+            dir="ltr"
+            placeholder="https://example.com/image.jpg" />
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Latitude</mat-label>
-        <input matInput type="number" formControlName="latitude" />
-      </mat-form-field>
+        <div class="field-group" style="padding-top: 0.8rem;">
+          <label class="btn-upload-label" for="guide-edit-image">
+            <mat-icon>cloud_upload</mat-icon>
+            <span>استبدال ملف الصورة</span>
+          </label>
+          <input 
+            id="guide-edit-image" 
+            type="file" 
+            accept="image/*" 
+            (change)="onFileChange($event)" 
+            style="display: none;" />
+        </div>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Longitude</mat-label>
-        <input matInput type="number" formControlName="longitude" />
-      </mat-form-field>
+      <!-- القسم 2: بيانات الاتصال والعنوان -->
+      <div class="section-title" style="margin-top: 1rem;">بيانات الاتصال والعنوان</div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>عنوان (EN)</mat-label>
-        <input matInput formControlName="addressEn" />
-      </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>الهاتف (عربي)</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="phoneAr" 
+            placeholder="رقم الهاتف..." />
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>عنوان (AR)</mat-label>
-        <input matInput formControlName="addressAr" />
-      </mat-form-field>
+        <div class="field-group">
+          <label>Phone (English)</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="phoneEn" 
+            dir="ltr"
+            placeholder="+20 100 000 0000" />
+        </div>
+      </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>التقييم</mat-label>
-        <input matInput type="number" min="0" max="5" formControlName="rating" />
-      </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>البريد (عربي)</label>
+          <input 
+            type="email" 
+            class="clay-input-field" 
+            formControlName="emailAr" 
+            placeholder="user@example.com" />
+        </div>
+
+        <div class="field-group">
+          <label>Email (English)</label>
+          <input 
+            type="email" 
+            class="clay-input-field" 
+            formControlName="emailEn" 
+            dir="ltr"
+            placeholder="user@example.com" />
+        </div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>العنوان بالعربية</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="addressAr" 
+            placeholder="المدينة، المحافظة..." />
+        </div>
+
+        <div class="field-group">
+          <label>Address in English</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="addressEn" 
+            dir="ltr"
+            placeholder="City, Governorate..." />
+        </div>
+      </div>
+
+      <!-- القسم 3: الإحداثيات الجغرافية -->
+      <div class="section-title" style="margin-top: 1rem;">الإحداثيات الجغرافية</div>
+
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>Latitude (خط العرض)</label>
+          <input 
+            type="number" 
+            step="any" 
+            class="clay-input-field" 
+            formControlName="latitude" 
+            dir="ltr"
+            placeholder="28.1099" />
+        </div>
+
+        <div class="field-group">
+          <label>Longitude (خط الطول)</label>
+          <input 
+            type="number" 
+            step="any" 
+            class="clay-input-field" 
+            formControlName="longitude" 
+            dir="ltr"
+            placeholder="30.7503" />
+        </div>
+      </div>
+
+      <!-- القسم 4: وسائل التواصل الاجتماعي -->
+      <div class="section-title" style="margin-top: 1rem;">حسابات التواصل الاجتماعي</div>
+
+      <div class="form-three-grid">
+        <div class="field-group">
+          <label>Facebook</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="facebook" 
+            dir="ltr"
+            placeholder="Facebook profile/page" />
+        </div>
+
+        <div class="field-group">
+          <label>Instagram</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="instagram" 
+            dir="ltr"
+            placeholder="Instagram profile" />
+        </div>
+
+        <div class="field-group">
+          <label>Twitter (X)</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="twitter" 
+            dir="ltr"
+            placeholder="Twitter handle" />
+        </div>
+      </div>
+
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>TikTok</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="tiktok" 
+            dir="ltr"
+            placeholder="TikTok username" />
+        </div>
+
+        <div class="field-group">
+          <label>YouTube</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="youtube" 
+            dir="ltr"
+            placeholder="YouTube channel" />
+        </div>
+      </div>
+
     </div>
 
-    <div class="dialog-actions">
-      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-      <button type="submit" class="clay-btn-primary">تحديث</button>
+    <!-- أزرار الإجراءات (Actions) -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm">
+        <mat-icon>save</mat-icon>
+        <span>تحديث</span>
+      </button>
+
+      <button type="button" class="btn-dialog-cancel" (click)="close()">
+        <span>إلغاء</span>
+      </button>
     </div>
   </form>
 </div>

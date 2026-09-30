@@ -7,8 +7,6 @@ import { ServiceService } from '../../Services/service.service';
 
 @Component({
   selector: 'app-service-delete',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './delete.component.html',
   styleUrl: './delete.component.scss',
 })

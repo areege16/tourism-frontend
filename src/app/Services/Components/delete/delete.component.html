@@ -1,13 +1,46 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <mat-icon color="warn">warning</mat-icon>
-    <h3>تأكيد الحذف</h3>
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 440px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>delete_outline</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تأكيد الحذف</h2>
+        <p class="dialog-subtitle">حذف الخدمة بشكل نهائي</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
 
-  <p>هل أنت متأكد من حذف الخدمة <strong>{{ data.title || 'هذه الخدمة' }}</strong>؟</p>
+  <!-- محتوى رسالة التأكيد (Body) -->
+  <div class="clay-dialog-body">
+    <div class="dialog-info-card">
+      <mat-icon>warning_amber</mat-icon>
+      <p>
+        هل أنت متأكد من رغبتك في حذف هذه الخدمة؟ لا يمكن التراجع عن هذه العملية بعد التأكيد.
+      </p>
+    </div>
 
-  <div class="dialog-actions">
-    <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-    <button type="button" class="clay-btn-danger" (click)="confirmDelete()">حذف</button>
+    <div class="field-group" style="text-align: center; margin: 1.25rem 0 0.5rem;">
+      <label>اسم الخدمة المراد حذفها:</label>
+      <span class="section-title" style="border: none; margin-bottom: 0; padding-bottom: 0; color: var(--cta-salmon); font-size: 1.05rem;">
+        {{ data.title || 'هذه الخدمة' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- أزرار الإجراءات (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-confirm" (click)="confirmDelete()">
+      <mat-icon>delete_forever</mat-icon>
+      <span>تأكيد الحذف</span>
+    </button>
+
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إلغاء</span>
+    </button>
   </div>
 </div>

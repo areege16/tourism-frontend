@@ -13,17 +13,6 @@ import { BlogPostService } from '../../Services/blog-post.service';
 
 @Component({
   selector: 'app-blog-post-edit',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.scss',
 })

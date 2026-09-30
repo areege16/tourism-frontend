@@ -1,44 +1,99 @@
-<div class="dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>تفاصيل معلومات السياحة</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 680px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>travel_explore</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل معلومات السياحة</h2>
+        <p class="dialog-subtitle">عرض النصائح والإرشادات المناخية وتفاصيل الزيارة</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div *ngIf="isLoading" class="empty-state">جارٍ تحميل التفاصيل...</div>
-
-  <div *ngIf="!isLoading && info" class="details-body">
-    <div class="info-row wide">
-      <span class="label">العنوان</span>
-      <span class="value">{{ getTitle() }}</span>
-    </div>
-
-    <div class="info-row">
-      <span class="label">المناخ</span>
-      <span class="value">{{ getClimate() }}</span>
-    </div>
-
-    <div class="info-row">
-      <span class="label">أفضل وقت للزيارة</span>
-      <span class="value">{{ getBestTimeToVisit() }}</span>
-    </div>
-
-    <div class="info-row">
-      <span class="label">ما الذي يلبس</span>
-      <span class="value">{{ getWhatToWear() }}</span>
-    </div>
-
-    <div class="info-row wide">
-      <span class="label">ملاحظات</span>
-      <span class="value">{{ getNotes() }}</span>
-    </div>
-
-    <div class="info-row wide">
-      <span class="label">آخر تحديث</span>
-      <span class="value">{{ info.lastUpdated || '—' }}</span>
+  <!-- حالة التحميل -->
+  <div class="clay-dialog-body" *ngIf="isLoading" style="text-align: center; padding: 3rem 1rem;">
+    <div class="dialog-info-card" style="justify-content: center;">
+      <mat-icon class="spin-icon">sync</mat-icon>
+      <p>جارٍ تحميل تفاصيل المعلومات السياحية...</p>
     </div>
   </div>
 
-  <div *ngIf="!isLoading && !info" class="empty-state">لا توجد بيانات للعرض</div>
+  <!-- محتوى التفاصيل (Body) -->
+  <div class="clay-dialog-body" *ngIf="!isLoading && info">
+
+    <!-- كارت العنوان الرئيسي -->
+    <div class="field-group" style="margin-bottom: 1.25rem;">
+      <div class="section-title">العنوان التعريفي</div>
+      <div class="clay-input-field" style="margin: 0; background: var(--bg-app); font-weight: 700; font-size: 1rem;">
+        {{ getTitle() || '—' }}
+      </div>
+    </div>
+
+    <!-- بطاقات المناخ وأفضل وقت للزيارة -->
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="field-group">
+        <div class="section-title">المناخ والطقس</div>
+        <div class="clay-input-field textarea-field" 
+             style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+          {{ getClimate() || 'لا توجد بيانات مناخية' }}
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="section-title">أفضل وقت للزيارة</div>
+        <div class="clay-input-field textarea-field" 
+             style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+          {{ getBestTimeToVisit() || 'غير محدد' }}
+        </div>
+      </div>
+    </div>
+
+    <!-- إرشادات الملابس -->
+    <div class="field-group" style="margin-bottom: 1.25rem;">
+      <div class="section-title">ما الذي يُنصح بارتدائه</div>
+      <div class="clay-input-field textarea-field" 
+           style="margin: 0; background: var(--bg-app); min-height: 60px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+        {{ getWhatToWear() || 'لا توجد تعليمات محددة' }}
+      </div>
+    </div>
+
+    <!-- الملاحظات الإضافية -->
+    <div class="field-group" style="margin-bottom: 1.25rem;">
+      <div class="section-title">ملاحظات وإرشادات إضافية</div>
+      <div class="clay-input-field textarea-field" 
+           style="margin: 0; background: var(--bg-app); min-height: 60px; white-space: pre-line; word-break: break-word; overflow-wrap: anywhere;">
+        {{ getNotes() || 'لا توجد ملاحظات إضافية' }}
+      </div>
+    </div>
+
+    <!-- تاريخ آخر تحديث -->
+    <div class="dialog-info-card" style="margin-bottom: 0;">
+      <mat-icon>update</mat-icon>
+      <div>
+        <p style="font-size: 0.72rem; color: var(--text-muted);">آخر تحديث</p>
+        <p dir="ltr" style="text-align: right;">{{ info.lastUpdated || '—' }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- حالة عدم وجود بيانات -->
+  <div class="clay-dialog-body" *ngIf="!isLoading && !info" style="text-align: center; padding: 3rem 1rem;">
+    <div class="dialog-info-card" style="justify-content: center;">
+      <mat-icon>info</mat-icon>
+      <p>لا توجد بيانات متاحة لعرضها حالياً.</p>
+    </div>
+  </div>
+
+  <!-- الفوتر (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إغلاق</span>
+    </button>
+  </div>
 </div>

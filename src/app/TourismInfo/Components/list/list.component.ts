@@ -1,13 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog } from '@angular/material/dialog';
 import { TourismInfo } from '../../Models/tourism-info';
 import { TourismInfoService } from '../../Services/tourism-info.service';
 import { CreateComponent } from '../create/create.component';
@@ -17,18 +9,6 @@ import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-tourism-info-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

@@ -1,49 +1,57 @@
 <div class="clay-view-container" dir="rtl">
+  <!-- شبكة الإحصائيات العلوية -->
   <section class="stats-grid">
-    <div class="clay-stat-card teal">
+    <div class="clay-stat-card mint">
       <div class="stat-icon-wrapper">
         <mat-icon>person_pin</mat-icon>
       </div>
       <span class="stat-title">إجمالي المرشدين السياحيين</span>
       <span class="stat-value">{{ (guides.length || 0) | number }}</span>
-      <span class="stat-badge">سجل مرشد</span>
+      <span class="stat-badge">مرشد معتمد</span>
     </div>
   </section>
 
-  <section class="clay-card table-card">
+  <!-- كارت الجدول الرئيسي -->
+  <section class="table-card">
+    <!-- رأس الجدول وأدوات التحكم -->
     <div class="table-header">
       <div class="title-wrap">
         <h3>قائمة المرشدين السياحيين</h3>
         <span class="results-count">(عرض {{ filteredGuides.length }} مرشد)</span>
       </div>
 
-      <div class="table-actions">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
         <input
           type="text"
           class="clay-input-field"
+          style="margin: 0; min-width: 250px;"
           placeholder="بحث بالاسم أو الخبرة..."
           [(ngModel)]="searchTerm"
           (input)="applyFilter()"
         />
 
-        <button type="button" class="clay-btn-primary add-btn" (click)="openCreate()">
+        <button type="button" class="clay-btn-primary" (click)="openCreate()">
           <mat-icon>person_add</mat-icon>
-          <span>إضافة مرشد جديد</span>
+          <span>إضافة مرشد</span>
         </button>
       </div>
     </div>
 
+    <!-- حاوية التمرير للجدول -->
     <div class="table-scroll-container">
       <table mat-table [dataSource]="filteredGuides" class="clay-mat-table">
+        
+        <!-- رقم السجل -->
         <ng-container matColumnDef="index">
-          <th mat-header-cell *matHeaderCellDef>#</th>
+          <th mat-header-cell *matHeaderCellDef style="width: 50px;">#</th>
           <td mat-cell *matCellDef="let guide; let i = index">
             <span class="idx-badge">{{ i + 1 }}</span>
           </td>
         </ng-container>
 
+        <!-- بيانات المرشد (الصورة والاسم والبيو) -->
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>الاسم</th>
+          <th mat-header-cell *matHeaderCellDef>المرشد</th>
           <td mat-cell *matCellDef="let guide">
             <div class="item-name-cell">
               <ng-container *ngIf="guide.imageUrl && !hasImageError(guide.imageUrl); else noImage">
@@ -60,64 +68,94 @@
                 </div>
               </ng-template>
 
-              <div class="post-title-box">
+              <div style="display: flex; flex-direction: column; gap: 0.15rem;">
                 <strong>{{ getLocalizedText(guide.fullName) }}</strong>
-                <span class="meta-sub">{{ getLocalizedText(guide.bio) }}</span>
+                <small style="font-size: 0.75rem; color: var(--text-muted); max-width: 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                  {{ getLocalizedText(guide.bio) || '—' }}
+                </small>
               </div>
             </div>
           </td>
         </ng-container>
 
+        <!-- التخصص -->
         <ng-container matColumnDef="expertise">
           <th mat-header-cell *matHeaderCellDef>التخصص</th>
           <td mat-cell *matCellDef="let guide">
-            <span class="value-badge">{{ getLocalizedText(guide.expertise) }}</span>
+            <span class="value-badge">
+              <mat-icon style="font-size: 1rem; width: 1rem; height: 1rem; color: var(--icon-active);">workspace_premium</mat-icon>
+              {{ getLocalizedText(guide.expertise) || '—' }}
+            </span>
           </td>
         </ng-container>
 
+        <!-- الهاتف -->
         <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef>الهاتف</th>
           <td mat-cell *matCellDef="let guide">
-            <span class="value-badge">{{ guide.phone || '—' }}</span>
+            <span class="value-badge" dir="ltr">
+              {{ guide.phone || '—' }}
+            </span>
           </td>
         </ng-container>
 
+        <!-- اللغات -->
         <ng-container matColumnDef="languages">
           <th mat-header-cell *matHeaderCellDef>اللغات</th>
           <td mat-cell *matCellDef="let guide">
-            <span class="value-badge">{{ (guide.languages || []).join(', ') || '—' }}</span>
+            <span class="value-badge">
+              {{ (guide.languages || []).join(', ') || '—' }}
+            </span>
           </td>
         </ng-container>
 
+        <!-- الإجراءات -->
         <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+          <th mat-header-cell *matHeaderCellDef style="text-align: center; width: 120px;">الإجراءات</th>
           <td mat-cell *matCellDef="let guide">
-            <div class="action-buttons-group">
-              <button type="button" class="action-icon-btn view" matTooltip="عرض التفاصيل" (click)="openDetails(guide)">
-                <mat-icon>info</mat-icon>
+            <div class="action-buttons-group" style="justify-content: center;">
+              <button 
+                type="button" 
+                class="action-icon-btn view" 
+                matTooltip="عرض التفاصيل" 
+                (click)="openDetails(guide)">
+                <mat-icon>visibility</mat-icon>
               </button>
-              <button type="button" class="action-icon-btn edit" matTooltip="تعديل" (click)="openEdit(guide)">
+
+              <button 
+                type="button" 
+                class="action-icon-btn edit" 
+                matTooltip="تعديل" 
+                (click)="openEdit(guide)">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button type="button" class="action-icon-btn delete" matTooltip="حذف" (click)="openDelete(guide)">
+
+              <button 
+                type="button" 
+                class="action-icon-btn delete" 
+                matTooltip="حذف" 
+                (click)="openDelete(guide)">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
           </td>
         </ng-container>
 
+        <!-- صفوف الجدول -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns" class="clay-table-row"></tr>
 
+        <!-- حالة التحميل أو انعدام البيانات -->
         <tr class="mat-row state-row" *matNoDataRow>
           <td class="mat-cell" [attr.colspan]="displayedColumns.length">
             <div *ngIf="isLoading" class="loading-state">
-              <mat-icon class="spin-icon">hourglass_empty</mat-icon>
-              <span>جاري تحميل المرشدين...</span>
+              <mat-icon class="spin-icon">sync</mat-icon>
+              <span>جارٍ تحميل بيانات المرشدين...</span>
             </div>
+            
             <div *ngIf="!isLoading" class="empty-state">
-              <mat-icon>person</mat-icon>
-              <span>لا توجد بيانات للمرشدين</span>
+              <mat-icon>search_off</mat-icon>
+              <span>لا توجد بيانات مطابقة لخيارات البحث</span>
             </div>
           </td>
         </tr>

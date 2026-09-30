@@ -1,9 +1,46 @@
-<div class="delete-dialog" dir="rtl">
-  <h3>تأكيد الحذف</h3>
-  <p>هل أنت متأكد من حذف <strong>{{ title }}</strong>؟</p>
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 440px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>person_remove</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">حذف المرشد</h2>
+        <p class="dialog-subtitle">تأكيد عملية حذف بيانات المرشد</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
 
-  <div class="actions">
-    <button mat-stroked-button color="primary" (click)="close()">إلغاء</button>
-    <button mat-flat-button color="warn" (click)="confirm()">حذف</button>
+  <!-- محتوى رسالة التأكيد (Body) -->
+  <div class="clay-dialog-body">
+    <div class="dialog-info-card">
+      <mat-icon>warning_amber</mat-icon>
+      <p>
+        هل أنت متأكد أنك تريد حذف هذه المعلومة؟ سيتم مسح كافة البيانات المرتبطة به نهائياً.
+      </p>
+    </div>
+
+    <div class="field-group" style="text-align: center; margin: 1.25rem 0 0.5rem;">
+      <label>اسم المعلومه المراد حذفها:</label>
+      <span class="section-title" style="border: none; margin-bottom: 0; padding-bottom: 0; color: var(--cta-salmon); font-size: 1.05rem;">
+        {{ data.title || 'هذا المرشد' }}
+      </span>
+    </div>
+  </div>
+
+  <!-- أزرار الإجراءات (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-confirm" (click)="confirm()">
+      <mat-icon>delete_forever</mat-icon>
+      <span>تأكيد الحذف</span>
+    </button>
+
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إلغاء</span>
+    </button>
   </div>
 </div>

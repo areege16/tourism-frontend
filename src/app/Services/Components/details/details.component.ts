@@ -9,8 +9,6 @@ import { ServiceService } from '../../Services/service.service';
 
 @Component({
   selector: 'app-service-details',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })

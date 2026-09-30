@@ -19,20 +19,6 @@ import { EditComponent } from '../edit/edit.component';
 
 @Component({
   selector: 'app-tour-guides-list',
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    MatTableModule,
-    MatIconModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    DecimalPipe,
-  ],
   templateUrl: './list.component.html',
   styleUrl: './list.component.scss',
 })

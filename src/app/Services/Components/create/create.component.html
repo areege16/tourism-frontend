@@ -1,276 +1,471 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>إضافة خدمة</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 760px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>add_business</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">إضافة خدمة جديدة</h2>
+        <p class="dialog-subtitle">أدخل تفاصيل وبيانات الخدمة، الموقع، ومواعيد العمل</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
-    <div class="form-grid two-col">
-      <div class="field-block">
-        <label class="field-label" for="service-name-en">اسم الخدمة (EN)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-name-en" matInput formControlName="name" placeholder="اسم الخدمة (EN)" />
-        </mat-form-field>
+  <!-- نموذج البيانات (Form Body) -->
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="clay-dialog-body">
+
+      <!-- القسم 1: المعلومات الأساسية والتصنيف -->
+      <div class="section-title">المعلومات الأساسية</div>
+
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-name-ar">اسم الخدمة (AR)</label>
+          <input 
+            id="service-name-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="nameAr" 
+            placeholder="اسم الخدمة بالعربية..." />
+        </div>
+
+        <div class="field-group">
+          <label for="service-name-en">Service Name (EN)</label>
+          <input 
+            id="service-name-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="name" 
+            dir="ltr"
+            placeholder="Service name in English..." />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-name-ar">اسم الخدمة (AR)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-name-ar" matInput formControlName="nameAr" placeholder="اسم الخدمة (AR)" />
-        </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-type-ar">النوع (AR)</label>
+          <input 
+            id="service-type-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="typeAr" 
+            placeholder="مثال: مطعم، فندق، مشفى..." />
+        </div>
+
+        <div class="field-group">
+          <label for="service-type-en">Type (EN)</label>
+          <input 
+            id="service-type-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="type" 
+            dir="ltr"
+            placeholder="e.g. Restaurant, Hotel, Hospital..." />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-type-en">النوع (EN)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-type-en" matInput formControlName="type" placeholder="النوع (EN)" />
-        </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-specialty-ar">التخصص (AR)</label>
+          <input 
+            id="service-specialty-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="specialtyAr" 
+            placeholder="التخصص بالعربية..." />
+        </div>
+
+        <div class="field-group">
+          <label for="service-specialty">Specialty (EN)</label>
+          <input 
+            id="service-specialty"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="specialty" 
+            dir="ltr"
+            placeholder="Specialty in English..." />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-type-ar">النوع (AR)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-type-ar" matInput formControlName="typeAr" placeholder="النوع (AR)" />
-        </mat-form-field>
+      <!-- الوصف -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-description-ar">الوصف (AR)</label>
+          <textarea 
+            id="service-description-ar"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="descriptionAr" 
+            placeholder="وصف تفصيلي للخدمة..."></textarea>
+        </div>
+
+        <div class="field-group">
+          <label for="service-description-en">Description (EN)</label>
+          <textarea 
+            id="service-description-en"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="description" 
+            dir="ltr"
+            placeholder="Detailed description in English..."></textarea>
+        </div>
       </div>
 
-      <div class="field-block full-width">
-        <label class="field-label" for="service-description-en">الوصف (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="service-description-en" matInput formControlName="description" placeholder="الوصف (EN)"></textarea>
-        </mat-form-field>
+      <!-- المزايا -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-features-ar">المزايا (AR)</label>
+          <input 
+            id="service-features-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="featuresAr" 
+            placeholder="ميزة 1, ميزة 2, ميزة 3" />
+        </div>
+
+        <div class="field-group">
+          <label for="service-features">Features (EN)</label>
+          <input 
+            id="service-features"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="features" 
+            dir="ltr"
+            placeholder="Feature 1, Feature 2, Feature 3" />
+        </div>
       </div>
 
-      <div class="field-block full-width">
-        <label class="field-label" for="service-description-ar">الوصف (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="service-description-ar" matInput formControlName="descriptionAr" placeholder="الوصف (AR)"></textarea>
-        </mat-form-field>
+      <!-- القسم 2: الاتصال والموقع والتقييم -->
+      <div class="section-title" style="margin-top: 1rem;">بيانات الاتصال والموقع الجغرافي</div>
+
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-phone">رقم الهاتف</label>
+          <input 
+            id="service-phone"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="phone" 
+            dir="ltr"
+            placeholder="+20 100 000 0000" />
+        </div>
+
+        <div class="field-group">
+          <label for="service-email">البريد الإلكتروني</label>
+          <input 
+            id="service-email"
+            type="email" 
+            class="clay-input-field" 
+            formControlName="email" 
+            dir="ltr"
+            placeholder="service@example.com" />
+        </div>
       </div>
 
-      <div class="field-block full-width">
-        <label class="field-label" for="service-address-en">العنوان (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="service-address-en" matInput formControlName="address" placeholder="العنوان (EN)" />
-        </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-address-ar">العنوان (AR)</label>
+          <input 
+            id="service-address-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="addressAr" 
+            placeholder="العنوان بالعربية بالتفصيل..." />
+        </div>
+
+        <div class="field-group">
+          <label for="service-address-en">Address (EN)</label>
+          <input 
+            id="service-address-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="address" 
+            dir="ltr"
+            placeholder="Full address in English..." />
+        </div>
       </div>
 
-      <div class="field-block full-width">
-        <label class="field-label" for="service-address-ar">العنوان (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="service-address-ar" matInput formControlName="addressAr" placeholder="العنوان (AR)" />
-        </mat-form-field>
+      <div class="form-three-grid">
+        <div class="field-group">
+          <label for="service-latitude">خط العرض (Latitude)</label>
+          <input 
+            id="service-latitude"
+            type="number" 
+            step="any"
+            class="clay-input-field" 
+            formControlName="latitude" 
+            dir="ltr"
+            placeholder="28.1099" />
+        </div>
+
+        <div class="field-group">
+          <label for="service-longitude">خط الطول (Longitude)</label>
+          <input 
+            id="service-longitude"
+            type="number" 
+            step="any"
+            class="clay-input-field" 
+            formControlName="longitude" 
+            dir="ltr"
+            placeholder="30.7503" />
+        </div>
+
+        <div class="field-group">
+          <label for="service-distance">المسافة (كم)</label>
+          <input 
+            id="service-distance"
+            type="number" 
+            step="0.1"
+            class="clay-input-field" 
+            formControlName="distanceKm" 
+            placeholder="2.5" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-phone">الهاتف</label>
-        <mat-form-field appearance="outline">
-          <input id="service-phone" matInput formControlName="phone" placeholder="الهاتف" />
-        </mat-form-field>
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-rating">التقييم (من 0 إلى 5)</label>
+          <input 
+            id="service-rating"
+            type="number" 
+            min="0" 
+            max="5" 
+            step="0.1"
+            class="clay-input-field" 
+            formControlName="rating" 
+            placeholder="4.5" />
+        </div>
+
+        <div class="field-group">
+          <label for="service-comments">عدد التعليقات</label>
+          <input 
+            id="service-comments"
+            type="number" 
+            min="0"
+            class="clay-input-field" 
+            formControlName="commentsCount" 
+            placeholder="0" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-email">البريد الإلكتروني</label>
-        <mat-form-field appearance="outline">
-          <input id="service-email" matInput type="email" formControlName="email" placeholder="البريد الإلكتروني" />
-        </mat-form-field>
+      <!-- الصورة ورابطها -->
+      <div class="form-row-grid" style="align-items: center;">
+        <div class="field-group">
+          <label for="service-image">رابط الصورة</label>
+          <input 
+            id="service-image"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="image" 
+            dir="ltr"
+            placeholder="https://example.com/image.jpg" />
+        </div>
+
+        <div class="field-group" style="padding-top: 0.8rem;">
+          <label class="btn-upload-label" for="service-image-file">
+            <mat-icon>cloud_upload</mat-icon>
+            <span>رفع ملف الصورة</span>
+          </label>
+          <input 
+            id="service-image-file" 
+            type="file" 
+            accept="image/*" 
+            (change)="onFileChange($event)" 
+            style="display: none;" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-image">الصورة</label>
-        <mat-form-field appearance="outline">
-          <input id="service-image" matInput formControlName="image" placeholder="الرابط أو اسم الصورة" />
-        </mat-form-field>
+      <!-- القسم 3: خيارات الخدمة الإضافية (Checkboxes) -->
+      <div class="section-title" style="margin-top: 1rem;">المميزات والخدمات السريعة</div>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 1.25rem; margin-bottom: 1.25rem; padding: 0.5rem 0;">
+        <mat-checkbox formControlName="is24h" color="primary">خدمة 24 ساعة</mat-checkbox>
+        <mat-checkbox formControlName="isEmergency" color="primary">طوارئ</mat-checkbox>
+        <mat-checkbox formControlName="isFeatured" color="primary">خدمة مميزة</mat-checkbox>
+        <mat-checkbox formControlName="hasDelivery" color="primary">خدمة التوصيل</mat-checkbox>
+        <mat-checkbox formControlName="acceptsInsurance" color="primary">يقبل التأمين</mat-checkbox>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-image-file">رفع صورة</label>
-        <input id="service-image-file" type="file" accept="image/*" (change)="onFileChange($event)" placeholder="رفع صورة" />
+      <!-- القسم 4: جدول ساعات العمل الأسبوعية -->
+      <div class="section-title" style="margin-top: 1rem;">ساعات العمل طوال الأسبوع</div>
+
+      <!-- السبت -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-sat-ar">السبت (AR)</label>
+          <input 
+            id="service-opening-sat-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArSaturday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-sat-en">Saturday (EN)</label>
+          <input 
+            id="service-opening-sat-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnSaturday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-longitude">خط الطول</label>
-        <mat-form-field appearance="outline">
-          <input id="service-longitude" matInput type="number" formControlName="longitude" placeholder="خط الطول" />
-        </mat-form-field>
+      <!-- الأحد -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-sun-ar">الأحد (AR)</label>
+          <input 
+            id="service-opening-sun-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArSunday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-sun-en">Sunday (EN)</label>
+          <input 
+            id="service-opening-sun-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnSunday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-latitude">خط العرض</label>
-        <mat-form-field appearance="outline">
-          <input id="service-latitude" matInput type="number" formControlName="latitude" placeholder="خط العرض" />
-        </mat-form-field>
+      <!-- الاثنين -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-mon-ar">الاثنين (AR)</label>
+          <input 
+            id="service-opening-mon-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArMonday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-mon-en">Monday (EN)</label>
+          <input 
+            id="service-opening-mon-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnMonday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-distance">المسافة (كم)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-distance" matInput type="number" formControlName="distanceKm" placeholder="المسافة (كم)" />
-        </mat-form-field>
+      <!-- الثلاثاء -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-tue-ar">الثلاثاء (AR)</label>
+          <input 
+            id="service-opening-tue-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArTuesday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-tue-en">Tuesday (EN)</label>
+          <input 
+            id="service-opening-tue-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnTuesday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-rating">التقييم</label>
-        <mat-form-field appearance="outline">
-          <input id="service-rating" matInput type="number" min="0" max="5" formControlName="rating" placeholder="التقييم" />
-        </mat-form-field>
+      <!-- الأربعاء -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-wed-ar">الأربعاء (AR)</label>
+          <input 
+            id="service-opening-wed-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArWednesday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-wed-en">Wednesday (EN)</label>
+          <input 
+            id="service-opening-wed-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnWednesday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-comments">عدد التعليقات</label>
-        <mat-form-field appearance="outline">
-          <input id="service-comments" matInput type="number" formControlName="commentsCount" placeholder="عدد التعليقات" />
-        </mat-form-field>
+      <!-- الخميس -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-thu-ar">الخميس (AR)</label>
+          <input 
+            id="service-opening-thu-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArThursday" 
+            placeholder="مثال: 9:00 ص - 10:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-thu-en">Thursday (EN)</label>
+          <input 
+            id="service-opening-thu-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnThursday" 
+            dir="ltr"
+            placeholder="e.g. 9:00 AM - 10:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-specialty">التخصص</label>
-        <mat-form-field appearance="outline">
-          <input id="service-specialty" matInput formControlName="specialty" placeholder="التخصص" />
-        </mat-form-field>
+      <!-- الجمعة -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label for="service-opening-fri-ar">الجمعة (AR)</label>
+          <input 
+            id="service-opening-fri-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursArFriday" 
+            placeholder="مثال: عطلة أسبوعية أو 2:00 م - 11:00 م" />
+        </div>
+        <div class="field-group">
+          <label for="service-opening-fri-en">Friday (EN)</label>
+          <input 
+            id="service-opening-fri-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="openingHoursEnFriday" 
+            dir="ltr"
+            placeholder="e.g. Closed or 2:00 PM - 11:00 PM" />
+        </div>
       </div>
 
-      <div class="field-block">
-        <label class="field-label" for="service-specialty-ar">التخصص (AR)</label>
-        <mat-form-field appearance="outline">
-          <input id="service-specialty-ar" matInput formControlName="specialtyAr" placeholder="التخصص (AR)" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block full-width">
-        <label class="field-label" for="service-features">المزايا (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="service-features" matInput formControlName="features" placeholder="Feature 1, Feature 2" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block full-width">
-        <label class="field-label" for="service-features-ar">المزايا (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <input id="service-features-ar" matInput formControlName="featuresAr" placeholder="ميزة 1, ميزة 2" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-mon-en">ساعات العمل EN - الاثنين</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-mon-en" matInput formControlName="openingHoursEnMonday" placeholder="ساعات العمل EN - الاثنين" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-mon-ar">ساعات العمل AR - الاثنين</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-mon-ar" matInput formControlName="openingHoursArMonday" placeholder="ساعات العمل AR - الاثنين" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-tue-en">ساعات العمل EN - الثلاثاء</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-tue-en" matInput formControlName="openingHoursEnTuesday" placeholder="ساعات العمل EN - الثلاثاء" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-tue-ar">ساعات العمل AR - الثلاثاء</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-tue-ar" matInput formControlName="openingHoursArTuesday" placeholder="ساعات العمل AR - الثلاثاء" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-wed-en">ساعات العمل EN - الأربعاء</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-wed-en" matInput formControlName="openingHoursEnWednesday" placeholder="ساعات العمل EN - الأربعاء" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-wed-ar">ساعات العمل AR - الأربعاء</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-wed-ar" matInput formControlName="openingHoursArWednesday" placeholder="ساعات العمل AR - الأربعاء" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-thu-en">ساعات العمل EN - الخميس</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-thu-en" matInput formControlName="openingHoursEnThursday" placeholder="ساعات العمل EN - الخميس" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-thu-ar">ساعات العمل AR - الخميس</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-thu-ar" matInput formControlName="openingHoursArThursday" placeholder="ساعات العمل AR - الخميس" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-fri-en">ساعات العمل EN - الجمعة</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-fri-en" matInput formControlName="openingHoursEnFriday" placeholder="ساعات العمل EN - الجمعة" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-fri-ar">ساعات العمل AR - الجمعة</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-fri-ar" matInput formControlName="openingHoursArFriday" placeholder="ساعات العمل AR - الجمعة" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-sat-en">ساعات العمل EN - السبت</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-sat-en" matInput formControlName="openingHoursEnSaturday" placeholder="ساعات العمل EN - السبت" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-sat-ar">ساعات العمل AR - السبت</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-sat-ar" matInput formControlName="openingHoursArSaturday" placeholder="ساعات العمل AR - السبت" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-sun-en">ساعات العمل EN - الأحد</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-sun-en" matInput formControlName="openingHoursEnSunday" placeholder="ساعات العمل EN - الأحد" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block">
-        <label class="field-label" for="service-opening-sun-ar">ساعات العمل AR - الأحد</label>
-        <mat-form-field appearance="outline">
-          <input id="service-opening-sun-ar" matInput formControlName="openingHoursArSunday" placeholder="ساعات العمل AR - الأحد" />
-        </mat-form-field>
-      </div>
-
-      <div class="field-block checkbox-block">
-        <mat-checkbox formControlName="is24h">24 ساعة</mat-checkbox>
-      </div>
-      <div class="field-block checkbox-block">
-        <mat-checkbox formControlName="isEmergency">طوارئ</mat-checkbox>
-      </div>
-      <div class="field-block checkbox-block">
-        <mat-checkbox formControlName="isFeatured">مميز</mat-checkbox>
-      </div>
-      <div class="field-block checkbox-block">
-        <mat-checkbox formControlName="hasDelivery">التوصيل</mat-checkbox>
-      </div>
-      <div class="field-block checkbox-block">
-        <mat-checkbox formControlName="acceptsInsurance">التأمين</mat-checkbox>
-      </div>
     </div>
 
-    <div class="dialog-actions">
-      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-      <button type="submit" class="clay-btn-primary">حفظ</button>
+    <!-- أزرار الإجراءات (Actions) -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm">
+        <mat-icon>check</mat-icon>
+        <span>حفظ الخدمة</span>
+      </button>
+
+      <button type="button" class="btn-dialog-cancel" (click)="close()">
+        <span>إلغاء</span>
+      </button>
     </div>
   </form>
 </div>

@@ -11,9 +11,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ListComponent } from './Components/list/list.component';
 import { BlogPostsRoutingModule } from './blog-posts-routing.module';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { CreateComponent } from './Components/create/create.component';
+import { DeleteComponent } from './Components/delete/delete.component';
+import { DetailsComponent } from './Components/details/details.component';
+import { EditComponent } from './Components/edit/edit.component';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent,CreateComponent,DeleteComponent,DetailsComponent,EditComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,6 +34,7 @@ import { BlogPostsRoutingModule } from './blog-posts-routing.module';
     MatSelectModule,
     DatePipe,
     DecimalPipe,
+    MatCheckboxModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

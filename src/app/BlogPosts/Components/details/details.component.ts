@@ -9,8 +9,6 @@ import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-blog-post-details',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })

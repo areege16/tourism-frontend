@@ -1,13 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TourismInfoService } from '../../Services/tourism-info.service';
 
 @Component({
   selector: 'app-tourism-info-delete',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule],
   templateUrl: './delete.component.html',
   styleUrl: './delete.component.scss',
 })

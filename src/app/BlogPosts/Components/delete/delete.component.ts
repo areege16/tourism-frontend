@@ -7,8 +7,6 @@ import { BlogPostService } from '../../Services/blog-post.service';
 
 @Component({
   selector: 'app-blog-post-delete',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './delete.component.html',
   styleUrl: './delete.component.scss',
 })

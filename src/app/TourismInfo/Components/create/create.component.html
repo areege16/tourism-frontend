@@ -1,77 +1,161 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>إضافة معلومات سياحية</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl" style="width: 720px; max-width: 100%; box-sizing: border-box;">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>info</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">إضافة معلومات سياحية</h2>
+        <p class="dialog-subtitle">أدخل النصائح والإرشادات السياحية باللغتين العربية والإنجليزية</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <form class="clay-form" [formGroup]="form" (ngSubmit)="save()">
-    <div class="form-grid">
-      <div class="field-block" formGroupName="title">
-        <label class="field-label" for="tourism-title-en">العنوان (EN)</label>
-        <mat-form-field appearance="outline">
-          <input id="tourism-title-en" matInput formControlName="en" placeholder="Title" />
-        </mat-form-field>
+  <!-- نموذج البيانات (Form Body) -->
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="clay-dialog-body">
 
-        <label class="field-label" for="tourism-title-ar">العنوان (AR)</label>
-        <mat-form-field appearance="outline">
-          <input id="tourism-title-ar" matInput formControlName="ar" placeholder="العنوان" />
-        </mat-form-field>
+      <!-- العنوان الرئيسي -->
+      <div class="section-title">العنوان التعريفي</div>
+      <div class="form-row-grid" formGroupName="title">
+        <div class="field-group">
+          <label for="tourism-title-ar">العنوان (AR)</label>
+          <input 
+            id="tourism-title-ar"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="ar" 
+            placeholder="أدخل العنوان بالعربية..." />
+        </div>
+
+        <div class="field-group">
+          <label for="tourism-title-en">Title (EN)</label>
+          <input 
+            id="tourism-title-en"
+            type="text" 
+            class="clay-input-field" 
+            formControlName="en" 
+            dir="ltr"
+            placeholder="Enter title in English..." />
+        </div>
       </div>
 
-      <div class="field-block full-width" formGroupName="climate">
-        <label class="field-label" for="tourism-climate-en">المناخ (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-climate-en" matInput formControlName="en" placeholder="Climate"></textarea>
-        </mat-form-field>
+      <!-- المناخ والطقس -->
+      <div class="section-title" style="margin-top: 1rem;">المناخ وحالة الطقس</div>
+      <div class="form-row-grid" formGroupName="climate">
+        <div class="field-group">
+          <label for="tourism-climate-ar">المناخ (AR)</label>
+          <textarea 
+            id="tourism-climate-ar"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="ar" 
+            placeholder="وصف المناخ وحالة الجو..."></textarea>
+        </div>
 
-        <label class="field-label" for="tourism-climate-ar">المناخ (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-climate-ar" matInput formControlName="ar" placeholder="المناخ"></textarea>
-        </mat-form-field>
+        <div class="field-group">
+          <label for="tourism-climate-en">Climate (EN)</label>
+          <textarea 
+            id="tourism-climate-en"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="en" 
+            dir="ltr"
+            placeholder="Describe climate and weather..."></textarea>
+        </div>
       </div>
 
-      <div class="field-block full-width" formGroupName="bestTimeToVisit">
-        <label class="field-label" for="tourism-best-time-en">أفضل وقت للزيارة (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-best-time-en" matInput formControlName="en" placeholder="Best time to visit"></textarea>
-        </mat-form-field>
+      <!-- أفضل وقت للزيارة -->
+      <div class="section-title" style="margin-top: 1rem;">أفضل وقت للزيارة</div>
+      <div class="form-row-grid" formGroupName="bestTimeToVisit">
+        <div class="field-group">
+          <label for="tourism-best-time-ar">أفضل وقت للزيارة (AR)</label>
+          <textarea 
+            id="tourism-best-time-ar"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="ar" 
+            placeholder="مثال: من أكتوبر إلى أبريل..."></textarea>
+        </div>
 
-        <label class="field-label" for="tourism-best-time-ar">أفضل وقت للزيارة (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-best-time-ar" matInput formControlName="ar" placeholder="أفضل وقت للزيارة"></textarea>
-        </mat-form-field>
+        <div class="field-group">
+          <label for="tourism-best-time-en">Best Time to Visit (EN)</label>
+          <textarea 
+            id="tourism-best-time-en"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="en" 
+            dir="ltr"
+            placeholder="e.g. October to April..."></textarea>
+        </div>
       </div>
 
-      <div class="field-block full-width" formGroupName="whatToWear">
-        <label class="field-label" for="tourism-wear-en">ما الذي يلبس (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-wear-en" matInput formControlName="en" placeholder="What to wear"></textarea>
-        </mat-form-field>
+      <!-- الملابس الموصى بها -->
+      <div class="section-title" style="margin-top: 1rem;">إرشادات الملابس</div>
+      <div class="form-row-grid" formGroupName="whatToWear">
+        <div class="field-group">
+          <label for="tourism-wear-ar">ما الذي يلبس (AR)</label>
+          <textarea 
+            id="tourism-wear-ar"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="ar" 
+            placeholder="ملابس قطنية خفيفة، أحذية مريحة..."></textarea>
+        </div>
 
-        <label class="field-label" for="tourism-wear-ar">ما الذي يلبس (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-wear-ar" matInput formControlName="ar" placeholder="ما الذي يلبس"></textarea>
-        </mat-form-field>
+        <div class="field-group">
+          <label for="tourism-wear-en">What to Wear (EN)</label>
+          <textarea 
+            id="tourism-wear-en"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="en" 
+            dir="ltr"
+            placeholder="Light cotton clothes, comfortable shoes..."></textarea>
+        </div>
       </div>
 
-      <div class="field-block full-width" formGroupName="notes">
-        <label class="field-label" for="tourism-notes-en">ملاحظات (EN)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-notes-en" matInput formControlName="en" placeholder="Notes"></textarea>
-        </mat-form-field>
+      <!-- ملاحظات إضافية -->
+      <div class="section-title" style="margin-top: 1rem;">ملاحظات ونصائح إضافية</div>
+      <div class="form-row-grid" formGroupName="notes">
+        <div class="field-group">
+          <label for="tourism-notes-ar">ملاحظات (AR)</label>
+          <textarea 
+            id="tourism-notes-ar"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="ar" 
+            placeholder="أي إرشادات أو نصائح إضافية..."></textarea>
+        </div>
 
-        <label class="field-label" for="tourism-notes-ar">ملاحظات (AR)</label>
-        <mat-form-field appearance="outline" class="full-width">
-          <textarea id="tourism-notes-ar" matInput formControlName="ar" placeholder="ملاحظات"></textarea>
-        </mat-form-field>
+        <div class="field-group">
+          <label for="tourism-notes-en">Notes (EN)</label>
+          <textarea 
+            id="tourism-notes-en"
+            class="clay-input-field textarea-field" 
+            rows="3" 
+            formControlName="en" 
+            dir="ltr"
+            placeholder="Any additional notes or tips..."></textarea>
+        </div>
       </div>
+
     </div>
 
-    <div class="dialog-actions">
-      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-      <button type="submit" class="clay-btn-primary">حفظ</button>
+    <!-- أزرار الإجراءات (Actions) -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm">
+        <mat-icon>check</mat-icon>
+        <span>حفظ المعلومات</span>
+      </button>
+
+      <button type="button" class="btn-dialog-cancel" (click)="close()">
+        <span>إلغاء</span>
+      </button>
     </div>
   </form>
 </div>

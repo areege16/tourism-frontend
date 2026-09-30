@@ -1,22 +1,46 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>حذف المنشور</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>delete_outline</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">حذف المنشور</h2>
+        <p class="dialog-subtitle">تأكيد عملية الحذف النهائي</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div class="delete-body">
-    <div class="warning-icon">
+  <!-- محتوى رسالة التأكيد (Body) -->
+  <div class="clay-dialog-body">
+    <div class="dialog-info-card">
       <mat-icon>warning_amber</mat-icon>
+      <p>
+        هل أنت متأكد أنك تريد حذف هذا المنشور؟ لا يمكن التراجع عن هذا الإجراء لاحقاً.
+      </p>
     </div>
 
-    <p>هل أنت متأكد أنك تريد حذف هذا المنشور؟</p>
-    <strong>{{ data.title || 'هذا المنشور' }}</strong>
+    <div class="field-group" style="text-align: center; margin: 1rem 0;">
+      <label>عنوان المنشور المراد حذفه:</label>
+      <span class="section-title" style="border: none; margin-bottom: 0; padding-bottom: 0; color: var(--cta-salmon);">
+        {{ data.title || 'هذا المنشور' }}
+      </span>
+    </div>
   </div>
 
-  <div class="dialog-actions">
-    <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-    <button type="button" class="clay-btn-danger" (click)="confirmDelete()">حذف</button>
+  <!-- أزرار الإجراءات (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-confirm" (click)="confirmDelete()">
+      <mat-icon>delete_forever</mat-icon>
+      <span>تأكيد الحذف</span>
+    </button>
+
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إلغاء</span>
+    </button>
   </div>
 </div>

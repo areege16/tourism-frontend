@@ -7,8 +7,6 @@ import { TourGuideService } from '../../Services/tour-guide.service';
 
 @Component({
   selector: 'app-tour-guide-delete',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './delete.component.html',
   styleUrl: './delete.component.scss',
 })

@@ -1,89 +1,124 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>تفاصيل المنشور</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" style="width: 680px; max-width: 100%; box-sizing: border-box;" dir="rtl">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>article</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل المنشور</h2>
+        <p class="dialog-subtitle">عرض كامل بيانات ومحتوى المنشور</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <div class="details-body" *ngIf="post">
-    <div class="hero-image-wrap" *ngIf="post.imageUrl">
-      <img [src]="getImage(post.imageUrl)" [alt]="getLocalizedText(post.title)" />
-    </div>
-
-    <div class="meta-row">
-      <span class="pill">{{ getLocalizedText(post.category) }}</span>
-      <span class="pill">{{ post.readTime }} دقيقة</span>
-      <span class="pill">{{ post.publishDate | date: 'dd/MM/yyyy' }}</span>
-      <span class="pill" *ngIf="post.featured">مميز</span>
-    </div>
-
-    <div class="title-block">
-      <span class="label">العنوان</span>
-      <h4>{{ getLocalizedText(post.title) }}</h4>
-    </div>
-
-    <div class="summary-block">
-      <span class="label">الملخص</span>
-      <p class="excerpt">{{ getLocalizedText(post.excerpt) }}</p>
-    </div>
-
-    <div class="content-block">
-      <span class="label">المحتوى</span>
-      <div class="content-box">
-        <h5>English</h5>
-        <p>{{ getContentText(post.content) }}</p>
-        <h5>العربية</h5>
-        <p>{{ getLocalizedText(post.content) }}</p>
+  <!-- محتوى التفاصيل (Body) -->
+  <div class="clay-dialog-body" *ngIf="post">
+    
+    <!-- الصورة الأساسية -->
+    <div class="image-upload-wrapper" *ngIf="post.imageUrl" style="margin-bottom: 1.25rem;">
+      <div class="image-preview-box" style="width: 100%; height: 220px; border-radius: 20px;">
+        <img [src]="getImage(post.imageUrl)" [alt]="getLocalizedText(post.title)" />
       </div>
     </div>
 
-    <div class="author-box">
-      <div class="avatar">
+    <!-- بطاقات المعلومات والإحصائيات السريعة -->
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="dialog-info-card" style="margin-bottom: 0;">
         <mat-icon>person</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">المؤلف</p>
+          <p>{{ getLocalizedText(post.author) }}</p>
+        </div>
       </div>
-      <div class="author-meta">
-        <strong>{{ getLocalizedText(post.author) }}</strong>
-        <small>{{ getStatusLabel(post.status) }}</small>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>category</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">التصنيف</p>
+          <p>{{ getLocalizedText(post.category) }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>calendar_today</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">تاريخ النشر</p>
+          <p>{{ post.publishDate | date: 'dd/MM/yyyy' }}</p>
+        </div>
+      </div>
+
+      <div class="dialog-info-card" style="margin-bottom: 0;">
+        <mat-icon>schedule</mat-icon>
+        <div>
+          <p style="font-size: 0.72rem; color: var(--text-muted);">وقت القراءة</p>
+          <p>{{ post.readTime }} دقيقة</p>
+        </div>
       </div>
     </div>
 
-    <div class="meta-grid">
-      <div class="info-card">
-        <span class="label">المؤلف</span>
-        <strong>{{ getLocalizedText(post.author) }}</strong>
-      </div>
+    <!-- تنبيه المنشور المميز -->
+    <div class="dialog-info-card" *ngIf="post.featured">
+      <mat-icon style="color: var(--cta-salmon);">star</mat-icon>
+      <p>منشور مميز (Featured Post)</p>
+    </div>
 
-      <div class="info-card">
-        <span class="label">التصنيف</span>
-        <strong>{{ getLocalizedText(post.category) }}</strong>
-      </div>
-
-      <div class="info-card">
-        <span class="label">تاريخ النشر</span>
-        <strong>{{ post.publishDate | date: 'dd/MM/yyyy' }}</strong>
-      </div>
-
-      <div class="info-card">
-        <span class="label">وقت القراءة</span>
-        <strong>{{ post.readTime }} دقيقة</strong>
+    <!-- العنوان والملخص -->
+    <div class="field-group" style="margin-bottom: 1rem;">
+      <div class="section-title">العنوان</div>
+      <div class="clay-input-field" style="margin: 0; background: var(--bg-app); font-weight: 700;">
+        {{ getLocalizedText(post.title) }}
       </div>
     </div>
 
-    <div class="tags-block" *ngIf="getTags().length">
-      <span class="label">Tags</span>
-      <div class="tags-row">
-        <span class="tag" *ngFor="let tag of getTags()">{{ tag }}</span>
+    <div class="field-group" style="margin-bottom: 1rem;">
+      <div class="section-title">الملخص</div>
+      <div class="clay-input-field textarea-field" style="margin: 0; background: var(--bg-app); min-height: 60px;">
+        {{ getLocalizedText(post.excerpt) }}
       </div>
     </div>
 
-    <div class="featured-box" *ngIf="post.featured">
-      <span class="label">Featured</span>
-      <strong>مميز</strong>
+    <!-- تفاصيل المحتوى باللغتين -->
+    <div class="field-group" style="margin-bottom: 1.25rem;">
+      <div class="section-title">المحتوى الكامل</div>
+      
+      <div class="field-group" style="margin-bottom: 0.75rem;">
+        <label>اللغة العربية</label>
+        <div class="clay-input-field textarea-field" style="margin: 0; background: var(--bg-app); min-height: 80px; white-space: pre-line;">
+          {{ getLocalizedText(post.content) }}
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>English</label>
+        <div class="clay-input-field textarea-field" dir="ltr" style="margin: 0; background: var(--bg-app); min-height: 80px; white-space: pre-line;">
+          {{ getContentText(post.content) }}
+        </div>
+      </div>
     </div>
+
+    <!-- الوسوم (Tags) -->
+    <div class="field-group" *ngIf="getTags().length" style="margin-bottom: 0.5rem;">
+      <div class="section-title">الوسوم (Tags)</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+        <span 
+          *ngFor="let tag of getTags()" 
+          class="btn-upload-label" 
+          style="cursor: default; padding: 0.35rem 0.8rem; font-size: 0.78rem;">
+          #{{ tag }}
+        </span>
+      </div>
+    </div>
+
   </div>
 
-  <div class="dialog-actions">
-    <button type="button" class="clay-btn-primary" (click)="close()">إغلاق</button>
+  <!-- الفوتر (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إغلاق</span>
+    </button>
   </div>
 </div>

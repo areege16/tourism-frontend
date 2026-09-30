@@ -116,7 +116,7 @@ export class ListComponent implements OnInit {
 
   openDetails(post: BlogPost): void {
     this.dialog.open(DetailsComponent, {
-      width: '760px',
+      width: '680px',
       maxWidth: '95vw',
       panelClass: 'clay-dialog',
       data: { postId: post.id },

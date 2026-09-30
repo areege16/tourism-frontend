@@ -1,93 +1,194 @@
-<div class="clay-dialog-shell" dir="rtl">
-  <div class="dialog-header">
-    <h3>إضافة منشور جديد</h3>
-    <button type="button" class="icon-close" (click)="close()">
+<div class="clay-dialog clay-dialog-shell" dir="rtl">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>post_add</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">إضافة منشور جديد</h2>
+        <p class="dialog-subtitle">أدخل تفاصيل المنشور باللغتين العربية والإنجليزية</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
       <mat-icon>close</mat-icon>
     </button>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="save()" class="clay-form">
-    <div class="form-grid two-col">
-      <mat-form-field appearance="outline">
-        <mat-label>العنوان بالعربية</mat-label>
-        <input matInput formControlName="titleAr" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Title in English</mat-label>
-        <input matInput formControlName="titleEn" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>المحتوى بالعربية</mat-label>
-        <textarea matInput rows="4" formControlName="contentAr"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Content in English</mat-label>
-        <textarea matInput rows="4" formControlName="contentEn"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>ملخص بالعربية</mat-label>
-        <textarea matInput rows="3" formControlName="excerptAr"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Excerpt in English</mat-label>
-        <textarea matInput rows="3" formControlName="excerptEn"></textarea>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>التصنيف بالعربية</mat-label>
-        <input matInput formControlName="categoryAr" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Category in English</mat-label>
-        <input matInput formControlName="categoryEn" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>اسم المؤلف بالعربية</mat-label>
-        <input matInput formControlName="authorAr" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Author name in English</mat-label>
-        <input matInput formControlName="authorEn" />
-      </mat-form-field>
-
+  <!-- نموذج البيانات (Form Body) -->
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <div class="clay-dialog-body">
       
+      <!-- العناوين -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>العنوان بالعربية</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="titleAr" 
+            placeholder="أدخل عنوان المنشور..." />
+        </div>
 
-      <mat-form-field appearance="outline">
-        <mat-label>هشتاج</mat-label>
-        <input matInput formControlName="tags" placeholder="travel, food, luxury" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>تاريخ النشر</mat-label>
-        <input matInput type="datetime-local" formControlName="publishDate" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>وقت القراءة (دقائق)</mat-label>
-        <input matInput type="number" min="1" formControlName="readTime" />
-      </mat-form-field>
-
-      <div class="checkbox-wrap">
-        <mat-checkbox formControlName="featured">مميز</mat-checkbox>
+        <div class="field-group">
+          <label>Title in English</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="titleEn" 
+            dir="ltr"
+            placeholder="Enter post title..." />
+        </div>
       </div>
 
-      <div class="upload-wrap">
-        <label class="upload-label">ImageFile</label>
-        <input type="file" accept="image/*" (change)="onFileChange($event)" />
+      <!-- التصنيف -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>التصنيف بالعربية</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="categoryAr" 
+            placeholder="مثال: سياحة أثرية" />
+        </div>
+
+        <div class="field-group">
+          <label>Category in English</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="categoryEn" 
+            dir="ltr"
+            placeholder="e.g. Archaeological Tourism" />
+        </div>
       </div>
+
+      <!-- الكاتب -->
+      <div class="form-row-grid">
+        <div class="field-group">
+          <label>اسم المؤلف بالعربية</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="authorAr" 
+            placeholder="اسم الكاتب..." />
+        </div>
+
+        <div class="field-group">
+          <label>Author name in English</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="authorEn" 
+            dir="ltr"
+            placeholder="Author's name..." />
+        </div>
+      </div>
+
+      <!-- الملخص -->
+      <div class="field-group">
+        <label>ملخص بالعربية</label>
+        <textarea 
+          class="clay-input-field textarea-field" 
+          rows="2" 
+          formControlName="excerptAr" 
+          placeholder="موجز سريع للمنشور..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Excerpt in English</label>
+        <textarea 
+          class="clay-input-field textarea-field" 
+          rows="2" 
+          formControlName="excerptEn" 
+          dir="ltr"
+          placeholder="Brief summary in English..."></textarea>
+      </div>
+
+      <!-- المحتوى الكامل -->
+      <div class="field-group">
+        <label>المحتوى بالعربية</label>
+        <textarea 
+          class="clay-input-field textarea-field" 
+          rows="4" 
+          formControlName="contentAr" 
+          placeholder="اكتب المحتوى الكامل هنا..."></textarea>
+      </div>
+
+      <div class="field-group">
+        <label>Content in English</label>
+        <textarea 
+          class="clay-input-field textarea-field" 
+          rows="4" 
+          formControlName="contentEn" 
+          dir="ltr"
+          placeholder="Write the full content here..."></textarea>
+      </div>
+
+      <!-- بيانات النشر والمقاييس -->
+      <div class="form-three-grid">
+        <div class="field-group">
+          <label>هشتاج</label>
+          <input 
+            type="text" 
+            class="clay-input-field" 
+            formControlName="tags" 
+            placeholder="travel, food, luxury" />
+        </div>
+
+        <div class="field-group">
+          <label>تاريخ النشر</label>
+          <input 
+            type="datetime-local" 
+            class="clay-input-field" 
+            formControlName="publishDate" />
+        </div>
+
+        <div class="field-group">
+          <label>وقت القراءة (دقائق)</label>
+          <input 
+            type="number" 
+            min="1" 
+            class="clay-input-field" 
+            formControlName="readTime" 
+            placeholder="5" />
+        </div>
+      </div>
+
+      <!-- خيارات إضافية ورفع الصورة -->
+      <div class="form-row-grid" style="align-items: center; margin-top: 0.5rem;">
+        <div>
+          <mat-checkbox formControlName="featured" color="primary">
+            تحديد كمنشور مميز
+          </mat-checkbox>
+        </div>
+
+        <div class="field-group">
+          <label class="btn-upload-label" for="post-file-upload">
+            <mat-icon>cloud_upload</mat-icon>
+            <span>رفع الصورة الأساسية</span>
+          </label>
+          <input 
+            id="post-file-upload" 
+            type="file" 
+            accept="image/*" 
+            (change)="onFileChange($event)" 
+            style="display: none;" />
+        </div>
+      </div>
+
     </div>
 
-    <div class="dialog-actions">
-      <button type="button" class="clay-btn-secondary" (click)="close()">إلغاء</button>
-      <button type="submit" class="clay-btn-primary">حفظ</button>
+    <!-- أزرار الإجراءات (Actions) -->
+    <div class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm">
+        <mat-icon>check</mat-icon>
+        <span>حفظ المنشور</span>
+      </button>
+
+      <button type="button" class="btn-dialog-cancel" (click)="close()">
+        <span>إلغاء</span>
+      </button>
     </div>
   </form>
 </div>

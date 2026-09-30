@@ -1,15 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { TourismInfo } from '../../Models/tourism-info';
 import { TourismInfoService } from '../../Services/tourism-info.service';
 
 @Component({
   selector: 'app-tourism-info-details',
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './details.component.html',
   styleUrl: './details.component.scss',
 })

@@ -11,16 +11,6 @@ import { ServiceService } from '../../Services/service.service';
 
 @Component({
   selector: 'app-service-create',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCheckboxModule,
-    MatButtonModule,
-    MatIconModule,
-  ],
   templateUrl: './create.component.html',
   styleUrl: './create.component.scss',
 })
