@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
-import { Hotel } from '../../Models/hotel';
+import { Hotel, UpdateHotelDto } from '../../Models/hotel';
 import { HotelService } from '../../Services/hotel.service';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateComponent } from '../update/update.component';
+import { ToastService } from '../../../Shared/Services/toast.service';
+import { CreateComponent } from '../create/create.component';
+import { DeleteComponent } from '../delete/delete.component';
 
 @Component({
   selector: 'app-list',
@@ -19,7 +24,7 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['index', 'name', 'rating', 'priceRange', 'actions'];
 
-  constructor(private hotelService: HotelService) {}
+  constructor(private hotelService: HotelService, private dialog: MatDialog ) {}
 
   ngOnInit(): void {
     this.loadHotels();
@@ -53,6 +58,49 @@ export class ListComponent implements OnInit {
       hotel.priceRange?.en?.toLowerCase().includes(term)
     );
   }
+  openCreate(): void {
+  const dialogRef = this.dialog.open(CreateComponent, {
+    width: '640px',
+    maxWidth: '95vw',
+    panelClass: 'clay-dialog',
+  });
+
+  dialogRef.afterClosed().subscribe((isCreated: boolean) => {
+    if (isCreated) {
+      this.loadHotels();
+    }
+  });
+}
+  openUpdate(hotel: any): void {
+  const dialogRef = this.dialog.open(UpdateComponent, {
+    width: '640px',
+    maxWidth: '95vw',
+    panelClass: 'clay-dialog',
+    data: { id: hotel.id } // <--- id بحرف صغير
+  });
+
+  dialogRef.afterClosed().subscribe((isUpdated: boolean) => {
+    if (isUpdated) {
+      this.loadHotels();
+    }
+  });
+}
+ 
+
+  opendelete(hotel: any): void {
+  const dialogRef = this.dialog.open(DeleteComponent, {
+    width: '640px',
+    maxWidth: '95vw',
+    panelClass: 'clay-dialog',
+    data: { id: hotel.id } 
+  });
+
+  dialogRef.afterClosed().subscribe((isDeleted: boolean) => {
+    if (isDeleted) {
+      this.loadHotels();
+    }
+  });
+}
 
   getImage(path?: string): string {
     return getFullImageUrl(path || '');

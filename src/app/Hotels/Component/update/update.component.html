@@ -1,1 +1,218 @@
-<p>update works!</p>
+<div class="clay-dialog" dir="rtl">
+  <!-- هيدر الديالوج -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>edit_business</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تعديل بيانات الفندق</h2>
+        <p class="dialog-subtitle">تحديث التفاصيل، المرفقات، ونطاق الأسعار</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- حالة انتظار تحميل البيانات -->
+  <div *ngIf="isLoadingData" class="clay-dialog-body" style="text-align: center; padding: 4rem 1rem;">
+    <div class="loading-state" style="display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-muted);">
+      <mat-icon class="spin-icon" style="font-size: 2.5rem; width: 2.5rem; height: 2.5rem;">hourglass_empty</mat-icon>
+      <span style="font-weight: 700;">جاري جلب أحدث تفاصيل الفندق...</span>
+    </div>
+  </div>
+
+  <!-- نموذج التعديل بعد اكتمال التحميل -->
+  <form *ngIf="!isLoadingData" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div mat-dialog-content class="clay-dialog-body">
+
+      <div class="dialog-info-card">
+        <mat-icon>info</mat-icon>
+        <p>يتم حفظ التعديلات فوراً وتحديث الصور والمرفقات على السيرفر المركزي.</p>
+      </div>
+
+      <!-- الاسم -->
+      <div class="form-row-grid">
+        <div class="field-group" formGroupName="name">
+          <label>اسم الفندق (عربي) *</label>
+          <input type="text" class="clay-input-field" formControlName="ar" placeholder="مثال: فندق المنيا جراند" />
+        </div>
+        <div class="field-group" formGroupName="name">
+          <label>اسم الفندق (English) *</label>
+          <input type="text" class="clay-input-field" formControlName="en" placeholder="e.g. Minya Grand Hotel" />
+        </div>
+      </div>
+
+      <!-- الوصف -->
+      <!-- الوصف -->
+      <div class="form-row-grid" style="margin-top: 1rem;">
+        <div class="field-group" formGroupName="description">
+          <label>الوصف (عربي)</label> <!-- Removed * -->
+          <textarea class="clay-input-field textarea-field" formControlName="ar" rows="3"></textarea>
+        </div>
+        <div class="field-group" formGroupName="description">
+          <label>الوصف (English)</label> <!-- Removed * -->
+          <textarea class="clay-input-field textarea-field" formControlName="en" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- النجوم والتقييم -->
+    <div class="form-three-grid" style="margin-top: 1rem;">
+        <div class="field-group">
+          <label>تصنيف النجوم (1-7)</label> <!-- Removed * -->
+          <input type="number" class="clay-input-field" formControlName="starRating" min="1" max="7" />
+        </div>
+        <div class="field-group">
+          <label>التقييم (0 - 5)</label>
+          <input type="number" step="0.1" class="clay-input-field" formControlName="rating" min="0" max="5" />
+        </div>
+        <div class="field-group">
+          <label>عدد المراجعات</label>
+          <input type="number" class="clay-input-field" formControlName="reviewCount" min="0" />
+        </div>
+      </div>
+
+      <!-- نطاق السعر -->
+   <div class="form-row-grid" style="margin-top: 1rem;" formGroupName="priceRange">
+        <div class="field-group">
+          <label>نطاق السعر (عربي)</label> <!-- Removed * -->
+          <input type="text" class="clay-input-field" formControlName="ar" />
+        </div>
+        <div class="field-group">
+          <label>نطاق السعر (English)</label> <!-- Removed * -->
+          <input type="text" class="clay-input-field" formControlName="en" />
+        </div>
+      </div>
+
+      <!-- الإحداثيات -->
+      <div class="form-row-grid" style="margin-top: 1rem;">
+        <div class="field-group">
+          <label>خط العرض (Latitude)</label> <!-- Removed * -->
+          <input type="number" step="any" class="clay-input-field" formControlName="latitude" />
+        </div>
+        <div class="field-group">
+          <label>خط الطول (Longitude)</label> <!-- Removed * -->
+          <input type="number" step="any" class="clay-input-field" formControlName="longitude" />
+        </div>
+      </div>
+
+      <!-- بيانات التواصل -->
+      <!-- بيانات التواصل -->
+      <div class="section-title">بيانات التواصل</div>
+      <div class="form-row-grid" formGroupName="contactInfo">
+        
+        <div class="field-group">
+          <label>رقم الهاتف</label> 
+          <input type="text" class="clay-input-field" formControlName="phone" />
+        </div>
+        
+        <div class="field-group">
+          <label>البريد الإلكتروني</label> 
+          <input type="email" class="clay-input-field" formControlName="email" />
+        </div>
+   
+        <div class="field-group">
+          <label>الموقع الإلكتروني</label> 
+          <input type="url" class="clay-input-field" formControlName="website" />
+        </div>
+        
+      </div>
+
+      <!-- الصورة الرئيسية -->
+      <div class="section-title" style="margin-top: 1.5rem;">الصورة الرئيسية للفندق</div>
+      <div class="image-upload-wrapper">
+        <div class="image-preview-box">
+          <img *ngIf="mainImagePreview" [src]="mainImagePreview" alt="Main Preview" />
+          <div *ngIf="!mainImagePreview" class="placeholder-icon">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>اختر صورة</span>
+          </div>
+        </div>
+        <div class="upload-btn-container">
+          <label class="btn-upload-label">
+            <mat-icon>upload_file</mat-icon>
+            <span>رفع صورة جديدة</span>
+            <input type="file" accept="image/*" (change)="onMainImageSelected($event)" style="display: none;" />
+          </label>
+        </div>
+      </div>
+
+      <!-- معرض الصور -->
+      <div class="section-title" style="margin-top: 1.5rem;">معرض الصور (Gallery)</div>
+      <div class="gallery-upload-section">
+        <div class="gallery-grid">
+          <div class="gallery-thumb" *ngFor="let url of existingGalleryUrls; let i = index">
+            <img [src]="getImageUrl(url)" alt="Existing Gallery" />
+            <button type="button" class="btn-remove-thumb" (click)="removeExistingGalleryImage(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <div class="gallery-thumb new-upload" *ngFor="let preview of newGalleryPreviews; let i = index">
+            <img [src]="preview" alt="New Gallery" />
+            <button type="button" class="btn-remove-thumb" (click)="removeNewGalleryImage(i)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <label class="gallery-add-card">
+            <mat-icon>add_photo_alternate</mat-icon>
+            <span>إضافة صور</span>
+            <input type="file" multiple accept="image/*" (change)="onGalleryFilesSelected($event)" style="display: none;" />
+          </label>
+        </div>
+      </div>
+
+      <!-- المرافق -->
+      <div class="section-title" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <span>المرافق والخدمات</span>
+        <button type="button" class="btn-add-item" (click)="addAmenity()">
+          <mat-icon>add</mat-icon> إضافة مرفق
+        </button>
+      </div>
+
+      <div formArrayName="amenities" class="dynamic-list">
+        <div class="dynamic-row" *ngFor="let item of amenitiesArray.controls; let i = index" [formGroupName]="i">
+          <input type="text" class="clay-input-field" formControlName="ar" placeholder="المرفق (عربي)" />
+          <input type="text" class="clay-input-field" formControlName="en" placeholder="Amenity (English)" />
+          <button type="button" class="btn-delete-row" (click)="removeAmenity(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- الغرف -->
+      <div class="section-title" style="margin-top: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+        <span>أنواع الغرف</span>
+        <button type="button" class="btn-add-item" (click)="addRoomType()">
+          <mat-icon>add</mat-icon> إضافة نوع غرفة
+        </button>
+      </div>
+
+      <div formArrayName="roomTypes" class="dynamic-list">
+        <div class="dynamic-row" *ngFor="let item of roomTypesArray.controls; let i = index" [formGroupName]="i">
+          <input type="text" class="clay-input-field" formControlName="ar" placeholder="نوع الغرفة (عربي)" />
+          <input type="text" class="clay-input-field" formControlName="en" placeholder="Room Type (English)" />
+          <button type="button" class="btn-delete-row" (click)="removeRoomType(i)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- الفوتر والأزرار -->
+    <div mat-dialog-actions class="clay-dialog-actions">
+      <button type="submit" class="btn-dialog-confirm" [disabled]="form.invalid || isSubmitting">
+        <mat-icon *ngIf="!isSubmitting">check_circle</mat-icon>
+        <mat-icon *ngIf="isSubmitting" class="spin-icon">hourglass_empty</mat-icon>
+        <span>{{ isSubmitting ? 'جاري الحفظ...' : 'حفظ التعديلات' }}</span>
+      </button>
+
+      <button type="button" class="btn-dialog-cancel" (click)="closeDialog()" [disabled]="isSubmitting">
+        إلغاء
+      </button>
+    </div>
+  </form>
+</div>
