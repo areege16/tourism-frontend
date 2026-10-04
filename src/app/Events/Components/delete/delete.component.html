@@ -1,0 +1,42 @@
+<div class="clay-dialog" dir="rtl">
+  
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon peach">
+        <mat-icon>warning</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تأكيد الحذف</h2>
+        <p class="dialog-subtitle">إجراء لا يمكن التراجع عنه</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onCancel()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="clay-dialog-body">
+    <div class="dialog-info-card" style="border-color: rgba(239, 68, 68, 0.3);">
+      <mat-icon style="color: #c25353;">report_problem</mat-icon>
+      <p>
+        هل أنت تأكد من رغبتك في حذف 
+        <strong style="color: var(--text-main);">"{{ data.title }}"</strong>؟
+      </p>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="onCancel()">
+      إلغاء
+    </button>
+    
+    <button type="button" class="btn-dialog-confirm" (click)="onConfirm()" style="background-color: #c25353 !important;">
+      <mat-icon>delete</mat-icon>
+      <span>حذف</span>
+    </button>
+  </div>
+
+</div>

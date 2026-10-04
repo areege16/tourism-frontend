@@ -3,7 +3,7 @@
   <header class="top-nav">
     <div class="brand">
       <span class="brand-logo"></span>
-      <span class="brand-name">منظومة الأرشفة الإلكترونية</span>
+      <span class="brand-name">لوحة إدارة منصة "اكتشف المنيا" السياحية</span>
     </div>
     <div class="nav-actions">
       <button type="button" class="nav-link-btn">استعراض السجلات</button>
@@ -16,7 +16,7 @@
     <div class="clay-login-card">
       <div class="card-header">
         <h2>تسجيل الدخول</h2>
-        <p>نظام أرشفة وإدارة محاضر الإزالات والمخالفات</p>
+        <p>لوحة التحكم وإدارة المحتوى | البوابة الرقمية لسياحة المنيا</p>
       </div>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
@@ -27,22 +27,14 @@
 
         <!-- حقل اسم المستخدم -->
         <div class="input-wrapper">
-          <input 
-            type="text" 
-            formControlName="userName" 
-            placeholder="اسم المستخدم أو البريد الإلكتروني"
-            [class.input-error]="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid"
-          />
+          <input type="text" formControlName="userName" placeholder="اسم المستخدم أو البريد الإلكتروني"
+            [class.input-error]="loginForm.get('userName')?.touched && loginForm.get('userName')?.invalid" />
         </div>
 
         <!-- حقل كلمة المرور -->
         <div class="input-wrapper password-field">
-          <input 
-            [type]="hidePassword ? 'password' : 'text'" 
-            formControlName="password" 
-            placeholder="كلمة المرور"
-            [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
-          />
+          <input [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="كلمة المرور"
+            [class.input-error]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" />
           <button type="button" class="icon-btn" (click)="togglePasswordVisibility()" aria-label="عرض كلمة المرور">
             <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>

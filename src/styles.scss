@@ -5,67 +5,67 @@
 @import './app/styles/toast';
 @import './app/styles/dialog';
 @import './app/styles/clay-shared';
+
 // --- 1. Custom Palettes Definition ---
 
-// Primary: Pastel Mint (#A3CFC3)
+// Primary: Amarna Terracotta & Warm Clay (#A34828)
 $custom-primary-map: (
-  50: #f3f9f7,
-  100: #e1f0ec,
-  200: #cde6e0,
-  300: #b9dcd4,
-  400: #aed5cc,
-  500: #a3cfc3, // Main Mint
-  600: #8bbfae,
-  700: #6ca895,
-  800: #446860, // Forest Sage (Sidebar & Active Icons)
-  900: #2d4640,
+  50: #fbf0eb,
+  100: #f5dcd2,
+  200: #ecc5b5,
+  300: #e2ab97,
+  400: #cb785b,
+  500: #a34828, // Main Terracotta
+  600: #8d3a1d,
+  700: #752d14, // Deep Desert Earth (Active Elements & Headers)
+  800: #571f0a,
+  900: #3b1204,
   contrast: (
-    500: #3a2e2c,
+    500: #ffffff,
     600: #ffffff,
     700: #ffffff,
     800: #ffffff,
   )
 );
 
-// Accent / CTA: Vibrant Salmon (#EE7E61)
+// Accent / CTA: Desert Amber & Gold (#D49B4B)
 $custom-accent-map: (
-  50: #fdf1ee,
-  100: #fbded6,
-  200: #f6c4b4, // Soft Peach
-  300: #f2a58f,
-  400: #ef8e74,
-  500: #ee7e61, // Vibrant Salmon CTA
-  600: #e86d4e,
-  700: #de573a,
-  800: #d44326,
-  900: #c12b0e,
+  50: #fdf8ef,
+  100: #f8ebd5,
+  200: #f2dbb6,
+  300: #ebca97,
+  400: #e0b06c,
+  500: #d49b4b, // Warm Desert Gold
+  600: #bd8234,
+  700: #a16a22,
+  800: #825013,
+  900: #613808,
   contrast: (
-    500: #ffffff,
-    200: #3a2e2c,
+    500: #321f17,
+    200: #321f17,
   )
 );
 
-// Warn Palette - 
+// Warn Palette: Muted Crimson Earth
 $custom-warn-map: (
-  50: #fde8e8,
-  100: #fad2d2, // Added for lighter hue
-  200: #f7baba,
-  300: #f4a2a2,
-  400: #f18b8b,
-  500: #e57373, // Main warn color
-  600: #d66464,
-  700: #c25353, // Added for darker hue
-  800: #ae4242,
-  900: #9a3232,
+  50: #fcf0f0,
+  100: #f7d7d7,
+  200: #eeadad,
+  300: #e48181,
+  400: #d85c5c,
+  500: #c85a5a, // Main Warn Color
+  600: #b54545,
+  700: #9a3232,
+  800: #7e2222,
+  900: #621414,
   contrast: (
     500: #ffffff,
-    100: #3a2e2c,
+    100: #321f17,
     700: #ffffff,
   )
 );
 
-
-$app-primary: mat.define-palette($custom-primary-map, 500, 200, 800);
+$app-primary: mat.define-palette($custom-primary-map, 500, 200, 700);
 $app-accent: mat.define-palette($custom-accent-map, 500, 200, 700);
 $app-warn: mat.define-palette($custom-warn-map, 500, 100, 700);
 
@@ -87,28 +87,29 @@ $app-theme: mat.define-light-theme((
 // --- 3. CSS Variables & Global Clay Tokens ---
 :root {
   // Base & Layout
-  --bg-app: #F8F3EA;
-  --bg-sidebar: #CBD8D4;
-  --bg-card: #FFFDF9;
+  --bg-app: #E2CEB3;       // Warm Sand Base
+  --bg-sidebar: #D1BC9F;   // Muted Ochre Sidebar Base
+  --bg-card: #F5EBDC;      // Soft Cream-Sand Card Surface
 
-  // Accents / Pastels
-  --pastel-peach: #F6C4B4;
-  --pastel-mint: #A3CFC3;
-  --pastel-butter: #F6D79F;
-  --pastel-periwinkle: #B9CEE2;
-  --pastel-mauve: #DCBDD7;
+  // Palette Highlights & Accents
+  --pastel-peach: #E29358;
+  --pastel-mint: #C4B097;  // Desert Sage Sand
+  --pastel-butter: #EAD3A8;
+  --pastel-periwinkle: #B3A290;
+  --pastel-mauve: #C89B84;
 
   // CTA & Text
-  --cta-salmon: #EE7E61;
-  --text-main: #3A2E2C;
-  --text-muted: #8C817D;
-  --icon-active: #446860;
+  --cta-terracotta: #A34828;
+  --accent-gold: #D49B4B;
+  --text-main: #321F17;     // Deep Dark Espresso
+  --text-muted: #72584A;    // Muted Warm Umber
+  --icon-active: #752D14;
 
-  // Claymorphism Shadows
-  --clay-card-shadow: 8px 8px 18px rgba(188, 175, 155, 0.35),
-                      -6px -6px 14px rgba(255, 255, 255, 0.9);
-  --clay-card-inset: inset 2px 2px 4px rgba(255, 255, 255, 0.7),
-                     inset -2px -2px 4px rgba(188, 175, 155, 0.2);
+  // Claymorphism Shadows (Warming up shadows with earth undertones)
+  --clay-card-shadow: 8px 8px 18px rgba(50, 31, 23, 0.22),
+                      -6px -6px 14px rgba(255, 248, 238, 0.7);
+  --clay-card-inset: inset 2px 2px 4px rgba(255, 248, 238, 0.8),
+                     inset -2px -2px 4px rgba(50, 31, 23, 0.15);
 }
 
 // --- 4. Global Styles & Overrides ---
@@ -139,27 +140,32 @@ p, span, .subtext {
   background-color: var(--bg-card);
   border-radius: 24px;
   box-shadow: var(--clay-card-shadow);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 245, 230, 0.7);
   padding: 1.5rem;
   transition: all 0.25s ease-in-out;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 10px 10px 22px rgba(188, 175, 155, 0.4),
-                -8px -8px 18px rgba(255, 255, 255, 0.95);
+    box-shadow: 10px 10px 22px rgba(50, 31, 23, 0.28),
+                -8px -8px 18px rgba(255, 248, 238, 0.85);
   }
 }
 
 // Clay Button Base
 .clay-btn-primary {
-  background-color: var(--cta-salmon) !important;
-  color: #ffffff !important;
+  background-color: var(--cta-terracotta) !important;
+   color: #FFFFFF !important; 
+  -webkit-text-fill-color: #FFFFFF !important;
   border-radius: 18px !important;
-  box-shadow: 4px 4px 10px rgba(238, 126, 97, 0.4),
-              inset 1px 1px 2px rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 4px 4px 10px rgba(163, 72, 40, 0.35),
+              inset 1px 1px 2px rgba(255, 255, 255, 0.4) !important;
   border: none;
   font-weight: 600;
   cursor: pointer;
+
+  &:hover {
+    background-color: #8D3A1D !important;
+  }
 }
 
 // Angular Material Components Overrides

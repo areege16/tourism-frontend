@@ -92,7 +92,7 @@
           <td mat-cell *matCellDef="let h">
             <div class="action-buttons-group">
               <button type="button" class="action-icon-btn view" matTooltip="عرض التفاصيل"
-                [routerLink]="['details', h.id]">
+                (click)="openDetails(h)">
                 <mat-icon>info</mat-icon>
               </button>
               <button type="button" class="action-icon-btn edit" matTooltip="تعديل" (click)="openUpdate(h)">

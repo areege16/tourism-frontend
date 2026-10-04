@@ -1,16 +1,7 @@
 <div class="clay-layout-wrapper" dir="rtl">
-  <mat-drawer-container
-    class="clay-drawer-container"
-    autosize
-    [hasBackdrop]="false"
-  >
-    <mat-drawer
-      mode="side"
-      opened="true"
-      position="start"
-      class="clay-sidebar-drawer"
-      [class.sidebar-collapsed]="isCollapsed"
-    >
+  <mat-drawer-container class="clay-drawer-container" autosize [hasBackdrop]="false">
+    <mat-drawer mode="side" opened="true" position="start" class="clay-sidebar-drawer"
+      [class.sidebar-collapsed]="isCollapsed">
       <div class="sidebar-inner-content">
         <!-- User Profile Header -->
         <div class="sidebar-profile">
@@ -29,20 +20,13 @@
         <nav class="sidebar-nav">
           <ul class="nav-list">
             <li *ngFor="let item of navItems" class="nav-item">
-              <a
-                [routerLink]="item.route"
-                routerLinkActive="active-link"
-                [routerLinkActiveOptions]="{
+              <a [routerLink]="item.route" routerLinkActive="active-link" [routerLinkActiveOptions]="{
                   exact: item.route === '/dashboard',
-                }"
-                class="nav-link"
-                [matTooltip]="isCollapsed ? item.label : ''"
-                matTooltipPosition="left"
-              >
+                }" class="nav-link" [matTooltip]="isCollapsed ? item.label : ''" matTooltipPosition="left">
                 <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
                 <span class="nav-label" *ngIf="!isCollapsed">{{
                   item.label
-                }}</span>
+                  }}</span>
               </a>
             </li>
           </ul>
@@ -55,22 +39,16 @@
               <div class="footer-icon-wrapper">
                 <mat-icon>verified</mat-icon>
               </div>
-              <h5>نظام الأرشفة المعتمد</h5>
-              <p>محاضر إزالات المحافظة الإلكترونية</p>
+              <h5>منصة إدارة المحتوى السياحي</h5>
+              <p>البوابة الإلكترونية الرسمية لسياحة المنيا</p>
               <button type="button" class="action-btn" (click)="logout()">
                 <span>تسجيل الخروج</span>
               </button>
             </div>
           </ng-container>
 
-          <button
-            *ngIf="isCollapsed"
-            type="button"
-            class="mini-logout-btn"
-            (click)="logout()"
-            matTooltip="تسجيل الخروج"
-            matTooltipPosition="left"
-          >
+          <button *ngIf="isCollapsed" type="button" class="mini-logout-btn" (click)="logout()" matTooltip="تسجيل الخروج"
+            matTooltipPosition="left">
             <mat-icon>logout</mat-icon>
           </button>
         </div>
@@ -82,12 +60,8 @@
       <div class="clay-main-container">
         <header class="clay-topbar">
           <div class="topbar-right-group">
-            <button
-              type="button"
-              class="clay-icon-button toggle-btn"
-              (click)="toggleDrawer()"
-              aria-label="تبديل القائمة"
-            >
+            <button type="button" class="clay-icon-button toggle-btn" (click)="toggleDrawer()"
+              aria-label="تبديل القائمة">
               <mat-icon>{{ isCollapsed ? "menu" : "menu_open" }}</mat-icon>
             </button>
             <div class="topbar-title">
@@ -96,11 +70,7 @@
           </div>
 
           <div class="topbar-actions">
-            <button
-              type="button"
-              class="clay-icon-button"
-              aria-label="الملف الشخصي"
-            >
+            <button type="button" class="clay-icon-button" aria-label="الملف الشخصي">
               <mat-icon>account_circle</mat-icon>
             </button>
           </div>

@@ -11,7 +11,7 @@ export class LayoutComponent {
   isCollapsed = false;
   userData = this.authService.getUserData();
   userName: string = this.userData?.fullName || 'المستخدم';
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
 
   navItems: NavItem[] = [
     {
@@ -24,6 +24,7 @@ export class LayoutComponent {
     { label: 'المرشدون السياحيون', icon: 'person_pin', route: '/dashboard/tourguides' },
     { label: 'الخدمات', icon: 'build', route: '/dashboard/services' },
     { label: 'معلومات السياحة', icon: 'travel_explore', route: '/dashboard/tourisminfo' },
+    { label: 'الفعاليات', icon: 'event', route: '/dashboard/events' },
     {
       label: 'المصورون',
       icon: 'camera_alt',

@@ -33,50 +33,72 @@ export class SouvenirService {
   }
 
   // Services/souvenir.service.ts
+private buildShopFormData(payload: SouvenirShopCreateValue): FormData {
+  const fd = new FormData();
 
-  private buildShopFormData(payload: SouvenirShopCreateValue): FormData {
-    const fd = new FormData();
+  const append = (
+    key: string,
+    value: unknown,
+  ) => {
+    // إذا كانت القيمة فارغة أو غير محددة أو نصاً فارغاً لا تقومي بإضافتها
+    if (value === null || value === undefined || value === '') return;
+    fd.append(key, String(value));
+  };
 
-    const append = (
-      key: string,
-      value: string | number | boolean | null | undefined,
-    ) => {
-      if (value === null || value === undefined || value === '') return;
-      fd.append(key, String(value));
-    };
+  // حقول إلزامية
+  fd.append('Name', payload.name?.trim() ?? '');
+  fd.append('NameAr', payload.nameAr?.trim() ?? '');
+  fd.append('Category', payload.category ?? '');
 
-    fd.append('Name', payload.name);
-    fd.append('NameAr', payload.nameAr);
+  // حقول نصية اختيارية (لا ترسل إن كانت فارغة لتبقى null في السيرفر)
+  append('Description', payload.description?.trim());
+  append('DescriptionAr', payload.descriptionAr?.trim());
+  append('CategoryAr', payload.categoryAr?.trim());
+  append('Address', payload.address?.trim());
+  append('AddressAr', payload.addressAr?.trim());
+  append('Phone', payload.phone?.trim());
+  append('Email', payload.email?.trim());
+  append('PriceRange', payload.priceRange);
+  append('OpeningHours', payload.openingHours?.trim());
+  append('OpeningHoursAr', payload.openingHoursAr?.trim());
 
-    append('Description', payload.description);
-    append('DescriptionAr', payload.descriptionAr);
-    append('Category', payload.category);
-    append('CategoryAr', payload.categoryAr);
-    append('Address', payload.address);
-    append('AddressAr', payload.addressAr);
-    append('Phone', payload.phone);
-    append('Email', payload.email);
-
+  // حقول أرقام اختيارية (تأكدي ألا تكون NaN أو نص فارغ)
+  if (payload.latitude !== null && payload.latitude !== undefined && payload.latitude !== (' ' as any)) {
     append('Latitude', payload.latitude);
-    append('Longitude', payload.longitude);
-    append('DistanceKm', payload.distanceKm);
-    append('Rating', payload.rating);
-    append('ReviewCount', payload.reviewCount);
-
-    append('PriceRange', payload.priceRange);
-    append('OpeningHours', payload.openingHours);
-    append('OpeningHoursAr', payload.openingHoursAr);
-
-    append('IsFeatured', payload.isFeatured);
-    append('AcceptsCreditCard', payload.acceptsCreditCard);
-    append('HasDelivery', payload.hasDelivery);
-    append('HasOnlineStore', payload.hasOnlineStore);
-
-    payload.specialties.forEach((s) => fd.append('Specialties', s));
-    payload.specialtiesAr.forEach((s) => fd.append('SpecialtiesAr', s));
-
-    return fd;
   }
+  if (payload.longitude !== null && payload.longitude !== undefined) {
+    append('Longitude', payload.longitude);
+  }
+  if (payload.distanceKm !== null && payload.distanceKm !== undefined) {
+    append('DistanceKm', payload.distanceKm);
+  }
+  if (payload.rating !== null && payload.rating !== undefined) {
+    append('Rating', payload.rating);
+  }
+  if (payload.reviewCount !== null && payload.reviewCount !== undefined) {
+    append('ReviewCount', payload.reviewCount);
+  }
+
+  // حقول منطقية (Booleans)
+  if (typeof payload.isFeatured === 'boolean') {
+    fd.append('IsFeatured', String(payload.isFeatured));
+  }
+  if (typeof payload.acceptsCreditCard === 'boolean') {
+    fd.append('AcceptsCreditCard', String(payload.acceptsCreditCard));
+  }
+  if (typeof payload.hasDelivery === 'boolean') {
+    fd.append('HasDelivery', String(payload.hasDelivery));
+  }
+  if (typeof payload.hasOnlineStore === 'boolean') {
+    fd.append('HasOnlineStore', String(payload.hasOnlineStore));
+  }
+
+  // المصفوفات (تجنبي إرسال عناصر فارغة)
+  payload.specialties?.filter(s => !!s?.trim()).forEach((s) => fd.append('Specialties', s.trim()));
+  payload.specialtiesAr?.filter(s => !!s?.trim()).forEach((s) => fd.append('SpecialtiesAr', s.trim()));
+
+  return fd;
+}
 
   createShop(
     payload: SouvenirShopCreateValue,
@@ -106,11 +128,9 @@ export class SouvenirService {
 
     fd.append('Id', id);
 
-    // الصورة الرئيسية: ملف جديد لو اتغيرت، وإلا نبعت القديمة
     if (imageFile) fd.append('ImageFile', imageFile);
     else if (existingImage) fd.append('ExistingImage', existingImage);
 
-    // المعرض: القديم اللي فضل + الجديد
     existingImages.forEach((img) => fd.append('ExistingImages', img));
     newImagesFiles.forEach((f) => fd.append('NewImagesFiles', f));
 

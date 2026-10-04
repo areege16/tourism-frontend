@@ -99,8 +99,8 @@ export interface SouvenirShopCreateValue {
   acceptsCreditCard?: boolean | null;
   hasDelivery?: boolean | null;
   hasOnlineStore?: boolean | null;
-  specialties: string[];
-  specialtiesAr: string[];
+  specialties?: string[] ;
+  specialtiesAr?: string[] ;
 }
 
 export interface SouvenirShopUpdateValue extends SouvenirShopCreateValue {

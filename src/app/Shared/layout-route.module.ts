@@ -56,6 +56,14 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'events',
+        loadChildren: () =>
+          import('../Events/event.module').then(
+            (m) => m.EventModule,
+          ),
+      }
+      ,
+      {
         path: 'tourisminfo',
         loadChildren: () =>
           import('../TourismInfo/tourism-info.module').then(

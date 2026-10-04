@@ -7,6 +7,7 @@ import { UpdateComponent } from '../update/update.component';
 import { ToastService } from '../../../Shared/Services/toast.service';
 import { CreateComponent } from '../create/create.component';
 import { DeleteComponent } from '../delete/delete.component';
+import { DetailsComponent } from '../details/details.component';
 
 @Component({
   selector: 'app-list',
@@ -73,6 +74,22 @@ export class ListComponent implements OnInit {
 }
   openUpdate(hotel: any): void {
   const dialogRef = this.dialog.open(UpdateComponent, {
+    width: '640px',
+    maxWidth: '95vw',
+    panelClass: 'clay-dialog',
+    data: { id: hotel.id } // <--- id بحرف صغير
+  });
+
+  dialogRef.afterClosed().subscribe((isUpdated: boolean) => {
+    if (isUpdated) {
+      this.loadHotels();
+    }
+  });
+}
+
+
+  openDetails(hotel: any): void {
+  const dialogRef = this.dialog.open(DetailsComponent, {
     width: '640px',
     maxWidth: '95vw',
     panelClass: 'clay-dialog',

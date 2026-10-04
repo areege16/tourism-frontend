@@ -6,6 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HotelRouteModule } from './hotel-route.module';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DetailsComponent } from './Component/details/details.component';
@@ -26,7 +27,8 @@ import { UpdateComponent } from './Component/update/update.component';
     MatButtonModule,
     HotelRouteModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   exports: [ListComponent]
 })

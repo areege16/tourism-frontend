@@ -29,6 +29,13 @@
 }
 
 // هيكل الديالوج الرئيسي
+// Target Angular Material's overlay panel container to ensure rounded corners
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 28px !important;
+  overflow: hidden !important;
+  background-color: var(--bg-card) !important;
+}
+
 .clay-dialog {
   display: flex;
   flex-direction: column;
@@ -36,6 +43,11 @@
   background-color: var(--bg-card);
   position: relative;
   font-family: inherit;
+  
+  /* --- FIX FOR SHARP EDGES --- */
+  border-radius: 28px;
+  overflow: hidden;
+  /* -------------------------- */
 
   // --- الهيدر ---
   .clay-dialog-header {
@@ -284,7 +296,6 @@
     }
   }
 }
-
 // ==========================================
 // Layout Grids & Custom Form Inputs
 // ==========================================

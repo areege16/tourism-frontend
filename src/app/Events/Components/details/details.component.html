@@ -1,0 +1,126 @@
+<div class="clay-dialog" dir="rtl">
+  
+  <!-- Header -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>visibility</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل الفعالية</h2>
+        <p class="dialog-subtitle">عرض شامل لبيانات ومعلومات الفعالية</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Body -->
+  <div class="clay-dialog-body">
+
+    <!-- Image Banner -->
+    <div class="dialog-info-card" style="padding: 0; overflow: hidden;" *ngIf="event.imageUrl">
+      <img 
+        [src]="getImage(event.imageUrl)" 
+        [alt]="getLocalizedText(event.name)" 
+        style="width: 100%; max-height: 220px; object-fit: cover; display: block;"
+      />
+    </div>
+
+    <!-- Title & Category -->
+    <div class="section-title" style="display: flex; align-items: center; justify-content: space-between;">
+      <span>{{ getLocalizedText(event.name) }}</span>
+      <span class="btn-upload-label" style="cursor: default; font-size: 0.75rem; padding: 0.3rem 0.8rem;">
+        {{ getLocalizedText(event.category) }}
+      </span>
+    </div>
+
+    <!-- Description -->
+    <div class="field-group" style="margin-bottom: 1.25rem;">
+      <label>الوصف</label>
+      <p style="margin: 0; font-size: 0.9rem; line-height: 1.6; color: var(--text-main);">
+        {{ getLocalizedText(event.description) || 'لا يوجد وصف متاح.' }}
+      </p>
+    </div>
+
+    <!-- Dates & Status -->
+    <div class="section-title">التوقيت والتاريخ</div>
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="field-group">
+        <label>تاريخ البدء</label>
+        <span style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+          {{ event.startDate | date:'medium' }}
+        </span>
+      </div>
+      <div class="field-group">
+        <label>تاريخ الانتهاء</label>
+        <span style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+          {{ event.endDate | date:'medium' }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="section-title">الموقع الجغرافي</div>
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="field-group">
+        <label>العنوان / المكان</label>
+        <span style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+          {{ getLocalizedText(event.location) || 'غير محدد' }}
+        </span>
+      </div>
+      <div class="field-group" *ngIf="event.latitude && event.longitude">
+        <label>الإحداثيات</label>
+        <span style="font-weight: 600; color: var(--text-muted); font-size: 0.82rem;">
+          {{ event.latitude }}, {{ event.longitude }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Pricing & Organizer -->
+    <div class="section-title">التذاكر والمنظم</div>
+    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+      <div class="field-group">
+        <label>رسوم الدخول</label>
+        <span style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+          {{ event.isFree ? 'مجاني' : (getLocalizedText(event.ticketPrice) || 'غير محدد') }}
+        </span>
+      </div>
+      <div class="field-group" *ngIf="event.organizer">
+        <label>الجهة المنظمة</label>
+        <span style="font-weight: 700; color: var(--text-main); font-size: 0.88rem;">
+          {{ getLocalizedText(event.organizer) }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="section-title" *ngIf="event.contactInfo">معلومات التواصل</div>
+    <div class="form-three-grid" *ngIf="event.contactInfo">
+      <div class="field-group" *ngIf="event.contactInfo.phone">
+        <label>الهاتف</label>
+        <span style="font-weight: 600; font-size: 0.85rem;">{{ event.contactInfo.phone }}</span>
+      </div>
+      <div class="field-group" *ngIf="event.contactInfo.email">
+        <label>البريد الإلكتروني</label>
+        <span style="font-weight: 600; font-size: 0.85rem;">{{ event.contactInfo.email }}</span>
+      </div>
+      <div class="field-group" *ngIf="event.contactInfo.website">
+        <label>الموقع الإلكتروني</label>
+        <a [href]="event.contactInfo.website" target="_blank" style="color: var(--icon-active); font-weight: 600; font-size: 0.85rem;">
+          رابط الموقع
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Actions -->
+  <div class="clay-dialog-actions" style="justify-content: flex-end;">
+    <button type="button" class="btn-dialog-cancel" (click)="onClose()">
+      إغلاق
+    </button>
+  </div>
+
+</div>

@@ -1,1 +1,222 @@
-<p>details works!</p>
+<div class="clay-dialog clay-dialog-shell" style="width: 680px; max-width: 100%; box-sizing: border-box;" dir="rtl">
+  <!-- رأس النافذة المنبثقة (Header) -->
+  <div class="clay-dialog-header">
+    <div class="header-title-group">
+      <div class="dialog-header-icon">
+        <mat-icon>hotel</mat-icon>
+      </div>
+      <div>
+        <h2 class="dialog-title">تفاصيل الفندق</h2>
+        <p class="dialog-subtitle" *ngIf="hotel">{{ hotel.name.ar }}</p>
+      </div>
+    </div>
+    <button type="button" class="btn-close" (click)="close()" aria-label="إغلاق">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- محتوى التفاصيل (Body) -->
+  <div class="clay-dialog-body">
+
+    <!-- حالة التحميل -->
+    <div class="dialog-info-card" *ngIf="isLoading">
+      <mat-spinner diameter="32"></mat-spinner>
+      <p>جارِ تحميل بيانات الفندق...</p>
+    </div>
+
+    <!-- حالة الخطأ -->
+    <div *ngIf="!isLoading && (hasError || !hotel)">
+      <div class="dialog-info-card" style="margin-bottom: 1rem;">
+        <mat-icon style="color: var(--cta-salmon);">error_outline</mat-icon>
+        <p>تعذر العثور على بيانات الفندق المطلوبة.</p>
+      </div>
+      <button type="button" class="clay-btn-primary" (click)="fetchHotelDetails(data.id)">
+        <mat-icon>refresh</mat-icon>
+        <span>إعادة المحاولة</span>
+      </button>
+    </div>
+
+    <!-- عند توفر البيانات -->
+    <div *ngIf="!isLoading && hotel">
+
+      <!-- الصورة الأساسية ومعاينة المعرض -->
+      <div class="image-upload-wrapper" *ngIf="selectedPreviewImage" style="margin-bottom: 1.25rem;">
+        <div class="image-preview-box" style="width: 100%; height: 220px; border-radius: 20px;">
+          <img
+            [src]="getImage(selectedPreviewImage)"
+            (error)="onImageError(selectedPreviewImage, $event)"
+            [alt]="hotel.name.ar || hotel.name.en"
+          />
+        </div>
+      </div>
+
+      <!-- معرض الصور المصغرة -->
+      <div class="gallery-grid" *ngIf="hotel.imageGallery?.length" style="margin-bottom: 1.25rem;">
+        <div
+          class="gallery-thumb"
+          *ngFor="let img of hotel.imageGallery"
+          [style.outline]="img === selectedPreviewImage ? '2px solid var(--cta-salmon)' : 'none'"
+          (click)="selectImage(img)"
+        >
+          <img
+            [src]="getImage(img)"
+            (error)="onImageError(img, $event)"
+            alt="صورة من المعرض"
+          />
+        </div>
+      </div>
+
+      <!-- بطاقات المعلومات والإحصائيات السريعة -->
+      <div class="form-row-grid" style="margin-bottom: 1.25rem;">
+        <div class="dialog-info-card" *ngIf="hotel.starRating" style="margin-bottom: 0;">
+          <mat-icon style="color: #f59e0b;">star</mat-icon>
+          <div>
+            <p style="font-size: 0.72rem; color: var(--text-muted);">فئة الفندق</p>
+            <p>{{ hotel.starRating }} نجوم</p>
+          </div>
+        </div>
+
+        <div class="dialog-info-card" *ngIf="hotel.rating" style="margin-bottom: 0;">
+          <mat-icon>grade</mat-icon>
+          <div>
+            <p style="font-size: 0.72rem; color: var(--text-muted);">التقييم العام</p>
+            <p>{{ hotel.rating }} <span *ngIf="hotel.reviewCount">({{ hotel.reviewCount }})</span></p>
+          </div>
+        </div>
+
+        <div class="dialog-info-card" *ngIf="hotel.priceRange" style="margin-bottom: 0;">
+          <mat-icon>payments</mat-icon>
+          <div>
+            <p style="font-size: 0.72rem; color: var(--text-muted);">نطاق الأسعار</p>
+            <p>{{ hotel.priceRange.ar || hotel.priceRange.en }}</p>
+          </div>
+        </div>
+
+        <div class="dialog-info-card" *ngIf="hotel.contactInfo?.phone" style="margin-bottom: 0;">
+          <mat-icon>phone</mat-icon>
+          <div>
+            <p style="font-size: 0.72rem; color: var(--text-muted);">الهاتف</p>
+            <p dir="ltr">{{ hotel.contactInfo.phone.ar || hotel.contactInfo.phone.en }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- الاسم باللغتين -->
+      <div class="form-row-grid" style="margin-bottom: 1rem;">
+        <div class="field-group">
+          <div class="section-title">الاسم (عربي)</div>
+          <div class="clay-input-field" style="margin: 0; background: var(--bg-app); font-weight: 700;">
+            {{ hotel.name.ar }}
+          </div>
+        </div>
+
+        <div class="field-group">
+          <div class="section-title">Name (English)</div>
+          <div class="clay-input-field" dir="ltr" style="margin: 0; background: var(--bg-app); font-weight: 700;">
+            {{ hotel.name.en }}
+          </div>
+        </div>
+      </div>
+
+      <!-- نبذة عن الفندق -->
+      <div class="field-group" *ngIf="hotel.description" style="margin-bottom: 1.25rem;">
+        <div class="section-title">نبذة عن الفندق</div>
+
+        <div class="field-group" *ngIf="hotel.description.ar" style="margin-bottom: 0.75rem;">
+          <label>الوصف (عربي)</label>
+          <div class="clay-input-field textarea-field" style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line;">
+            {{ hotel.description.ar }}
+          </div>
+        </div>
+
+        <div class="field-group" *ngIf="hotel.description.en">
+          <label>Description (English)</label>
+          <div class="clay-input-field textarea-field" dir="ltr" style="margin: 0; background: var(--bg-app); min-height: 70px; white-space: pre-line;">
+            {{ hotel.description.en }}
+          </div>
+        </div>
+      </div>
+
+      <!-- الخدمات والمرافق (Amenities) كـ Badges -->
+      <div class="field-group" *ngIf="hotel.amenities?.length" style="margin-bottom: 1rem;">
+        <div class="section-title">الخدمات والمرافق (Amenities)</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span
+            *ngFor="let item of hotel.amenities"
+            class="btn-upload-label"
+            style="cursor: default; padding: 0.35rem 0.8rem; font-size: 0.78rem;"
+          >
+            {{ item.ar || item.en }}
+          </span>
+        </div>
+      </div>
+
+      <!-- أنواع الغرف (Room Types) كـ Badges -->
+      <div class="field-group" *ngIf="hotel.roomTypes?.length" style="margin-bottom: 1rem;">
+        <div class="section-title">أنواع الغرف (Room Types)</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+          <span
+            *ngFor="let room of hotel.roomTypes"
+            class="btn-upload-label"
+            style="cursor: default; padding: 0.35rem 0.8rem; font-size: 0.78rem; background-color: var(--pastel-peach); color: var(--cta-salmon);"
+          >
+            {{ room.ar || room.en }}
+          </span>
+        </div>
+      </div>
+
+      <!-- بيانات التواصل والموقع -->
+      <div class="field-group" style="margin-bottom: 0.5rem;">
+        <div class="section-title">معلومات التواصل والموقع</div>
+        <div class="form-row-grid">
+          <div class="dialog-info-card" *ngIf="hotel.contactInfo?.email" style="margin-bottom: 0;">
+            <mat-icon>email</mat-icon>
+            <div>
+              <p style="font-size: 0.72rem; color: var(--text-muted);">البريد الإلكتروني</p>
+              <p dir="ltr">{{ hotel.contactInfo.email}}</p>
+            </div>
+          </div>
+          <div class="dialog-info-card" *ngIf="hotel.contactInfo?.phone" style="margin-bottom: 0;">
+            <mat-icon>phone</mat-icon>
+            <div>
+              <p style="font-size: 0.72rem; color: var(--text-muted);">الهاتف</p>
+              <p dir="ltr">{{ hotel.contactInfo.phone}}</p>
+            </div>
+          </div>
+
+          <div class="dialog-info-card" *ngIf="hotel.contactInfo?.website" style="margin-bottom: 0;">
+            <mat-icon>language</mat-icon>
+            <div>
+              <p style="font-size: 0.72rem; color: var(--text-muted);">الموقع الإلكتروني</p>
+              <a
+                [href]="hotel.contactInfo.website"
+                target="_blank"
+                dir="ltr"
+                style="color: var(--icon-active); font-weight: 600; text-decoration: none;"
+              >
+                {{ hotel.contactInfo.website }}
+              </a>
+            </div>
+          </div>
+
+          <div class="dialog-info-card" *ngIf="hotel.latitude && hotel.longitude" style="margin-bottom: 0;">
+            <mat-icon>place</mat-icon>
+            <div>
+              <p style="font-size: 0.72rem; color: var(--text-muted);">الإحداثيات</p>
+              <p dir="ltr">{{ hotel.latitude }}, {{ hotel.longitude }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- الفوتر (Actions) -->
+  <div class="clay-dialog-actions">
+    <button type="button" class="btn-dialog-cancel" (click)="close()">
+      <span>إغلاق</span>
+    </button>
+  </div>
+</div>

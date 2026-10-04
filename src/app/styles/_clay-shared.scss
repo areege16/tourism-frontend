@@ -186,21 +186,27 @@
     transform: rotate(360deg);
   }
 }
-/* إلغاء حواف وخلفية Angular Material بشكل كامل على مستوى الطبقة الخارجية */
+/* 1. إلغاء أي خلفية أو حواف أو قص افتراضي من Angular Material */
 .cdk-overlay-pane:has(.clay-dialog-shell) {
   width: auto !important;
   max-width: fit-content !important;
+
+  .mat-mdc-dialog-container,
+  .mdc-dialog__surface,
+  .mat-mdc-dialog-inner-container {
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important; // إلغاء زوايا Material الافتراضية
+    overflow: visible !important; // منع قص المؤثرات الخارجية مثل الظلال (Clay Shadows)
+  }
 }
 
-.cdk-overlay-pane:has(.clay-dialog-shell) .mat-mdc-dialog-container {
-  padding: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
-.cdk-overlay-pane:has(.clay-dialog-shell) .mdc-dialog__surface {
-  background: transparent !important;
-  box-shadow: none !important;
-  padding: 0 !important;
-  overflow: visible !important;
+/* 2. تطبيق التدوير والخلفية على عنصر الحوار الخاص بك */
+.clay-dialog-shell {
+  border-radius: 28px !important; // تحديد انحناء الزوايا المطلوب
+  overflow: hidden; // قص أي محتوى داخلي ليتطابق مع الزوايا المنحنية
+  background-color: var(--bg-card);
+  box-shadow: var(--clay-card-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.7);
 }

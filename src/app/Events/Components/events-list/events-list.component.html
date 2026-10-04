@@ -1,0 +1,154 @@
+<div class="clay-view-container">
+
+    <!-- Stats Section -->
+    <div class="stats-grid">
+        <div class="clay-stat-card mint">
+            <div class="stat-icon-wrapper">
+                <mat-icon>event</mat-icon>
+            </div>
+            <div class="stat-title">إجمالي الفعاليات</div>
+            <div class="stat-value">{{ events.length }}</div>
+            <div class="stat-badge">نشطة</div>
+        </div>
+
+        <div class="clay-stat-card peach">
+            <div class="stat-icon-wrapper">
+                <mat-icon>confirmation_number</mat-icon>
+            </div>
+            <div class="stat-title">فعاليات مجانية</div>
+            <div class="stat-value">
+                {{ freeEventsCount }}
+            </div>
+            <div class="stat-badge">دخول مجاني</div>
+        </div>
+    </div>
+
+    <!-- Table Card Container -->
+    <div class="clay-card table-card">
+
+        <!-- Table Header & Controls -->
+        <div class="table-header">
+            <div class="title-wrap">
+                <h3>الفعاليات السياحية</h3>
+                <span class="results-count">({{ filteredEvents.length }} نتيجة)</span>
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <input type="text" class="clay-input-field" placeholder="بحث في الفعاليات..."
+                    [(ngModel)]="searchTerm" />
+                <button class="clay-btn-primary" (click)="openCreate()">
+                    <mat-icon>add</mat-icon>
+                    إضافة فعالية
+                </button>
+            </div>
+        </div>
+
+        <!-- Table Body -->
+        <div class="table-scroll-container">
+            <table mat-table [dataSource]="filteredEvents" class="clay-mat-table">
+
+                <!-- Index Column -->
+                <ng-container matColumnDef="index">
+                    <th mat-header-cell *matHeaderCellDef> # </th>
+                    <td mat-cell *matCellDef="let element; let i = index" class="idx-badge">
+                        {{ i + 1 }}
+                    </td>
+                </ng-container>
+
+                <!-- Name & Thumbnail Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef>اسم الفعالية</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="item-name-cell">
+                            <ng-container *ngIf="element.imageUrl && !hasImageError(element.imageUrl); else noImage">
+                                <img [src]="getImage(element.imageUrl)" (error)="onImageError(element.imageUrl)"
+                                    class="item-thumb" [alt]="getLocalizedText(element.title)" />
+                            </ng-container>
+                            <ng-template #noImage>
+                                <div class="item-thumb-fallback">
+                                    <mat-icon>article</mat-icon>
+                                </div>
+                            </ng-template>
+                            <span style="font-weight: 700;">{{ element.name?.ar || element.name?.en }}</span>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Category Column -->
+                <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef>التصنيف</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="value-badge">
+                            {{ element.category?.ar || element.category?.en || 'عام' }}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Location Column -->
+                <ng-container matColumnDef="location">
+                    <th mat-header-cell *matHeaderCellDef>الموقع</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.location?.ar || element.location?.en }}
+                    </td>
+                </ng-container>
+
+                <!-- Start Date Column -->
+                <ng-container matColumnDef="startDate">
+                    <th mat-header-cell *matHeaderCellDef>تاريخ البدء</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ element.startDate | date:'dd/MM/yyyy' }}
+                    </td>
+                </ng-container>
+
+                <!-- Ticket Price Column -->
+                <ng-container matColumnDef="ticketPrice">
+                    <th mat-header-cell *matHeaderCellDef>التذكرة</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="value-badge" *ngIf="!element.isFree">
+                            {{ element.ticketPrice?.ar || element.ticketPrice?.en || 'مدفوع' }}
+                        </span>
+                        <span class="value-badge" *ngIf="element.isFree" style="color: #6ca895;">
+                            مجاني
+                        </span>
+                    </td>
+                </ng-container>
+
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="action-buttons-group">
+                            <button class="action-icon-btn view" (click)="openDetails(element)" title="عرض">
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <button class="action-icon-btn edit" (click)="openEdit(element)" title="تعديل">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button class="action-icon-btn delete" (click)="openDelete(element)" title="حذف">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="clay-table-row"></tr>
+
+                <!-- Loading State -->
+                <tr class="state-row" *matNoDataRow>
+                    <td [attr.colspan]="displayedColumns.length">
+                        <div *ngIf="isLoading" class="loading-state">
+                            <mat-icon class="animate-spin">sync</mat-icon>
+                            <span>جاري تحميل الفعاليات...</span>
+                        </div>
+                        <div *ngIf="!isLoading && filteredEvents.length === 0" class="empty-state">
+                            <mat-icon>event_busy</mat-icon>
+                            <span>لا توجد فعاليات مسجلة حالياً</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>

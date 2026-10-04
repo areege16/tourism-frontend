@@ -2,8 +2,8 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background-color: var(--bg-app, #F8F3EA);
-  background-image: url('/assets/images/background.jpg'); // ضع مسار صورة الدودلز هنا
+  background-color: var(--bg-app, #E2CEB3);
+  background-image: url('/assets/images/background (2).jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -28,14 +28,14 @@
       width: 24px;
       height: 24px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #f6c4b4, #ee7e61);
-      box-shadow: 2px 2px 6px rgba(188, 175, 155, 0.4);
+      background: linear-gradient(135deg, #E29358, #A34828);
+      box-shadow: 2px 2px 6px rgba(60, 40, 25, 0.3);
     }
 
     .brand-name {
       font-size: 1.25rem;
       font-weight: 800;
-      color: var(--text-main, #3A2E2C);
+      color: var(--text-main, #321F17);
       letter-spacing: -0.5px;
     }
   }
@@ -51,17 +51,17 @@
       font-size: 0.85rem;
       font-weight: 700;
       letter-spacing: 1px;
-      color: var(--text-muted, #8C817D);
+      color: var(--text-muted, #72584A);
       cursor: pointer;
       transition: color 0.2s;
 
       &:hover {
-        color: var(--text-main, #3A2E2C);
+        color: var(--text-main, #321F17);
       }
     }
 
     .nav-signup-btn {
-      background-color: #7966FF;
+      background-color: #A34828;
       color: #ffffff;
       border: none;
       border-radius: 12px;
@@ -69,18 +69,19 @@
       font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 3px 4px 10px rgba(121, 102, 255, 0.3);
+      box-shadow: 3px 4px 10px rgba(163, 72, 40, 0.35);
       transition: transform 0.2s, box-shadow 0.2s;
 
       &:hover {
         transform: translateY(-1px);
-        box-shadow: 4px 6px 14px rgba(121, 102, 255, 0.4);
+        background-color: #8B3B1F;
+        box-shadow: 4px 6px 14px rgba(163, 72, 40, 0.45);
       }
     }
   }
 }
 
-// Center Container & Clay Card
+// Center Container & Sand Glass Card
 .login-container {
   flex: 1;
   display: flex;
@@ -92,13 +93,13 @@
 .clay-login-card {
   width: 100%;
   max-width: 440px;
-  background-color: rgba(255, 253, 249, 0.94);
-  backdrop-filter: blur(8px);
+  background-color: rgba(245, 235, 220, 0.88);
+  backdrop-filter: blur(10px);
   border-radius: 36px;
   padding: 2.5rem 2.25rem;
-  box-shadow: 12px 16px 36px rgba(188, 175, 155, 0.45),
-              -10px -10px 30px rgba(255, 255, 255, 0.5);
-  border: 1.5px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 12px 16px 36px rgba(50, 31, 23, 0.25),
+    -8px -8px 24px rgba(255, 248, 238, 0.6);
+  border: 1.5px solid rgba(255, 245, 230, 0.7);
   box-sizing: border-box;
 
   .card-header {
@@ -109,13 +110,13 @@
       margin: 0;
       font-size: 1.7rem;
       font-weight: 700;
-      color: var(--text-main, #3A2E2C);
+      color: var(--text-main, #321F17);
     }
 
     p {
       margin: 0.5rem 0 0;
       font-size: 0.85rem;
-      color: var(--text-muted, #8C817D);
+      color: var(--text-muted, #72584A);
       line-height: 1.4;
     }
   }
@@ -128,8 +129,8 @@
   gap: 1.1rem;
 
   .error-banner {
-    background-color: #fde8e8;
-    color: #c25353;
+    background-color: #F8D7DA;
+    color: #842029;
     padding: 0.6rem 1rem;
     border-radius: 12px;
     font-size: 0.82rem;
@@ -145,26 +146,28 @@
       box-sizing: border-box;
       padding: 0.95rem 1.25rem;
       font-size: 0.9rem;
-      color: var(--text-main, #3A2E2C);
-      background-color: #F1ECE4;
-      border: 1px solid rgba(255, 255, 255, 0.7);
+      color: var(--text-main, #321F17);
+      background-color: #EADBC8;
+      border: 1px solid rgba(255, 255, 255, 0.6);
       border-radius: 16px;
       outline: none;
-      box-shadow: inset 3px 3px 6px rgba(188, 175, 155, 0.35),
-                  inset -3px -3px 6px rgba(255, 255, 255, 0.9);
+      box-shadow: inset 3px 3px 6px rgba(90, 60, 40, 0.2),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.8);
       transition: all 0.2s ease-in-out;
 
       &::placeholder {
-        color: #A69E9B;
+        color: #927C6F;
       }
 
       &:focus {
-        background-color: #EDE7DD;
-        border-color: var(--pastel-mint, #A3CFC3);
+        background-color: #E3D1BA;
+        border-color: var(--accent-gold, #D49B4B);
+        box-shadow: inset 2px 2px 4px rgba(90, 60, 40, 0.2),
+          0 0 0 3px rgba(212, 155, 75, 0.25);
       }
 
       &.input-error {
-        border-color: #e57373;
+        border-color: #C85A5A;
       }
     }
 
@@ -180,7 +183,7 @@
         transform: translateY(-50%);
         background: transparent;
         border: none;
-        color: #A69E9B;
+        color: #927C6F;
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -194,7 +197,7 @@
         }
 
         &:hover {
-          color: var(--text-main, #3A2E2C);
+          color: var(--text-main, #321F17);
         }
       }
     }
@@ -207,49 +210,65 @@
     .forgot-link {
       font-size: 0.78rem;
       font-weight: 600;
-      color: var(--text-muted, #8C817D);
+      color: var(--text-muted, #72584A);
       text-decoration: none;
       transition: color 0.2s;
 
       &:hover {
-        color: var(--cta-salmon, #EE7E61);
+        color: var(--cta-terracotta, #A34828);
         text-decoration: underline;
       }
     }
   }
 
   // CTA Pill Button
-  .submit-btn {
-    width: 100%;
-    margin-top: 0.5rem;
-    padding: 0.95rem;
-    background: linear-gradient(180deg, #F9967C 0%, var(--cta-salmon, #EE7E61) 100%);
-    color: #ffffff;
-    border: none;
-    border-radius: 18px;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 8px 18px rgba(238, 126, 97, 0.4),
-                inset 1px 1px 2px rgba(255, 255, 255, 0.6);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+ .submit-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.95rem;
+  background: linear-gradient(180deg, #B54F2A 0%, var(--cta-terracotta, #8E3B1E) 100%);
+  
+  /* إجبار لون النص والأيقونات داخل الزر على الأبيض الناصع */
+  color: #FFFFFF !important; 
+  -webkit-text-fill-color: #FFFFFF !important; // يضمن التغلب على أي gradient أو وراثة للخطوط
+  
+  border: none;
+  border-radius: 18px;
+  font-size: 1.1rem;
+  font-weight: 800; 
+  letter-spacing: 0.3px;
+  
+  /* ظل يسند حروف النص العربي فوق التدرج الترابي */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important; 
+  
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(142, 59, 30, 0.4),
+              inset 1px 1px 2px rgba(255, 255, 255, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 22px rgba(238, 126, 97, 0.5),
-                  inset 1px 1px 2px rgba(255, 255, 255, 0.7);
-    }
-
-    &:active:not(:disabled) {
-      transform: translateY(1px);
-      box-shadow: 0 4px 10px rgba(238, 126, 97, 0.4);
-    }
-
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
+  span, div, p {
+    color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
   }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: linear-gradient(180deg, #C25B34 0%, var(--cta-terracotta, #A34828) 100%);
+    box-shadow: 0 10px 22px rgba(142, 59, 30, 0.5),
+                inset 1px 1px 2px rgba(255, 255, 255, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 4px 10px rgba(142, 59, 30, 0.4);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    text-shadow: none !important;
+  }
+}
 }
 
 // Social Divider & Buttons
@@ -260,7 +279,7 @@
   span {
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--text-muted, #8C817D);
+    color: var(--text-muted, #72584A);
   }
 }
 
@@ -275,11 +294,11 @@
     justify-content: center;
     gap: 0.4rem;
     padding: 0.65rem 0.5rem;
-    background-color: #FFFDF9;
-    border: 1px solid rgba(255, 255, 255, 0.9);
+    background-color: #F5EBDC;
+    border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 14px;
-    box-shadow: 4px 4px 10px rgba(188, 175, 155, 0.25),
-                -3px -3px 8px rgba(255, 255, 255, 0.9);
+    box-shadow: 4px 4px 10px rgba(70, 45, 30, 0.15),
+      -3px -3px 8px rgba(255, 255, 255, 0.8);
     cursor: pointer;
     transition: all 0.2s ease;
 
@@ -291,13 +310,14 @@
     span {
       font-size: 0.75rem;
       font-weight: 600;
-      color: var(--text-main, #3A2E2C);
+      color: var(--text-main, #321F17);
     }
 
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 6px 6px 12px rgba(188, 175, 155, 0.35),
-                  -4px -4px 10px rgba(255, 255, 255, 0.95);
+      background-color: #FAF3EA;
+      box-shadow: 6px 6px 12px rgba(70, 45, 30, 0.2),
+        -4px -4px 10px rgba(255, 255, 255, 0.9);
     }
 
     &:active {
@@ -312,7 +332,7 @@
   }
 
   .login-wrapper {
-    background-image: none; // إخفاء خلفية الدودلز على الهواتف لتفادي التداخل
+    background-image: none;
   }
 
   .clay-login-card {
