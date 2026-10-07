@@ -34,60 +34,91 @@
 
         <div class="form-row-grid">
           <div class="field-group">
-            <label>الاسم (عربي)</label>
+            <label>الاسم (عربي) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('nameAr')"
               formControlName="nameAr"
               placeholder="اسم المعلم بالعربي"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('nameAr')">
+              <small *ngIf="form.get('nameAr')?.errors?.['required']">الاسم بالعربي مطلوب.</small>
+              <small *ngIf="form.get('nameAr')?.errors?.['minlength']">يجب ألا يقل عن 3 أحرف.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Name (English)</label>
+            <label>Name (English) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('nameEn')"
               formControlName="nameEn"
               placeholder="Attraction name"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('nameEn')">
+              <small *ngIf="form.get('nameEn')?.errors?.['required']">English name is required.</small>
+              <small *ngIf="form.get('nameEn')?.errors?.['minlength']">Must be at least 3 characters.</small>
+            </div>
           </div>
         </div>
 
         <div class="form-row-grid">
           <div class="field-group">
-            <label>التصنيف (عربي)</label>
+            <label>التصنيف (عربي) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('categoryAr')"
               formControlName="categoryAr"
               placeholder="مثال: موقع تاريخي"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('categoryAr')">
+              <small>التصنيف بالعربي مطلوب.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Category (English)</label>
+            <label>Category (English) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('categoryEn')"
               formControlName="categoryEn"
               placeholder="e.g. Historical Site"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('categoryEn')">
+              <small>English category is required.</small>
+            </div>
           </div>
         </div>
 
         <div class="field-group">
-          <label>الوصف (عربي)</label>
+          <label>الوصف (عربي) <span class="required-asterisk">*</span></label>
           <textarea
             class="clay-input-field textarea-field"
+            [class.is-invalid]="isFieldInvalid('descriptionAr')"
             rows="4"
             formControlName="descriptionAr"
           ></textarea>
+          <div class="error-msg" *ngIf="isFieldInvalid('descriptionAr')">
+            <small *ngIf="form.get('descriptionAr')?.errors?.['required']">الوصف بالعربي مطلوب.</small>
+            <small *ngIf="form.get('descriptionAr')?.errors?.['minlength']">يجب ألا يقل عن 10 أحرف.</small>
+          </div>
         </div>
+
         <div class="field-group">
-          <label>Description (English)</label>
+          <label>Description (English) <span class="required-asterisk">*</span></label>
           <textarea
             class="clay-input-field textarea-field"
+            [class.is-invalid]="isFieldInvalid('descriptionEn')"
             rows="4"
             formControlName="descriptionEn"
             dir="ltr"
           ></textarea>
+          <div class="error-msg" *ngIf="isFieldInvalid('descriptionEn')">
+            <small *ngIf="form.get('descriptionEn')?.errors?.['required']">English description is required.</small>
+            <small *ngIf="form.get('descriptionEn')?.errors?.['minlength']">Must be at least 10 characters.</small>
+          </div>
         </div>
       </section>
 
@@ -99,24 +130,35 @@
         </h3>
         <div class="form-row-grid">
           <div class="field-group">
-            <label>خط العرض (Latitude)</label>
+            <label>خط العرض (Latitude) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('latitude')"
               type="number"
               step="any"
               formControlName="latitude"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('latitude')">
+              <small *ngIf="form.get('latitude')?.errors?.['required']">خط العرض مطلوب.</small>
+              <small *ngIf="form.get('latitude')?.errors?.['min'] || form.get('latitude')?.errors?.['max']">القيمة يجب أن تكون بين -90 و 90.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>خط الطول (Longitude)</label>
+            <label>خط الطول (Longitude) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('longitude')"
               type="number"
               step="any"
               formControlName="longitude"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('longitude')">
+              <small *ngIf="form.get('longitude')?.errors?.['required']">خط الطول مطلوب.</small>
+              <small *ngIf="form.get('longitude')?.errors?.['min'] || form.get('longitude')?.errors?.['max']">القيمة يجب أن تكون بين -180 و 180.</small>
+            </div>
           </div>
         </div>
       </section>
@@ -130,41 +172,59 @@
 
         <div class="form-row-grid">
           <div class="field-group">
-            <label>مواعيد الزيارة (عربي)</label>
+            <label>مواعيد الزيارة (عربي) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('openingHoursAr')"
               formControlName="openingHoursAr"
               placeholder="٨:٠٠ ص - ٥:٠٠ م"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('openingHoursAr')">
+              <small>مواعيد الزيارة مطلوب.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Opening Hours (English)</label>
+            <label>Opening Hours (English) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('openingHoursEn')"
               formControlName="openingHoursEn"
               placeholder="8:00 AM - 5:00 PM"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('openingHoursEn')">
+              <small>Opening hours are required.</small>
+            </div>
           </div>
         </div>
 
         <div class="form-row-grid">
           <div class="field-group">
-            <label>سعر التذكرة (عربي)</label>
+            <label>سعر التذكرة (عربي) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('ticketPriceAr')"
               formControlName="ticketPriceAr"
               placeholder="١٠٠ جنيه"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('ticketPriceAr')">
+              <small>سعر التذكرة مطلوب.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>Ticket Price (English)</label>
+            <label>Ticket Price (English) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('ticketPriceEn')"
               formControlName="ticketPriceEn"
               placeholder="100 EGP"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('ticketPriceEn')">
+              <small>Ticket price is required.</small>
+            </div>
           </div>
         </div>
 
@@ -173,18 +233,23 @@
             <label>رابط الحجز</label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('bookingUrl')"
               formControlName="bookingUrl"
               placeholder="https://..."
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('bookingUrl')">
+              <small>صيغة الرابط غير صحيحة (يجب أن يبدأ بـ http:// أو https://).</small>
+            </div>
           </div>
         </div>
 
         <div class="form-row-grid">
           <div class="field-group">
-            <label>التقييم (0 - 5)</label>
+            <label>التقييم (0 - 5) <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('rating')"
               type="number"
               step="0.1"
               min="0"
@@ -192,16 +257,26 @@
               formControlName="rating"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('rating')">
+              <small *ngIf="form.get('rating')?.errors?.['required']">التقييم مطلوب.</small>
+              <small *ngIf="form.get('rating')?.errors?.['min'] || form.get('rating')?.errors?.['max']">يجب أن تكون القيمة من 0 إلى 5.</small>
+            </div>
           </div>
+
           <div class="field-group">
-            <label>عدد التقييمات</label>
+            <label>عدد التقييمات <span class="required-asterisk">*</span></label>
             <input
               class="clay-input-field"
+              [class.is-invalid]="isFieldInvalid('reviewCount')"
               type="number"
               min="0"
               formControlName="reviewCount"
               dir="ltr"
             />
+            <div class="error-msg" *ngIf="isFieldInvalid('reviewCount')">
+              <small *ngIf="form.get('reviewCount')?.errors?.['required']">عدد التقييمات مطلوب.</small>
+              <small *ngIf="form.get('reviewCount')?.errors?.['min']">القيمة يجب ألا تكون بالسالب.</small>
+            </div>
           </div>
         </div>
       </section>
@@ -216,37 +291,21 @@
         <div class="form-row-grid">
           <div class="field-group">
             <label>الحقبة التاريخية (عربي)</label>
-            <input
-              class="clay-input-field"
-              formControlName="historicalPeriodAr"
-            />
+            <input class="clay-input-field" formControlName="historicalPeriodAr" />
           </div>
           <div class="field-group">
             <label>Historical Period (English)</label>
-            <input
-              class="clay-input-field"
-              formControlName="historicalPeriodEn"
-              dir="ltr"
-            />
+            <input class="clay-input-field" formControlName="historicalPeriodEn" dir="ltr" />
           </div>
         </div>
 
         <div class="field-group">
           <label>الأهمية التاريخية (عربي)</label>
-          <textarea
-            class="clay-input-field textarea-field"
-            rows="6"
-            formControlName="significanceAr"
-          ></textarea>
+          <textarea class="clay-input-field textarea-field" rows="6" formControlName="significanceAr"></textarea>
         </div>
         <div class="field-group">
           <label>Significance (English)</label>
-          <textarea
-            class="clay-input-field textarea-field"
-            rows="6"
-            formControlName="significanceEn"
-            dir="ltr"
-          ></textarea>
+          <textarea class="clay-input-field textarea-field" rows="6" formControlName="significanceEn" dir="ltr"></textarea>
         </div>
       </section>
 
@@ -263,17 +322,23 @@
             *ngFor="let feature of features.controls; let i = index"
             [formGroupName]="i"
           >
-            <input
-              class="clay-input-field"
-              formControlName="ar"
-              placeholder="الميزة (عربي)"
-            />
-            <input
-              class="clay-input-field"
-              formControlName="en"
-              placeholder="Feature (English)"
-              dir="ltr"
-            />
+            <div class="field-group full-width">
+              <input
+                class="clay-input-field"
+                [class.is-invalid]="feature.get('ar')?.touched && feature.get('ar')?.invalid"
+                formControlName="ar"
+                placeholder="الميزة (عربي)"
+              />
+            </div>
+            <div class="field-group full-width">
+              <input
+                class="clay-input-field"
+                [class.is-invalid]="feature.get('en')?.touched && feature.get('en')?.invalid"
+                formControlName="en"
+                placeholder="Feature (English)"
+                dir="ltr"
+              />
+            </div>
             <button
               type="button"
               class="btn-delete-row"

@@ -17,7 +17,7 @@ import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-update',
-   templateUrl: './update.component.html',
+  templateUrl: './update.component.html',
   styleUrl: './update.component.scss',
 })
 export class UpdateComponent implements OnInit {
@@ -41,7 +41,7 @@ export class UpdateComponent implements OnInit {
     private snackBar: MatSnackBar,
     private dialogRef: MatDialogRef<UpdateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { id: string },
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -72,7 +72,10 @@ export class UpdateComponent implements OnInit {
       features: this.fb.array([]),
     });
   }
-
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.form.get(fieldName);
+    return !!(field && field.invalid && (field.dirty || field.touched));
+  }
   get features(): FormArray {
     return this.form.get('features') as FormArray;
   }
@@ -188,13 +191,49 @@ export class UpdateComponent implements OnInit {
   fullUrl(path: string): string {
     return getFullImageUrl(path);
   }
-
   onSubmit(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
-      this.snackBar.open('من فضلك راجعي الحقول المطلوبة', 'إغلاق', {
-        duration: 3000,
+
+      // Map control keys to friendly Arabic display names
+      const fieldLabels: { [key: string]: string } = {
+        nameAr: 'الاسم (عربي)',
+        nameEn: 'الاسم (إنجليزي)',
+        descriptionAr: 'الوصف (عربي)',
+        descriptionEn: 'الوصف (إنجليزي)',
+        categoryAr: 'التصنيف (عربي)',
+        categoryEn: 'التصنيف (إنجليزي)',
+        latitude: 'خط العرض',
+        longitude: 'خط الطول',
+        rating: 'التقييم',
+        reviewCount: 'عدد التقييمات',
+      };
+
+      const invalidFields: string[] = [];
+
+      // Check main form controls
+      Object.keys(this.form.controls).forEach((key) => {
+        const control = this.form.get(key);
+        if (control?.invalid && key !== 'features') {
+          invalidFields.push(fieldLabels[key] || key);
+        }
       });
+
+      // Check features FormArray separately if any row is invalid
+      if (this.features.invalid) {
+        invalidFields.push('المميزات');
+      }
+
+      // Construct the snackbar message
+      const message = invalidFields.length > 0
+        ? `يرجى ملء الحقول المطلوبة: ${invalidFields.join('، ')}`
+        : 'من فضلك راجع الحقول المطلوبة';
+
+      this.snackBar.open(message, 'إغلاق', {
+        duration: 5000,
+        panelClass: ['snackbar-error'],
+      });
+
       return;
     }
 
