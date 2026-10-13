@@ -1,16 +1,9 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTableModule } from '@angular/material/table';
-import { MatTooltipModule } from '@angular/material/tooltip';
+
+import { MatDialog } from '@angular/material/dialog';
+
 import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
-import { TourGuide } from '../../Models/tour-guide';
+import { TourGuideDto } from '../../Models/tour-guide';
 import { TourGuideService } from '../../Services/tour-guide.service';
 import { CreateComponent } from '../create/create.component';
 import { DeleteComponent } from '../delete/delete.component';
@@ -23,8 +16,8 @@ import { EditComponent } from '../edit/edit.component';
   styleUrl: './list.component.scss',
 })
 export class ListComponent implements OnInit {
-  guides: TourGuide[] = [];
-  filteredGuides: TourGuide[] = [];
+  guides: TourGuideDto[] = [];
+  filteredGuides: TourGuideDto[] = [];
   isLoading = true;
   searchTerm = '';
   failedImages = new Set<string>();
@@ -42,9 +35,9 @@ export class ListComponent implements OnInit {
 
   loadGuides(): void {
     this.isLoading = true;
-    this.tourGuideService.getTourGuides().subscribe({
+    this.tourGuideService.getAll().subscribe({
       next: (data) => {
-        this.guides = data || [];
+        this.guides = data.data || [];
         this.filteredGuides = [...this.guides];
         this.isLoading = false;
       },
@@ -63,8 +56,8 @@ export class ListComponent implements OnInit {
     }
 
     this.filteredGuides = this.guides.filter((guide) => {
-      const fullName = this.toText(guide.name ?? guide.fullName);
-      const expertise = this.toText(guide.expertise);
+      const fullName = this.toText(guide.name.ar);
+      const expertise = this.toText(guide.languages?.join(' '));
       const email = this.toText(guide.email);
       const languages = (guide.languages ?? []).map((item) => this.toText(item)).join(' ');
 
@@ -129,7 +122,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openEdit(guide: TourGuide): void {
+  openEdit(guide: TourGuideDto): void {
     const dialogRef = this.dialog.open(EditComponent, {
       width: '680px',
       maxWidth: '95vw',
@@ -144,7 +137,7 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openDetails(guide: TourGuide): void {
+  openDetails(guide: TourGuideDto): void {
     this.dialog.open(DetailsComponent, {
       width: '760px',
       maxWidth: '95vw',
@@ -153,14 +146,14 @@ export class ListComponent implements OnInit {
     });
   }
 
-  openDelete(guide: TourGuide): void {
+  openDelete(guide: TourGuideDto): void {
     const dialogRef = this.dialog.open(DeleteComponent, {
       width: '420px',
       maxWidth: '92vw',
       panelClass: 'clay-dialog',
       data: {
         id: guide.id,
-        title: this.getLocalizedText(guide.fullName),
+        title: this.getLocalizedText(guide.name.ar),
       },
     });
 

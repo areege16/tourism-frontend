@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
-import { TourGuide } from '../../Models/tour-guide';
+import { TourGuideDto } from '../../Models/tour-guide';
 import { TourGuideService } from '../../Services/tour-guide.service';
 
 @Component({
@@ -16,13 +16,13 @@ import { TourGuideService } from '../../Services/tour-guide.service';
   styleUrl: './details.component.scss',
 })
 export class DetailsComponent implements OnInit {
-  guide!: TourGuide;
+  guide!: TourGuideDto;
   isLoading = true;
 
   constructor(
     private dialogRef: MatDialogRef<DetailsComponent>,
     private tourGuideService: TourGuideService,
-    @Inject(MAT_DIALOG_DATA) public data: { guide?: TourGuide; guideId?: string },
+    @Inject(MAT_DIALOG_DATA) public data: { guide?: TourGuideDto; guideId?: string },
   ) {}
 
   ngOnInit(): void {
@@ -36,9 +36,9 @@ export class DetailsComponent implements OnInit {
     }
 
     if (guideId) {
-      this.tourGuideService.getTourGuideById(guideId).subscribe({
+      this.tourGuideService.getById(guideId).subscribe({
         next: (result) => {
-          this.guide = result ?? this.guide;
+          this.guide = result?.data ?? this.guide;
           this.isLoading = false;
         },
         error: () => {
@@ -69,7 +69,7 @@ export class DetailsComponent implements OnInit {
   }
 
   getDisplayName(): string {
-    return this.getLocalizedText(this.guide?.name ?? this.guide?.fullName) || 'بدون اسم';
+    return this.getLocalizedText(this.guide?.name ?? this.guide?.name) || 'بدون اسم';
   }
 
   getDisplayBio(): string {
@@ -84,9 +84,6 @@ export class DetailsComponent implements OnInit {
     return this.getLocalizedText(this.guide?.phone) || '—';
   }
 
-  getDisplayAddress(): string {
-    return this.getLocalizedText(this.guide?.location?.address) || '—';
-  }
 
   getLanguages(): string[] {
     return this.guide?.languages?.length ? this.guide.languages : [];
@@ -96,9 +93,7 @@ export class DetailsComponent implements OnInit {
     return getFullImageUrl(path || '');
   }
 
-  getLocationAddress(): string {
-    return this.getDisplayAddress();
-  }
+ 
 
   close(): void {
     this.dialogRef.close();

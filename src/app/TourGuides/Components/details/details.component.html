@@ -74,25 +74,6 @@
       </div>
     </div>
 
-    <div class="form-row-grid" style="margin-bottom: 1.25rem;">
-      <div class="dialog-info-card" style="margin-bottom: 0;">
-        <mat-icon>location_on</mat-icon>
-        <div>
-          <p style="font-size: 0.72rem; color: var(--text-muted);">العنوان</p>
-          <p>{{ getDisplayAddress() || '—' }}</p>
-        </div>
-      </div>
-
-      <div class="dialog-info-card" style="margin-bottom: 0;">
-        <mat-icon>my_location</mat-icon>
-        <div>
-          <p style="font-size: 0.72rem; color: var(--text-muted);">الإحداثيات</p>
-          <p dir="ltr" style="text-align: right;">
-            {{ guide.location?.latitude ?? 0 }}, {{ guide.location?.longitude ?? 0 }}
-          </p>
-        </div>
-      </div>
-    </div>
 
     <!-- اللغات المتقنة -->
     <div class="field-group" *ngIf="getLanguages().length" style="margin-bottom: 1.25rem;">

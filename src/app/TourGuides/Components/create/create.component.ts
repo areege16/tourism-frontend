@@ -1,12 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
 import { TourGuideService } from '../../Services/tour-guide.service';
+import { CreateTourGuideCommand } from '../../Models/tour-guide';
 
 @Component({
   selector: 'app-tour-guide-create',
@@ -15,6 +11,8 @@ import { TourGuideService } from '../../Services/tour-guide.service';
 })
 export class CreateComponent implements OnInit {
   form!: FormGroup;
+  selectedFile?: File;
+  imagePreview: string | null = null; // رابط المعاينة
 
   constructor(
     private fb: FormBuilder,
@@ -29,22 +27,36 @@ export class CreateComponent implements OnInit {
       bioEn: ['', Validators.required],
       bioAr: ['', Validators.required],
       languages: [''],
-      imageUrl: [''],
-      phoneEn: ['', Validators.required],
-      phoneAr: ['', Validators.required],
-      emailEn: ['', [Validators.required, Validators.email]],
-      emailAr: ['', [Validators.required]],
+      phone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       facebook: [''],
       instagram: [''],
       twitter: [''],
       tiktok: [''],
       youtube: [''],
-      latitude: [0, [Validators.required]],
-      longitude: [0, [Validators.required]],
-      addressEn: ['', Validators.required],
-      addressAr: ['', Validators.required],
       rating: [0, [Validators.required, Validators.min(0), Validators.max(5)]],
     });
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.selectedFile = file;
+
+      // إنشاء رابط المعاينة
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeImage(fileInput: HTMLInputElement): void {
+    this.selectedFile = undefined;
+    this.imagePreview = null;
+    fileInput.value = ''; // إزالة الملف من المدخل
   }
 
   save(): void {
@@ -60,7 +72,7 @@ export class CreateComponent implements OnInit {
       .map((item: string) => item.trim())
       .filter((item: string) => item.length > 0);
 
-    const payload = {
+    const payload: CreateTourGuideCommand = {
       name: {
         en: value.nameEn,
         ar: value.nameAr,
@@ -70,34 +82,20 @@ export class CreateComponent implements OnInit {
         ar: value.bioAr,
       },
       languages,
-      imageUrl: value.imageUrl || '',
-      phone: {
-        en: value.phoneEn,
-        ar: value.phoneAr,
-      },
-      email: {
-        en: value.emailEn,
-        ar: value.emailAr,
-      },
+      imageFile: this.selectedFile,
+      phone: value.phone,
+      email: value.email,
       social: {
-        facebook: value.facebook || '',
-        instagram: value.instagram || '',
-        twitter: value.twitter || '',
-        tiktok: value.tiktok || '',
-        youtube: value.youtube || '',
-      },
-      location: {
-        latitude: Number(value.latitude ?? 0),
-        longitude: Number(value.longitude ?? 0),
-        address: {
-          en: value.addressEn,
-          ar: value.addressAr,
-        },
+        facebook: value.facebook || undefined,
+        instagram: value.instagram || undefined,
+        twitter: value.twitter || undefined,
+        tiktok: value.tiktok || undefined,
+        youtube: value.youtube || undefined,
       },
       rating: Number(value.rating ?? 0),
     };
 
-    this.tourGuideService.createTourGuide(payload).subscribe({
+    this.tourGuideService.create(payload).subscribe({
       next: () => this.dialogRef.close(true),
       error: (err) => console.error('Create tour guide error:', err),
     });

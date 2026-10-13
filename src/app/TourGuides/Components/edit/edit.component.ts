@@ -1,14 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { TourGuide } from '../../Models/tour-guide';
+import { TourGuideDto } from '../../Models/tour-guide';
 import { TourGuideService } from '../../Services/tour-guide.service';
+import { getFullImageUrl } from '../../../Shared/Models/getImageUrl';
 
 @Component({
   selector: 'app-tour-guide-edit',
@@ -17,12 +12,13 @@ import { TourGuideService } from '../../Services/tour-guide.service';
 })
 export class EditComponent implements OnInit {
   form!: FormGroup;
+  imagePreview: string | null = null; // لمعاينة الصورة (سواء القديمة أو الجديدة)
 
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<EditComponent>,
     private tourGuideService: TourGuideService,
-    @Inject(MAT_DIALOG_DATA) public data: { guide: TourGuide },
+    @Inject(MAT_DIALOG_DATA) public data: { guide: TourGuideDto },
   ) {}
 
   private getLocalizedValue(value: unknown): string {
@@ -45,29 +41,49 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     const guide = this.data.guide;
 
+    // تهيئة معاينة الصورة بالصورة الحالية للمرشد (بعد معالجتها بالرابط الكامل)
+    if (guide.imageUrl) {
+      this.imagePreview = getFullImageUrl(guide.imageUrl);
+    }
+
     this.form = this.fb.group({
-      nameEn: [guide.name?.en || guide.fullName?.en || '', Validators.required],
-      nameAr: [guide.name?.ar || guide.fullName?.ar || '', Validators.required],
+      nameEn: [guide.name?.en || '', Validators.required],
+      nameAr: [guide.name?.ar  || '', Validators.required],
       bioEn: [guide.bio?.en || '', Validators.required],
       bioAr: [guide.bio?.ar || '', Validators.required],
       languages: [(guide.languages ?? []).join(',')],
       imageUrl: [guide.imageUrl || ''],
-      phoneEn: [this.getLocalizedValue(guide.phone), Validators.required],
-      phoneAr: [this.getLocalizedValue(guide.phone), Validators.required],
-      emailEn: [this.getLocalizedValue(guide.email), [Validators.required, Validators.email]],
-      emailAr: [this.getLocalizedValue(guide.email), [Validators.required]],
+      phone: [this.getLocalizedValue(guide.phone), Validators.required],
+      email: [this.getLocalizedValue(guide.email), [Validators.required, Validators.email]],
       facebook: [guide.social?.facebook || ''],
       instagram: [guide.social?.instagram || ''],
       twitter: [guide.social?.twitter || ''],
       tiktok: [guide.social?.tiktok || ''],
       youtube: [guide.social?.youtube || ''],
-      latitude: [guide.location?.latitude ?? 0, [Validators.required]],
-      longitude: [guide.location?.longitude ?? 0, [Validators.required]],
-      addressEn: [guide.location?.address?.en || '', Validators.required],
-      addressAr: [guide.location?.address?.ar || '', Validators.required],
       rating: [guide.rating ?? 0, [Validators.required, Validators.min(0), Validators.max(5)]],
       imageFile: [null],
     });
+  }
+
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      this.form.patchValue({ imageFile: file });
+
+      // بناء رابط معاينة مؤقت للملف الجديد
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  removeImage(fileInput: HTMLInputElement): void {
+    this.form.patchValue({ imageFile: null, imageUrl: '' });
+    this.imagePreview = null;
+    fileInput.value = ''; // تصفير حقل الرفع
   }
 
   save(): void {
@@ -95,14 +111,9 @@ export class EditComponent implements OnInit {
       },
       languages,
       imageUrl: value.imageUrl || '',
-      phone: {
-        en: value.phoneEn,
-        ar: value.phoneAr,
-      },
-      email: {
-        en: value.emailEn,
-        ar: value.emailAr,
-      },
+      imageFile: value.imageFile, // الملف الجديد (إن وجد)
+      phone: value.phone || '',
+      email: value.email || '',
       social: {
         facebook: value.facebook || '',
         instagram: value.instagram || '',
@@ -110,27 +121,13 @@ export class EditComponent implements OnInit {
         tiktok: value.tiktok || '',
         youtube: value.youtube || '',
       },
-      location: {
-        latitude: Number(value.latitude ?? 0),
-        longitude: Number(value.longitude ?? 0),
-        address: {
-          en: value.addressEn,
-          ar: value.addressAr,
-        },
-      },
       rating: Number(value.rating ?? 0),
     };
 
-    this.tourGuideService.updateTourGuide(this.data.guide.id ?? '', payload).subscribe({
+    this.tourGuideService.update(this.data.guide.id ?? '', payload).subscribe({
       next: () => this.dialogRef.close(true),
       error: (err) => console.error('Update tour guide error:', err),
     });
-  }
-
-  onFileChange(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-    this.form.patchValue({ imageFile: file });
   }
 
   close(): void {

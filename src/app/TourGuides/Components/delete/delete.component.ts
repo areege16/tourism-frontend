@@ -23,7 +23,7 @@ export class DeleteComponent {
       return;
     }
 
-    this.tourGuideService.deleteTourGuide(this.data.id).subscribe({
+    this.tourGuideService.delete(this.data.id).subscribe({
       next: (success) => this.dialogRef.close(success),
       error: () => this.dialogRef.close(false),
     });
